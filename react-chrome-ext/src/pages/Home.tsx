@@ -1,5 +1,5 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -8,7 +8,9 @@ const Home = () => {
       <NavLink to={"/login"}>
         <button>login</button>
       </NavLink>
-      <button>signup</button>
+      <NavLink to={"/signUp"}>
+        <button>signup</button>
+      </NavLink>
     </div>
   );
 };

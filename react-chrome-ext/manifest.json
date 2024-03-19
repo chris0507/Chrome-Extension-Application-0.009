@@ -8,11 +8,11 @@
     "default_title": "React Chrome Extension"
   },
   "permissions": ["storage", "https://*/*", "http://*/*"],
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
-  },
   "background": {
     "scripts": ["backgorund.js"],
     "persistent": false
+  },
+   "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline'"
   }
 }
