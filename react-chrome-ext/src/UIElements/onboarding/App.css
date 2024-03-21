@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #1A1A1A;
+    /* font-family: "Aleo", serif; */
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

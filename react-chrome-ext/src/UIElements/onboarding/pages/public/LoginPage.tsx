@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Login from "../components/Login";
+import Header from "../../../../components/Header";
+import Login from "../../../../components/Login";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -22,8 +22,8 @@ const LoginPage = () => {
         linkUrl="/signup"
       />
       <Login />
-      
-      {/* <button onClick={handleLoginSuccess}>Simulate Login</button> */}
+
+      <button onClick={handleLoginSuccess}>Simulate Login</button>
     </>
   );
 };

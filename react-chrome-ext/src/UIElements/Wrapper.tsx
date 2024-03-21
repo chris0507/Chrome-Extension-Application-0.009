@@ -14,7 +14,7 @@ const Wrapper = () => {
   }, [location]);
 
   return (
-    <div>
+    <div className="w-full h-full">
       <Outlet />
     </div>
   );

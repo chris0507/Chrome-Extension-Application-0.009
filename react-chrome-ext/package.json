@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -10,11 +11,16 @@
     "@types/node": "^16.18.89",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "axios": "^1.6.8",
+    "buffer": "^6.0.3",
     "history": "^5.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.1",
+    "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
+    "tailwind-datepicker-react": "^1.4.3",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -44,15 +50,18 @@
   "devDependencies": {
     "@types/chrome": "^0.0.263",
     "autoprefixer": "^10.4.18",
+    "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^6.10.0",
     "html-webpack-plugin": "^5.6.0",
     "postcss-loader": "^8.1.1",
+    "progress-bar-webpack-plugin": "^2.1.0",
     "style-loader": "^3.3.4",
     "tailwindcss": "^3.4.1",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
     "webpack": "^5.90.3",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-config-utils": "^2.3.1"
   }
 }
