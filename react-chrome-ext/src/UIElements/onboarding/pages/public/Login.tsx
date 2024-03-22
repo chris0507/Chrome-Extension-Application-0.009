@@ -41,7 +41,7 @@ const Login = () => {
         <div className="w-full h-full border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-10">
           <div className="flex justify-around gap-5 ">
             <LoginForm onStatusChange={handleStatusChange} />
-            <SignUpForm onStatusChange={handleStatusChange} />
+            <SignUpForm />
           </div>
           <NavLink to="business">
             <div className="flex justify-center items-center text-white text-center text-lg mt-10 gap-2 cursor-pointer">

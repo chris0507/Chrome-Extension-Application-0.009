@@ -14,6 +14,7 @@ import "./App.css";
 import BusinessLogin from "./pages/business/BusinessLogin";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
+import BusinessHome from "./pages/business/BusinessHome";
 
 const Wrapper = ({ children }: { children: any }) => {
   const token = localStorage.getItem("token");
@@ -32,7 +33,12 @@ const Wrapper = ({ children }: { children: any }) => {
       .post("http://localhost:5000/check-token", { token })
       .then((res) => {
         console.log(res);
-        if (location.pathname !== "/home") navigate("/home");
+        if (res.data.status == "public_verify_token") {
+          if (location.pathname !== "/home") navigate("/home");
+        } else if (res.data.status == "business_verify_token") {
+          if (location.pathname !== "/business-home")
+            navigate("/business-home");
+        }
       })
       .catch((err) => {
         if (location.pathname === "/home") navigate("/");
@@ -55,6 +61,14 @@ function App() {
             }
           />
           <Route
+            path="/home"
+            element={
+              <Wrapper>
+                <Home />
+              </Wrapper>
+            }
+          />
+          <Route
             path="/business"
             element={
               <Wrapper>
@@ -63,10 +77,10 @@ function App() {
             }
           />
           <Route
-            path="/home"
+            path="/business-home"
             element={
               <Wrapper>
-                <Home />
+                <BusinessHome />
               </Wrapper>
             }
           />

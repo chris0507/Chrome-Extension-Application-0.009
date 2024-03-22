@@ -8,10 +8,7 @@ import axios from "axios";
 import { registerUser } from "../../features/auth/authActions";
 import { RootState, AppDispatch } from "../../../../store";
 import Error from "../Error";
-import { SuccessRegisterToast } from "../Alert"; 
-interface LoginFormProps {
-  onStatusChange: (status: string) => void;
-}
+import { ExistEmailToast, SuccessRegisterToast } from "../Alert"; 
 interface FormData {
   username: string;
   dob: string;
@@ -20,9 +17,7 @@ interface FormData {
   email: string;
   password: string;
 }
-const SignUpForm: React.FC<LoginFormProps> = ({ onStatusChange }) => {
-  const [show, setShow] = useState(false);
-
+const SignUpForm = () => {
   const { loading, userInfo, error, success } = useSelector(
     (state: RootState) => state.auth
   );
@@ -40,7 +35,7 @@ const SignUpForm: React.FC<LoginFormProps> = ({ onStatusChange }) => {
       .catch((err) => {
         const errStatus = err.response.data.status;
         if (errStatus == "existed_email") {
-          onStatusChange("existed_email");
+          ExistEmailToast();
         }
       });
     console.log(data);
@@ -54,6 +49,8 @@ const SignUpForm: React.FC<LoginFormProps> = ({ onStatusChange }) => {
   };
 
   //calendar
+  const [show, setShow] = useState(false);
+
   const options = {
     title: "",
     autoHide: true,

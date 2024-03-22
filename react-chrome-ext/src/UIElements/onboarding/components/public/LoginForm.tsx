@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Error from "../Error";
-import { RootState, AppDispatch } from "../../../../store";
 import axios from "axios";
 import { SuccessLoginToast } from "../Alert";
 
@@ -13,12 +10,9 @@ interface LoginFormProps {
 interface FormData {
   email: string;
   password: string;
-  // Add any other form fields here as needed
 }
+
 const LoginForm: React.FC<LoginFormProps> = ({ onStatusChange }) => {
-  const { userInfo, loading, error } = useSelector(
-    (state: RootState) => state.auth
-  );
   const { register, handleSubmit } = useForm<FormData>();
   const navigate = useNavigate();
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import LoginForm from '../../components/business/LoginForm';
 import SignUpForm from '../../components/business/SignUpForm';
@@ -10,7 +10,7 @@ const BusinessLogin = () => {
         <img src="/images/logo.png" alt="logo" width={200} />
       </div>
       <div className="w-full h-full border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-10">
-        <div className="flex justify-around gap-5 ">
+        <div className="flex justify-center gap-5 ">
           <LoginForm />
           <SignUpForm />
         </div>
