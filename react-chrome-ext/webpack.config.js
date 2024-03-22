@@ -37,23 +37,23 @@ const getFolders = (dirPath) => {
     .map((dirent) => dirent.name);
 };
 
-  const getEntries = (dirPath, entryFile = "index.tsx") => {
-    const _e = {};
-    // get all folders
-    const folders = getFolders(dirPath);
+const getEntries = (dirPath, entryFile = "index.tsx") => {
+  const _e = {};
+  // get all folders
+  const folders = getFolders(dirPath);
 
-    folders.forEach((folderName) => {
-      _e[camelCase(folderName)] = path.join(
-        __dirname,
-        "src",
-        dirPath,
-        folderName,
-        entryFile
-      );
-    });
+  folders.forEach((folderName) => {
+    _e[camelCase(folderName)] = path.join(
+      __dirname,
+      "src",
+      dirPath,
+      folderName,
+      entryFile
+    );
+  });
 
-    return _e;
-  };
+  return _e;
+};
 
 module.exports = {
   // entry: {

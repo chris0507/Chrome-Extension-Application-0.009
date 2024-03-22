@@ -1,45 +1,166 @@
 const express = require("express");
-const { GoogleSpreadsheet } = require("google-spreadsheet");
-const { JWT } = require("google-auth-library");
-require("dotenv").config();
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const os = require("os");
 
-const serviceAccountAuth = new JWT({
-  email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-  key: process.env.GOOGLE_PRIVATE_KEY,
-  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+const { PORT, SECRET_ACCESS_TOKEN } = require("./config/index.js");
+const { connectSheet, doc } = require("./google/google.js");
+
+const app = express();
+
+const saltRounds = 10;
+
+app.use(cors());
+app.disable("x-powered-by"); //Reduce fingerprinting
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+//CONNECT DATABASE
+connectSheet();
+
+const networkInterfaces = os.networkInterfaces();
+
+const ipAddresses = [];
+
+Object.keys(networkInterfaces).forEach((interfaceName) => {
+  networkInterfaces[interfaceName].forEach((iface) => {
+    if (iface.family === "IPv4" && !iface.internal) {
+      ipAddresses.push(iface.address);
+    }
+  });
 });
 
-const doc = new GoogleSpreadsheet(
-  "16lCQ7F23kZGSZvER3JU9R-N8ivhQ5l_GBx2I5fJ5Lwk",
-  serviceAccountAuth
-);
+let logged_user = {
+  username: "",
+  email: "",
+  password: "",
+};
 
-const authClientObject = await auth.getClient();
+const generateAccessJWT = (email, ipAddresses) => {
+  const secretKey = SECRET_ACCESS_TOKEN;
+  const payload = {
+    email,
+    ipAddresses,
+  };
+  const options = {
+    expiresIn: "1h", // Token expiration time
+  };
+  return jwt.sign(payload, secretKey, options);
+};
 
-doc.loadInfo();
-// doc
-//   .loadInfo()
-//   .then((res) => {})
-//   .catch((err) => {
-//     console.log(err);
-//   });
+app.post("/register", async (req, res) => {
+  const { username, dob, city, ethnicity, email, password } = req.body;
+  console.log(username, dob)
+  const sheet = doc.sheetsByIndex[0];
+  const rows = await sheet.getRows();
+  const data = [];
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-// doc.loadInfo().then((res) => {
-//   console.log(res.data);
-// });
-/*
-app.get("/", (req, res) => {
-  res.send("This is home page.");
+  for (let row of rows) {
+    if (email == row.get("email")) {
+      return res.status(404).json({
+        status: "existed_email",
+        data: [],
+        message: "It seems you already have an account, please log in instead.",
+      });
+    }
+    // data.push({
+    //   username: row.get("username"),
+    //   dob: row.get("dob"),
+    //   city: row.get("city"),
+    //   ethnicity: row.get("ethnicity"),
+    //   email: row.get("email"),
+    //   password: row.get("password"),
+    // });
+  }
+  // res.json({ data });
+  await sheet.addRow({
+    username: username,
+    dob: dob,
+    city: city,
+    ethnicity: ethnicity,
+    email: email,
+    password: hashedPassword,
+  });
+  res.send("Successful Registered!");
 });
 
-app.post("/", (req, res) => {
-  res.send("This is home page with post request.");
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const sheet = doc.sheetsByIndex[0];
+  const rows = await sheet.getRows();
+
+  for (let row of rows) {
+    if (email == row.get("email")) {
+      logged_user.username = row.get("username");
+      logged_user.password = row.get("password");
+      logged_user.email = row.get("email");
+    }
+  }
+
+  if (logged_user.email == "") {
+    return res.status(404).json({
+      status: "noexist",
+      data: [],
+      message: "Account does not exist",
+    });
+  }
+  const isPasswordValid = await bcrypt.compare(password, logged_user.password);
+
+  if (!isPasswordValid) {
+    return res.status(404).json({
+      status: "wrongPassword",
+      data: [],
+      message: "Wrong password",
+    });
+  } else {
+    let options = {
+      maxAge: 20 * 60 * 1000, // would expire in 20minutes
+      httpOnly: true, // The cookie is only accessible by the web server
+      secure: true,
+      sameSite: "None",
+    };
+
+    const token = generateAccessJWT(logged_user.email, ipAddresses);
+    // res.cookie("SessionID", token, options);
+
+    res.status(200).json({
+      status: "success",
+      data: token,
+      message: "Successfully login",
+    });
+  }
 });
 
-// PORT
-const PORT = 5000;
+app.post("/check-token", async (req, res) => {
+  const token = req.body.token;
+  if (!token) {
+    return res.status(404).json({
+      status: "null_token",
+      data: [],
+      message: "Token does not exist",
+    });
+  }
+  await jwt.verify(token, SECRET_ACCESS_TOKEN, (err, decoded) => {
+    if (err) {
+      console.error("Token verification failed:", err.message);
+    } else {
+      if (
+        decoded.email == logged_user.email &&
+        decoded.ipAddresses.join(", ") == ipAddresses.join(", ")
+      ) {
+        res.status(200).json({
+          status: "verify_token",
+          message: "Veritied token",
+        });
+      } else console.log("wrong");
+    }
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT: ${PORT}`);
 });
-*/
