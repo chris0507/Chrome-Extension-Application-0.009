@@ -68,9 +68,7 @@ const BusinessHome = () => {
       <div className="h-screen p-5 bg-[#381C33] rounded-lg">
         <BusinessBlocksGrid />
       </div>
-      <div>
-        <RightSidebar />
-      </div>
+      <RightSidebar />
     </div>
   );
 };

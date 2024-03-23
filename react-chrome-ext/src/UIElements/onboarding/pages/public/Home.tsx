@@ -6,22 +6,46 @@ import BlocksGrid from "../../components/public/BlocksGrid";
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const [popupId, setPopupId] = useState(0);
 
   const handleSignOut = () => {
     localStorage.removeItem("token");
-
     setIsMenuOpen(false);
     navigate("/");
   };
 
-  // Define the menu items
+  const openPopup = () => {
+    chrome.windows.create(
+      {
+        url: "index.html",
+        type: "popup",
+        focused: true,
+        width: 418,
+        height: 500,
+        top: 0,
+        left: screen.width - 400,
+      },
+      (window) => {
+        setPopupId(window?.id || 0);
+      }
+    );
+  };
+
+  const handleAddURLs = () => {
+    setIsMenuOpen(!isMenuOpen);
+    if (popupId) {
+      chrome.windows.remove(popupId);
+      openPopup();
+    } else openPopup();
+  };
+
   const menuItems = [
     { title: "Dashboard" },
     { title: "Coupons" },
     { title: "High Street" },
     { title: "My Account" },
     { title: "Sign out", action: handleSignOut },
-    { title: "Add URLs" },
+    { title: "Add URLs", action: handleAddURLs },
   ];
 
   const toggleMenu = () => {
@@ -31,7 +55,10 @@ const Home = () => {
   return (
     <div className="flex relative">
       <div className="bg-[#1A1A1A] p-5">
-        <div className="cursor-pointer" onClick={toggleMenu}>
+        <div
+          className="cursor-pointer focus:outline-none focus:ring focus:ring-violet-100"
+          onClick={toggleMenu}
+        >
           <div className="w-4 h-px bg-white my-1"></div>
           <div className="w-4 h-px bg-white my-1"></div>
           <div className="w-4 h-px bg-white my-1"></div>
@@ -68,9 +95,7 @@ const Home = () => {
       <div className="h-screen p-5 bg-[#1D3D4A] rounded-lg">
         <BlocksGrid />
       </div>
-      <div>
-        <RightSidebar />
-      </div>
+      <RightSidebar />
     </div>
   );
 };

@@ -1,16 +1,22 @@
 {
   "version": "1.0.0",
   "manifest_version": 3,
-  "name": "React Chrome Extension",
+  "name": "Application 0.009",
   "description": "This is a Chrome extension built with React and TypeScript",
   "action": {
     "default_popup": "index.html",
-    "default_title": "React Chrome Extension"
+    "default_title": "0.009"
   },
-  "permissions": ["storage", "https://*/*", "http://*/*", "tabs"],
+  "permissions": ["storage", "https://*/*", "http://*/*", "tabs", "windows"],
   "background": {
     "scripts": ["backgorund.js"],
     "persistent": false
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline'"

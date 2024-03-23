@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import axios from "axios";
 
-
 const Home = () => {
   const openOnBoardingpage = () => {
     chrome.tabs.create({ url: chrome.runtime.getURL("onboarding.html") });
@@ -10,7 +9,7 @@ const Home = () => {
 
   const handleClosePopup = () => {
     window.close();
-  }
+  };
 
   return (
     <div className="w-full h-full border border-solid border-[#08A9D7] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% ">

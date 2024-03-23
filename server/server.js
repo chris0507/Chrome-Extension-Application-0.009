@@ -113,10 +113,10 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const sheet = doc.sheetsByIndex[0];
   const rows = await sheet.getRows();
+  logged_user.email = "";
 
   for (let row of rows) {
     if (email == row.get("email")) {
-      logged_user.username = row.get("username");
       logged_user.password = row.get("password");
       logged_user.email = row.get("email");
     }
@@ -181,10 +181,10 @@ app.post("/check-token", async (req, res) => {
         decoded.email == business_logged_user.email &&
         decoded.ipAddresses.join(", ") == ipAddresses.join(", ")
       ) {
-         res.status(200).json({
-           status: "business_verify_token",
-           message: "Veritied token",
-         });
+        res.status(200).json({
+          status: "business_verify_token",
+          message: "Veritied token",
+        });
       } else console.log("wrong");
     }
   });
@@ -198,9 +198,10 @@ let business_logged_user = {
 
 app.post("/business/login", async (req, res) => {
   const { email, password } = req.body;
-  const sheet = doc.sheetsByIndex[1];
-  const rows = await sheet.getRows();
-
+  const businessSheet = doc.sheetsByIndex[1];
+  const rows = await businessSheet.getRows();
+  business_logged_user.email = "";
+  
   for (let row of rows) {
     if (email == row.get("email")) {
       business_logged_user.password = row.get("password");
@@ -246,7 +247,18 @@ app.post("/business/login", async (req, res) => {
 });
 
 app.post("/business/register", async (req, res) => {
-  const { brandName, city, baseCountry, CEOname, CEOemail, companyID, businessURL, logo, email, password } = req.body;
+  const {
+    brandName,
+    city,
+    baseCountry,
+    CEOname,
+    CEOemail,
+    companyID,
+    businessURL,
+    logo,
+    email,
+    password,
+  } = req.body;
   const sheet = doc.sheetsByIndex[1];
   const rows = await sheet.getRows();
   const hashedPassword = await bcrypt.hash(password, saltRounds);
