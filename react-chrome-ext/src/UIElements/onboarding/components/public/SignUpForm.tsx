@@ -128,9 +128,7 @@ const SignUpForm = () => {
   };
 
   useEffect(() => {
-    // redirect user to login page if registration was successful
     if (success) navigate("/home");
-    // redirect authenticated user to profile screen
     if (userInfo) navigate("/user-profile");
   }, [navigate, userInfo, success]);
 
@@ -231,6 +229,20 @@ const SignUpForm = () => {
             </button>
           </div>
         </div>
+        <label className="flex items-center space-x-2">
+          <input
+            type="checkbox"
+            // checked={isTermsAccepted}
+            // onChange={handleCheckboxChange}
+            className="form-checkbox h-4 w-4 text-indigo-600"
+          />
+          <span className="text-sm text-gray-700">
+            I agree to the{" "}
+            <a href="#" className="text-blue-500">
+              Terms of Service
+            </a>
+          </span>
+        </label>
       </form>
     </div>
   );

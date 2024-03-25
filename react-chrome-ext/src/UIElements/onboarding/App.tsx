@@ -46,6 +46,7 @@ const Wrapper = ({ children }: { children: any }) => {
   };
   return <>{children}</>;
 };
+
 function App() {
   return (
     <div className="min-h-screen">

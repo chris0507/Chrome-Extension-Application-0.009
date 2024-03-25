@@ -12,7 +12,7 @@ const AuthedPopupPage: React.FC<AuthedPopupPageProps> = ({
   openOnBoardingpage,
 }) => {
   return (
-    <div className="w-full h-[32rem] border border-solid border-[#08A9D7] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% ">
+    <div className="w-full h-[32rem] border border-solid border-[#08A9D7] rounded-t-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% ">
       <div className="p-2 flex justify-end">
         <button
           type="button"
@@ -79,6 +79,20 @@ const AuthedPopupPage: React.FC<AuthedPopupPageProps> = ({
               Add
             </button>
           </div>
+        </div>
+      </div>
+      <div className="rounded-b-2xl bg-[#08A9D7] p-2 text-center mt-2">
+        <span className="text-white text-xl">Rupert Bloom</span>
+      </div>
+      <div className="mt-0.5">
+        <div className="border border-solid border-[#08A9D7] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-1 text-xl text-center">
+          <span className="text-white">Tile 1</span>
+          <span className="mx-1 text-white">|</span>
+          <span className="text-white">11/03/2024</span>
+          <span className="mx-1 text-white">|</span>
+          <span className="text-[#00A1D6] cursor-pointer">visit website</span>
+          <span className="mx-1 text-white">|</span>
+          <span className="text-[#E0312A] cursor-pointer">Delete</span>
         </div>
       </div>
     </div>

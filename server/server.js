@@ -138,15 +138,7 @@ app.post("/login", async (req, res) => {
       message: "Wrong password",
     });
   } else {
-    let options = {
-      maxAge: 20 * 60 * 1000, // would expire in 20minutes
-      httpOnly: true, // The cookie is only accessible by the web server
-      secure: true,
-      sameSite: "None",
-    };
-
     const token = generateAccessJWT(logged_user.email, ipAddresses);
-    // res.cookie("SessionID", token, options);
 
     res.status(200).json({
       status: "success",
