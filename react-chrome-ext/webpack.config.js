@@ -152,7 +152,7 @@ function getHtmlPlugins(chunks) {
   return chunks.map(
     (chunk) =>
       new HTMLPlugin({
-        title: "React extension",
+        title: "Application 0.009",
         filename: `../${chunk}.html`,
         chunks: [chunk],
       })

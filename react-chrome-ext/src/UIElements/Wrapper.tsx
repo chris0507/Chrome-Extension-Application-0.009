@@ -9,6 +9,7 @@ const Wrapper = () => {
     const path = localStorage.getItem("currentPath");
     if (path !== "/") navigate(path as string);
   }, []);
+
   useEffect(() => {
     localStorage.setItem("currentPath", location.pathname);
   }, [location]);

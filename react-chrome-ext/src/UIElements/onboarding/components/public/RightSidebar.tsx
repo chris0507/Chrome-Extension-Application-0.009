@@ -23,7 +23,7 @@ const RightSidebar = () => {
             </div>
             <div className="text-white flex justify-center gap-3">
               <span className="text-[15px]">Google</span>
-              <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px]">
+              <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px] text-lg">
                 +
               </span>
               <span>Add to Dashboard | Report</span>
@@ -35,7 +35,7 @@ const RightSidebar = () => {
             </div>
             <div className="text-white flex justify-center gap-3">
               <span className="text-[15px]">Amazon</span>
-              <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px]">
+              <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px] text-lg">
                 +
               </span>
               <span>Add to Dashboard | Report</span>
