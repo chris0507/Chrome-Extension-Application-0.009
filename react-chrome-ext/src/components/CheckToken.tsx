@@ -1,9 +1,12 @@
 import axios from "axios";
+import env from "react-dotenv";
 
 export const checkTokenValidity = async () => {
+  const API_BASE_URL = "https://chrome-extension-application-0-009-server.onrender.com/";
+
   const token = localStorage.getItem("token");
   try {
-    const response = await axios.post("http://localhost:5000/check-token", {
+    const response = await axios.post(`${API_BASE_URL}check-token`, {
       token,
     });
     if ([200, 201, 204].includes(response.status)) {

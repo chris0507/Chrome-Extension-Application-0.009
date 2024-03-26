@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import env from "react-dotenv";
 import { ExistEmailToast, SuccessLoginToast } from "../Alert";
 interface FormData {
   brandName: string;
@@ -17,6 +18,9 @@ interface FormData {
 }
 
 const SignUpForm = () => {
+  // const API_BASE_URL = "http://135.181.213.19:5000";
+  const API_BASE_URL = "https://chrome-extension-application-0-009-server.onrender.com/";
+
   const { register, handleSubmit } = useForm<FormData>();
   const navigate = useNavigate();
 
@@ -24,7 +28,7 @@ const SignUpForm = () => {
     console.log(data);
     data.email = data.email.toLowerCase();
     axios
-      .post("http://localhost:5000/business/register", data)
+      .post(`${API_BASE_URL}business/register`, data)
       .then((res) => {
         SuccessLoginToast();
       })

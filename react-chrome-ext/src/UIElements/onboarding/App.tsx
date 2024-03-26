@@ -7,16 +7,18 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
-import Login from "./pages/public/Login";
-import Home from "./pages/public/Home";
-
-import "./App.css";
-import BusinessLogin from "./pages/business/BusinessLogin";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
+import env from "react-dotenv";
+import Login from "./pages/public/Login";
+import Home from "./pages/public/Home";
+import BusinessLogin from "./pages/business/BusinessLogin";
 import BusinessHome from "./pages/business/BusinessHome";
+import "./App.css";
 
 const Wrapper = ({ children }: { children: any }) => {
+  const API_BASE_URL = "https://chrome-extension-application-0-009-server.onrender.com/";
+
   const token = localStorage.getItem("token");
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,7 +32,7 @@ const Wrapper = ({ children }: { children: any }) => {
 
   const checkTokenValidity = async () => {
     const response = await axios
-      .post("http://localhost:5000/check-token", { token })
+      .post(`${API_BASE_URL}check-token`, { token })
       .then((res) => {
         console.log(res);
         if (res.data.status == "public_verify_token") {

@@ -9,6 +9,7 @@ import { registerUser } from "../../features/auth/authActions";
 import { RootState, AppDispatch } from "../../../../store";
 import Error from "../Error";
 import { ExistEmailToast, SuccessRegisterToast } from "../Alert"; 
+import env from "react-dotenv";
 interface FormData {
   username: string;
   dob: string;
@@ -18,6 +19,9 @@ interface FormData {
   password: string;
 }
 const SignUpForm = () => {
+  // const API_BASE_URL = "http://135.181.213.19:5000";
+  const API_BASE_URL = "https://chrome-extension-application-0-009-server.onrender.com/";
+
   const { loading, userInfo, error, success } = useSelector(
     (state: RootState) => state.auth
   );
@@ -28,7 +32,7 @@ const SignUpForm = () => {
   const submitForm = (data: FormData) => {
     data.email = data.email.toLowerCase();
     axios
-      .post("http://localhost:5000/register", data)
+      .post(`${API_BASE_URL}register`, data)
       .then((res) => {
         SuccessRegisterToast();
       })

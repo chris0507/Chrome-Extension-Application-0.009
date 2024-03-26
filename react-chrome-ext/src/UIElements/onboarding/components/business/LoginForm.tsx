@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import env from "react-dotenv";
 import { NoExistToast, SuccessLoginToast, WrongPassToast } from "../Alert";
 
 interface FormData {
@@ -10,12 +11,16 @@ interface FormData {
 }
 
 const LoginForm = () => {
+  // const API_BASE_URL ="http://135.181.213.19:5000";
+  const API_BASE_URL = "https://chrome-extension-application-0-009-server.onrender.com/";
+
+
   const { register, handleSubmit } = useForm<FormData>();
   const navigate = useNavigate();
 
   const submitForm = (data: FormData) => {
     axios
-      .post("http://localhost:5000/business/login", data)
+      .post(`${API_BASE_URL}business/login`, data)
       .then((res) => {
         if (res.data.status === "success") {
           SuccessLoginToast();

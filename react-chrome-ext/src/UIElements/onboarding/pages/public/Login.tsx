@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import LoginForm from "../../components/public/LoginForm";
 import SignUpForm from "../../components/public/SignUpForm";
-import { Toaster } from "react-hot-toast";
 
 import {
   NoExistToast,
@@ -10,7 +9,6 @@ import {
   SuccessLoginToast,
   ExistEmailToast,
 } from "../../components/Alert";
-import axios from "axios";
 
 const Login = () => {
   const [loginStatus, setLoginStatus] = useState("");

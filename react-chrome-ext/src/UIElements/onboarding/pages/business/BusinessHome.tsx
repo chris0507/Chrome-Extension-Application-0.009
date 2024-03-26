@@ -5,6 +5,7 @@ import BusinessBlocksGrid from "../../components/business/BusinessBlocksGrid";
 
 const BusinessHome = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [popupId, setPopupId] = useState(0);
   const navigate = useNavigate();
 
   const handleSignOut = () => {
@@ -14,6 +15,31 @@ const BusinessHome = () => {
     navigate("/");
   };
 
+   const openPopup = () => {
+     chrome.windows.create(
+       {
+         url: "index.html",
+         type: "popup",
+         focused: true,
+         width: 418,
+         height: 500,
+         top: 0,
+         left: screen.width - 400,
+       },
+       (window) => {
+         setPopupId(window?.id || 0);
+       }
+     );
+   };
+   
+  const handleAddURLs = () => {
+    setIsMenuOpen(!isMenuOpen);
+    if (popupId) {
+      chrome.windows.remove(popupId);
+      openPopup();
+    } else openPopup();
+  };
+
   // Define the menu items
   const menuItems = [
     { title: "Dashboard" },
@@ -21,7 +47,7 @@ const BusinessHome = () => {
     { title: "High Street" },
     { title: "My Account" },
     { title: "Sign out", action: handleSignOut },
-    { title: "Add URLs" },
+    { title: "Add URLs", action: handleAddURLs },
   ];
 
   const toggleMenu = () => {
