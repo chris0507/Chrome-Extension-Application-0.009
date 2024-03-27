@@ -193,7 +193,7 @@ app.post("/business/login", async (req, res) => {
   const businessSheet = doc.sheetsByIndex[1];
   const rows = await businessSheet.getRows();
   business_logged_user.email = "";
-  
+
   for (let row of rows) {
     if (email == row.get("email")) {
       business_logged_user.password = row.get("password");
@@ -296,6 +296,13 @@ app.post("/business/register", async (req, res) => {
   // // const response = await mailchimp.users.ping()
   // console.log("mailchimp", response);
 });
+
+// Test
+app.get("/test", (req, res) => {
+  res.status(200).json({
+    message:"correctly connecting"
+  })
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT: ${PORT}`);

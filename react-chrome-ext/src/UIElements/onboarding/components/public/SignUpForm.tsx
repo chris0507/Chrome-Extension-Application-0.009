@@ -18,7 +18,11 @@ interface FormData {
   email: string;
   password: string;
 }
-const SignUpForm = () => {
+interface SignUpFormProps {
+  setLoading: (status: boolean) => void;
+}
+
+const SignUpForm:React.FC<SignUpFormProps> = ({setLoading}) => {
   // const API_BASE_URL = "http://135.181.213.19:5000";
   const API_BASE_URL = "https://chrome-extension-application-0-009-server.onrender.com/";
 
@@ -30,19 +34,22 @@ const SignUpForm = () => {
   const navigate = useNavigate();
 
   const submitForm = (data: FormData) => {
+    setLoading(true);
     data.email = data.email.toLowerCase();
     axios
       .post(`${API_BASE_URL}register`, data)
       .then((res) => {
         SuccessRegisterToast();
+        setLoading(false);
       })
       .catch((err) => {
         const errStatus = err.response.data.status;
         if (errStatus == "existed_email") {
           ExistEmailToast();
         }
+        setLoading(false);
+
       });
-    console.log(data);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

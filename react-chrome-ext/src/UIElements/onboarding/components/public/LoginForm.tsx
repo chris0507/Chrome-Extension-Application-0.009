@@ -7,18 +7,24 @@ import { SuccessLoginToast } from "../Alert";
 
 interface LoginFormProps {
   onStatusChange: (status: string) => void;
+  setLoading: (status: boolean) => void;
 }
 interface FormData {
   email: string;
   password: string;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onStatusChange }) => {
-  const API_BASE_URL = "https://chrome-extension-application-0-009-server.onrender.com/";
+const LoginForm: React.FC<LoginFormProps> = ({
+  onStatusChange,
+  setLoading
+}) => {
+  const API_BASE_URL =
+    "https://chrome-extension-application-0-009-server.onrender.com/";
   const { register, handleSubmit } = useForm<FormData>();
   const navigate = useNavigate();
 
   const submitForm = (data: FormData) => {
+    setLoading(true);
     axios
       .post(`${API_BASE_URL}login`, data)
       .then((res) => {
@@ -37,13 +43,16 @@ const LoginForm: React.FC<LoginFormProps> = ({ onStatusChange }) => {
         } else if (errStatus == "wrongPassword") {
           onStatusChange("wrongPassword");
         }
+        setLoading(false);
       });
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
+      console.log("+Enter Pressed")
       e.preventDefault();
-      handleSubmit;
+      handleSubmit(submitForm)();
+      
     }
   };
 

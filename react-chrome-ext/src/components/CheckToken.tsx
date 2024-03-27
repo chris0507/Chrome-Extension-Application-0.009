@@ -1,5 +1,4 @@
 import axios from "axios";
-import env from "react-dotenv";
 
 export const checkTokenValidity = async () => {
   const API_BASE_URL = "https://chrome-extension-application-0-009-server.onrender.com/";
@@ -16,5 +15,6 @@ export const checkTokenValidity = async () => {
     console.log("Error: ", err);
     return false;
   }
+
   return false;
 };
