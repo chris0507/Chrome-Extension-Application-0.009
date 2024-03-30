@@ -2,7 +2,6 @@ import { useState, useEffect, CSSProperties } from "react";
 import { checkTokenValidity } from "../components/CheckToken";
 import PopupPage from "../components/PopupPage";
 import AuthedPopupPage from "../components/AuthedPopupPage";
-import ClipLoader from "react-spinners/ClipLoader";
 import { CircleLoader } from "react-spinners";
 
 const override: CSSProperties = {

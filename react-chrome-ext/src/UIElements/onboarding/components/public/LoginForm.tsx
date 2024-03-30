@@ -16,10 +16,10 @@ interface FormData {
 
 const LoginForm: React.FC<LoginFormProps> = ({
   onStatusChange,
-  setLoading
+  setLoading,
 }) => {
-  const API_BASE_URL =
-    "https://chrome-extension-application-0-009-server.onrender.com/";
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
+
   const { register, handleSubmit } = useForm<FormData>();
   const navigate = useNavigate();
 
@@ -49,10 +49,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      console.log("+Enter Pressed")
+      console.log("+Enter Pressed");
       e.preventDefault();
       handleSubmit(submitForm)();
-      
     }
   };
 

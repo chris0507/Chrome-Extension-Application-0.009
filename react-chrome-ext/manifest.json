@@ -20,5 +20,8 @@
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline'"
+  },
+  "env": {
+    "REACT_APP_API_BASE_URL": "http://localhost:5000"
   }
 }

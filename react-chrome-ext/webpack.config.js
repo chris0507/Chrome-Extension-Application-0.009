@@ -1,10 +1,12 @@
 const path = require("path");
+const webpack = require("webpack");
 const HTMLPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const fs = require("fs");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { camelCase } = require("lodash");
 const { getIfUtils, removeEmpty } = require("webpack-config-utils");
+require("dotenv").config({ path: "./.env" });
 
 const UIElementsDir = path.join(__dirname, "src", "UIElements");
 const setUIElementHtml = () => {
@@ -136,6 +138,9 @@ module.exports = {
           to: "../images",
         },
       ],
+    }),
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(process.env),
     }),
     ...getHtmlPlugins(["index"]),
   ],
