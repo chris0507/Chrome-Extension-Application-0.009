@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Datepicker from "tailwind-datepicker-react";
-import ReactCountryFlag from "react-country-flag";
 import axios from "axios";
-import { registerUser } from "../../features/auth/authActions";
-import { RootState, AppDispatch } from "../../../../store";
-import Error from "../Error";
-import { ExistEmailToast, SuccessRegisterToast } from "../Alert"; 
-import env from "react-dotenv";
+import { Formik } from "formik";
+import { RootState } from "../../../../store";
+import { ExistEmailToast, SuccessRegisterToast } from "../Alert";
+import Dropdown from "./Dropdown";
 interface FormData {
   username: string;
   dob: string;
@@ -22,18 +20,21 @@ interface SignUpFormProps {
   setLoading: (status: boolean) => void;
 }
 
-const SignUpForm:React.FC<SignUpFormProps> = ({setLoading}) => {
-  // const API_BASE_URL = "http://135.181.213.19:5000";
-  const API_BASE_URL = "https://chrome-extension-application-0-009-server.onrender.com/";
+interface ErrorObject {
+  email?: string;
+  password?: string;
+}
 
-  const { loading, userInfo, error, success } = useSelector(
-    (state: RootState) => state.auth
-  );
-
-  const { register, handleSubmit } = useForm<FormData>();
-  const navigate = useNavigate();
+const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
+  const { register, setValue, handleSubmit, getValues, watch } =
+    useForm<FormData>();
+  const [submitErrors, setSubmitErrors] = useState<FormData>();
+  const [isStrongPassword, setIsStrongPassword] = useState(false);
 
   const submitForm = (data: FormData) => {
+    console.log("getValues", getValues());
+    if (!validate()) return;
     setLoading(true);
     data.email = data.email.toLowerCase();
     axios
@@ -48,15 +49,18 @@ const SignUpForm:React.FC<SignUpFormProps> = ({setLoading}) => {
           ExistEmailToast();
         }
         setLoading(false);
-
       });
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      handleSubmit;
+      handleSubmit(submitForm)();
     }
+  };
+
+  const handleSelect = (value: string) => {
+    setValue("ethnicity", value, { shouldValidate: true });
   };
 
   //calendar
@@ -71,7 +75,7 @@ const SignUpForm:React.FC<SignUpFormProps> = ({setLoading}) => {
     maxDate: new Date("2030-01-01"),
     minDate: new Date("1950-01-01"),
     theme: {
-      background: "bg-[#343434] dark:bg-[#343434]",
+      background: "bg-white dark:bg-[#343434]",
       todayBtn: "",
       clearBtn: "",
       icons: "",
@@ -131,17 +135,77 @@ const SignUpForm:React.FC<SignUpFormProps> = ({setLoading}) => {
     inputPlaceholderProp: "Select Date",
   };
 
-  const handleChange = (selectedDate: Date) => {
-    register("dob", { value: selectedDate.toLocaleDateString() });
+  const handleChangeDob = (selectedDate: Date) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    };
+    const selectedDateString = selectedDate.toLocaleDateString(
+      "en-US",
+      options
+    );
+    console.log(selectedDateString);
+    setValue("dob", selectedDateString, { shouldValidate: true });
   };
+
   const handleClose = (state: boolean) => {
     setShow(state);
   };
 
-  useEffect(() => {
-    if (success) navigate("/home");
-    if (userInfo) navigate("/user-profile");
-  }, [navigate, userInfo, success]);
+  // Validation checking
+  const initialValues = {
+    username: "",
+    dob: "",
+    city: "",
+    ethnicity: "",
+    email: "",
+    password: "",
+  };
+
+  const validate = () => {
+    const data: FormData = getValues();
+    let errors: FormData = initialValues;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const hasUpperCase = /[A-Z]/.test(data.password);
+    const hasLowerCase = /[a-z]/.test(data.password);
+    const hasDigit = /\d/.test(data.password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(data.password);
+    const isLongEnough = data.password.length >= 8;
+
+    setIsStrongPassword(
+      hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar && isLongEnough
+    );
+    console.log("isStrongPassword", isStrongPassword);
+
+    if (!data.username) {
+      errors.username = "Username Empty Error";
+    }
+    if (!data.email) {
+      errors.email = "Email Empty Error";
+    } else if (!emailRegex.test(data.email)) {
+      errors.email = "Email is not exactly";
+    }
+    if (!data.password) {
+      errors.password = "Password Empty Error";
+    }
+    if (!isStrongPassword) {
+      errors.password =
+        "Password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long.";
+    }
+    setSubmitErrors(errors);
+    if (
+      errors.username ||
+      errors.email ||
+      errors.password ||
+      errors.city ||
+      errors.dob ||
+      errors.ethnicity
+    ) {
+      return 0;
+    }
+    return 1;
+  };
 
   return (
     <div className="w-full max-w-xs">
@@ -156,16 +220,20 @@ const SignUpForm:React.FC<SignUpFormProps> = ({setLoading}) => {
             {...register("username")}
             required
           />
+          {submitErrors?.username && watch("username") === "" && (
+            <p className="text-red-500">{submitErrors?.username}</p>
+          )}
         </div>
         <div className="mb-3 flex justify-center items-center gap-4">
           <label className="block text-white text-sm">DOB</label>
           <Datepicker
             options={options}
-            onChange={handleChange}
+            onChange={handleChangeDob}
             show={show}
             setShow={handleClose}
           />
         </div>
+
         <div className="mb-3">
           <select
             id="city"
@@ -186,20 +254,7 @@ const SignUpForm:React.FC<SignUpFormProps> = ({setLoading}) => {
           </div> */}
         </div>
         <div className="mb-3">
-          <select
-            id="ethnicity"
-            className="bg-[#3FA9F5] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
-            {...register("ethnicity")}
-            required
-          >
-            <option value="" disabled selected>
-              Ethnicity
-            </option>
-            <option value="US">United States</option>
-            <option value="CA">Canada</option>
-            <option value="FR">France</option>
-            <option value="DE">Germany</option>
-          </select>
+          <Dropdown onSelect={handleSelect} />
         </div>
         <div className="mb-3">
           <input
@@ -210,35 +265,43 @@ const SignUpForm:React.FC<SignUpFormProps> = ({setLoading}) => {
             {...register("email")}
             required
           />
+          {submitErrors?.email && watch("email") === "" && (
+            <p className="text-red-500">{submitErrors?.email}</p>
+          )}
         </div>
-        <div className="mb-3 relative flex items-center justify-end">
-          <input
-            className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-            id="password"
-            type="password"
-            placeholder="Passwrod"
-            {...register("password")}
-            required
-            onKeyDown={handleKeyPress}
-          />
-          <div className="absolute pr-2 cursor-pointer">
-            <button type="submit">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                className="w-5 h-5 text-white"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-            </button>
+        <div className="mb-3">
+          <div className="flex items-center justify-end">
+            <input
+              className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+              id="password"
+              type="password"
+              placeholder="Passwrod"
+              {...register("password")}
+              required
+              onKeyDown={handleKeyPress}
+            />
+            <div className="absolute pr-2 cursor-pointer">
+              <button type="submit">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="w-5 h-5 text-white"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
+          {submitErrors?.password && watch("password") === "" && (
+            <p className="text-red-500">{submitErrors?.password}</p>
+          )}
         </div>
         <label className="flex items-center space-x-2">
           <input
@@ -248,9 +311,9 @@ const SignUpForm:React.FC<SignUpFormProps> = ({setLoading}) => {
             className="form-checkbox h-4 w-4 text-indigo-600"
           />
           <span className="text-sm text-gray-700">
-            I agree to the{" "}
+            By signing up, you agree to the
             <a href="#" className="text-blue-500">
-              Terms of Service
+              Terms and Conditions and Privacy Policy
             </a>
           </span>
         </label>

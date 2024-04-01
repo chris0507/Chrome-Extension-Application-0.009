@@ -49,7 +49,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      console.log("+Enter Pressed");
       e.preventDefault();
       handleSubmit(submitForm)();
     }
