@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: antiquewhite;
+        }
+
+        .container {
+            width: 70%;
+            background-color: white;
+        }
+
+        .header {
+            padding: 20px;
+            padding-top: 20px;
+            background-color: red;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .header img {
+            width: 150px;
+        }
+
+        .header .text {
+            color: #fff;
+            font-size: 20px;
+            margin-left: 10px;
+        }
+
+        .content {
+            padding: 20px;
+            border-bottom: 1px #333 solid;
+        }
+
+        .icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .section2 {
+            padding: 20px 20px 0 20px;
+        }
+
+        .text-white {
+            color: white;
+        }
+
+        .mb-1 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .justify-space-between {
+            justify-content: space-between;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        .w-50 {
+            width: 50%;
+        }
+
+        .gap-1 {
+            gap: 1rem;
+        }
+
+        .gap-3 {
+            gap: 3rem;
+        }
+
+        .text-end {
+            text-align: end;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-start {
+            text-align: start;
+        }
+
+        .tutorial-button {
+            background-color: #02a7e1;
+            border: none;
+            padding: 1rem;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: #0272a1;
+            }
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px #0272a1;
+            }
+        }
+
+        .bowl-button {
+            background-color: black;
+            border: none;
+            padding: 1rem;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: #333;
+            }
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px #0272a1;
+            }
+        }
+
+        .footer {
+            padding: 20px;
+        }
+
+        .future {
+            display: flex;
+            justify-content: space-between;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        @media only screen and (max-width: 1040px) {
+            .future {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://i.ibb.co/rpRj9ng/Active-logo-009-3x.png" alt="0.009">
+            <p class="text-white">Thanks, Rupert Bloom</p>
+        </div>
+        <div class="content">
+            <div class="icons mb-1">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%28February_2022%29.svg/64px-Google_Chrome_icon_%28February_2022%29.svg.png"
+                    decoding="async" width="64" height="64" class="mw-file-element" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Safari_browser_logo.svg/234px-Safari_browser_logo.svg.png"
+                    decoding="async" width="64" height="64" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" decoding="async"
+                    width="64" height="64" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/512px-Opera_2015_icon.svg.png"
+                    decoding="async" width="64" height="64" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Microsoft_Edge_logo_%282019%29.svg/512px-Microsoft_Edge_logo_%282019%29.svg.png"
+                    decoding="async" width="64" height="64" />
+
+            </div>
+            <div class="">
+                <h2>What is the 0.009 Demo Chrome extension?</h2>
+                <p class="mb-1">0.009 is here! Thank for your time downloading the next most transparent communication
+                    platform in the world. Although we are still in our early stages of development, we are confident
+                    you won't get this experience anywhere else Satotz.</p>
+                <p class="mb-1">
+                    0.009 is Advertising Box Limited's latest innovation aimed to improve how users engage with
+                    advertising communications. We try to adapt user choice into growth in the platform's expanding
+                    catalogue of users from across multiple demographics.
+                </p>
+                <p class="mb-1">
+                    Our journey continues to be the pursuit of enabling more people access to local communications;
+                    adapting technology to further support user interests.
+                </p>
+                <p class="mb-1">
+                    Enabling users to interact with their favourite brands (you) and coupons that enhance their customer
+                    experiences through a uniquely simplified rewards system. We really hope you enjoy this stage 1
+                    journey and continue to use 0.009 in your future communications.
+                </p>
+                <button class="tutorial-button mb-1 w-100">Download app</button>
+            </div>
+            <div>
+                <div class="flex justify-center mb-1">
+                    <a href="#">Our future!</a>
+                </div>
+                <div class="future">
+                    <div class="flex flex-col justify-center items-center">
+                        <img src="https://i.ibb.co/V2TGwRh/1.png" class="image" />
+                        <h2>Ranking on 0.009</h2>
+                        <p>In 0.009 you'll need to close attention to who is adding your URL to their dashboard. This
+                            will go towards how users view your brand on 0.009 as well as your wallet size enabling how
+                            reward customers. You won't just be registering your business at stage 2.</p>
+                    </div>
+                    <div class="flex flex-col justify-center items-center">
+                        <img src="https://i.ibb.co/pPm8Wt7/2.png" class="image" />
+                        <h2>Coupons, what’s new?</h2>
+                        <p>Instead of ignoring customers disadvantaged with wealth limitations, why not capture their
+                            future interest with a coupon that means something to them. All the while you can test and
+                            establish your brand in new markets and demographics you never knew.</p>
+                    </div>
+                </div>
+                <div class="future">
+                    <div class="flex flex-col justify-center items-center">
+                        <img src="https://i.ibb.co/qNRkMmV/3.png" class="image" />
+                        <h2>Schmeckle |sch</h2>
+                        <p>Only on 0.009 can you interact with the schmeckle; our in platform token exchanged between
+                            users. Awkwardly our token wants to be exchanged for coupons and enable relationships
+                            between users. There are a lot of different cultures we support and we believe it's best to
+                            check first. </p>
+                    </div>
+                    <div class="flex flex-col justify-center items-center">
+                        <img src="https://i.ibb.co/GTt5pQF/5.png" class="image" />
+                        <h2>0.00_Highstreet {mine}</h2>
+                        <p>Be careful, 0.000 is currently the property of the supervillain Mandarin! This flagship
+                            product aims to enable users greater ease when exploring the world of advertising. Adapted
+                            from PPC, you can now explore local businesses and keep track of their journey to secure a
+                            high ranking.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section2 flex flex-col justify-center items-center">
+            <button class="tutorial-button mb-1 ">View Demo tutorial</button>
+            <h2 class="mb-1"><a href="#">Create Your Public Account</a></h2>
+            <p><i>Nothing more, just for a chance to enjoy more life!</i></p>
+            <div class="">
+                <img src="https://i.ibb.co/Jq7K0vJ/chill-and-smile-with-friends.jpg" class="w-100" />
+            </div>
+        </div>
+        <div class="footer mb-1">
+            <div class="text-start mb-1">
+                <p>Your sincerely</p>
+                <p>Chief Executive Officer | AD | BX | Rupert Bloom</p>
+            </div>
+            <div class="text-center flex flex-col">
+                <span>T&C apply</span>
+                <span>© 2024 Advertising Box limited</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
