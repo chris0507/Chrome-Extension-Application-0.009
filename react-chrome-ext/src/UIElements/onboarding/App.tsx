@@ -9,16 +9,15 @@ import {
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
-import env from "react-dotenv";
 import Login from "./pages/public/Login";
 import Home from "./pages/public/Home";
 import BusinessLogin from "./pages/business/BusinessLogin";
 import BusinessHome from "./pages/business/BusinessHome";
 import "./App.css";
+import VerifyEmail from "./components/VerifyEmail";
 
 const Wrapper = ({ children }: { children: any }) => {
-  const API_BASE_URL = "https://chrome-extension-application-0-009-server.onrender.com/";
-
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
   const token = localStorage.getItem("token");
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,13 +27,12 @@ const Wrapper = ({ children }: { children: any }) => {
     else {
       if (location.pathname === "/home") navigate("/");
     }
-  }, [location, token]);
+  }, []);
 
   const checkTokenValidity = async () => {
-    const response = await axios
+    await axios
       .post(`${API_BASE_URL}check-token`, { token })
       .then((res) => {
-        console.log(res);
         if (res.data.status == "public_verify_token") {
           if (location.pathname !== "/home") navigate("/home");
         } else if (res.data.status == "business_verify_token") {
@@ -84,6 +82,14 @@ function App() {
             element={
               <Wrapper>
                 <BusinessHome />
+              </Wrapper>
+            }
+          />
+          <Route
+            path="/verify-email"
+            element={
+              <Wrapper>
+                <VerifyEmail />
               </Wrapper>
             }
           />

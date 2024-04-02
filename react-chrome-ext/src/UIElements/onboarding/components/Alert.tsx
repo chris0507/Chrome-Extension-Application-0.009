@@ -226,10 +226,91 @@ const SuccessRegisterToast = () => {
   });
 };
 
+const WrongVerificationToast = () => {
+  toast("Verification code is not correct!", {
+    duration: 4000,
+    position: "top-right",
+
+    // Styling
+    style: { minWidth: "200px" },
+    className:
+      "text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400",
+
+    // Custom Icon
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+        <circle
+          cx="8"
+          cy="8"
+          r="7"
+          fill="none"
+          stroke="#e04006"
+          stroke-width="2"
+        />
+        <path fill="none" stroke="#e04006" stroke-width="2" d="M8 4v6m0 1v2" />
+      </svg>
+    ),
+
+    // Change colors of success/error/loading icon
+    iconTheme: {
+      primary: "#000",
+      secondary: "#fff",
+    },
+
+    // Aria
+    ariaProps: {
+      role: "status",
+      "aria-live": "polite",
+    },
+  });
+};
+
+const NotVerificationToast = () => {
+  toast("Please verify your account", {
+    duration: 4000,
+    position: "top-right",
+
+    // Styling
+    style: { minWidth: "200px" },
+    className:
+      "text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400",
+
+    // Custom Icon
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+        <circle
+          cx="8"
+          cy="8"
+          r="7"
+          fill="none"
+          stroke="#e04006"
+          stroke-width="2"
+        />
+        <path fill="none" stroke="#e04006" stroke-width="2" d="M8 4v6m0 1v2" />
+      </svg>
+    ),
+
+    // Change colors of success/error/loading icon
+    iconTheme: {
+      primary: "#000",
+      secondary: "#fff",
+    },
+
+    // Aria
+    ariaProps: {
+      role: "status",
+      "aria-live": "polite",
+    },
+  });
+};
+
+
 export {
   NoExistToast,
   ExistEmailToast,
   WrongPassToast,
   SuccessLoginToast,
   SuccessRegisterToast,
+  WrongVerificationToast,
+  NotVerificationToast,
 };

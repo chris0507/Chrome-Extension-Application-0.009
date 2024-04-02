@@ -8,6 +8,8 @@ import { Formik } from "formik";
 import { RootState } from "../../../../store";
 import { ExistEmailToast, SuccessRegisterToast } from "../Alert";
 import Dropdown from "./Dropdown";
+import { getValue } from "@testing-library/user-event/dist/utils";
+
 interface FormData {
   username: string;
   dob: string;
@@ -30,18 +32,21 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
   const { register, setValue, handleSubmit, getValues, watch } =
     useForm<FormData>();
   const [submitErrors, setSubmitErrors] = useState<FormData>();
-  const [isStrongPassword, setIsStrongPassword] = useState(false);
+  const navigate = useNavigate();
 
   const submitForm = (data: FormData) => {
-    console.log("getValues", getValues());
     if (!validate()) return;
     setLoading(true);
+
     data.email = data.email.toLowerCase();
     axios
       .post(`${API_BASE_URL}register`, data)
       .then((res) => {
-        SuccessRegisterToast();
+        // SuccessRegisterToast();
         setLoading(false);
+        navigate("/verify-email", {
+          state: { email: getValues("email"), type: "public" },
+        });
       })
       .catch((err) => {
         const errStatus = err.response.data.status;
@@ -173,11 +178,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(data.password);
     const isLongEnough = data.password.length >= 8;
 
-    setIsStrongPassword(
-      hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar && isLongEnough
-    );
-    console.log("isStrongPassword", isStrongPassword);
-
     if (!data.username) {
       errors.username = "Username Empty Error";
     }
@@ -188,8 +188,15 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
     }
     if (!data.password) {
       errors.password = "Password Empty Error";
-    }
-    if (!isStrongPassword) {
+    } else if (
+      !(
+        hasUpperCase &&
+        hasLowerCase &&
+        hasDigit &&
+        hasSpecialChar &&
+        isLongEnough
+      )
+    ) {
       errors.password =
         "Password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long.";
     }
@@ -299,21 +306,25 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
               </button>
             </div>
           </div>
-          {submitErrors?.password && watch("password") === "" && (
+          {submitErrors?.password && (
             <p className="text-red-500">{submitErrors?.password}</p>
           )}
         </div>
         <label className="flex items-center space-x-2">
-          <input
+          {/* <input
             type="checkbox"
             // checked={isTermsAccepted}
             // onChange={handleCheckboxChange}
             className="form-checkbox h-4 w-4 text-indigo-600"
-          />
-          <span className="text-sm text-gray-700">
-            By signing up, you agree to the
+          /> */}
+          <span className="text-sm text-white">
+            By signing up, you agree to the{" "}
             <a href="#" className="text-blue-500">
-              Terms and Conditions and Privacy Policy
+              Terms and Conditions
+            </a>{" "}
+            and{" "}
+            <a href="#" className="text-blue-500">
+              Privacy Policy
             </a>
           </span>
         </label>

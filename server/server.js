@@ -7,10 +7,8 @@ const os = require("os");
 
 const { PORT, SECRET_ACCESS_TOKEN } = require("./config/index.js");
 const { connectSheet, doc } = require("./google/google.js");
-
-const mailchimp = require("@mailchimp/mailchimp_transactional")(
-  "mandrill_verify.L-oY8nbXlFuY98jrWNO6MQ"
-);
+const generateVerificationCode = require("./sendmail/generateVerificationCode.js");
+const { sendEmail } = require("./sendmail/verificationTemplates.js");
 
 const app = express();
 
@@ -62,6 +60,7 @@ app.post("/register", async (req, res) => {
   const rows = await sheet.getRows();
   const data = [];
   const hashedPassword = await bcrypt.hash(password, saltRounds);
+  const verifyCode = generateVerificationCode();
 
   for (let row of rows) {
     if (email == row.get("email")) {
@@ -71,16 +70,8 @@ app.post("/register", async (req, res) => {
         message: "It seems you already have an account, please log in instead.",
       });
     }
-    // data.push({
-    //   username: row.get("username"),
-    //   dob: row.get("dob"),
-    //   city: row.get("city"),
-    //   ethnicity: row.get("ethnicity"),
-    //   email: row.get("email"),
-    //   password: row.get("password"),
-    // });
   }
-  // res.json({ data });
+
   await sheet.addRow({
     username: username,
     dob: dob,
@@ -88,64 +79,67 @@ app.post("/register", async (req, res) => {
     ethnicity: ethnicity,
     email: email,
     password: hashedPassword,
+    code: verifyCode,
+    status: 0,
   });
-  res.send("Successful Registered!");
 
-  const message = {
-    from_email: "info@financialcultures.com",
-    subject: "Hello world",
-    text: "Welcome to Mailchimp Transactional!",
-    to: [
-      {
-        email: email,
-        type: "to",
-      },
-    ],
-  };
-  const response = await mailchimp.messages.send({
-    message,
-  });
-  // const response = await mailchimp.users.ping()
-  console.log("mailchimp", response);
+  const response = await sendEmail({ emailType: 3, email, verifyCode });
+  if (response === true) return res.send("Successful Sent Email");
+  else res.send("Wrong Sent Email");
 });
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const sheet = doc.sheetsByIndex[0];
   const rows = await sheet.getRows();
-  logged_user.email = "";
 
   for (let row of rows) {
     if (email == row.get("email")) {
-      logged_user.password = row.get("password");
-      logged_user.email = row.get("email");
+      const isPasswordValid = await bcrypt.compare(
+        password,
+        row.get("password")
+      );
+
+      if (!isPasswordValid) {
+        return res.status(404).json({
+          status: "wrongPassword",
+          data: [],
+          message: "Wrong password",
+        });
+      } else {
+        const token = generateAccessJWT(email, ipAddresses);
+
+        if (row.get("status") == 0) {
+          const verifyCode = generateVerificationCode();
+          const response = await sendEmail({
+            emailType: 3,
+            email,
+            verifyCode,
+          });
+
+          row.assign({ code: verifyCode });
+          await row.save();
+
+          console.log("response", response)
+
+          if (response === true) {
+            console.log("===============")
+            return res.status(200).json({
+              status: "not-verify",
+            });
+          } else res.send("Wrong Sent Email");
+        }
+        res.status(200).json({
+          status: "success",
+          data: token,
+          message: "Successfully login",
+        });
+      }
     }
   }
-
-  if (logged_user.email == "") {
-    return res.status(404).json({
-      status: "noexist",
-      data: [],
-      message: "Account does not exist",
-    });
-  }
-  const isPasswordValid = await bcrypt.compare(password, logged_user.password);
-
-  if (!isPasswordValid) {
-    return res.status(404).json({
-      status: "wrongPassword",
-      data: [],
-      message: "Wrong password",
-    });
-  } else {
-    const token = generateAccessJWT(logged_user.email, ipAddresses);
-
-    res.status(200).json({
-      status: "success",
-      data: token,
-      message: "Successfully login",
-    });
-  }
+  return res.status(404).json({
+    status: "not-exist",
+  });
 });
 
 app.post("/check-token", async (req, res) => {
@@ -180,6 +174,38 @@ app.post("/check-token", async (req, res) => {
       } else console.log("wrong");
     }
   });
+});
+
+app.post("/confirmed-account", async (req, res) => {
+  const { sheetName, email, confirmedVerifyCode } = req.body;
+  let sheet = {};
+  if (sheetName == "public") {
+    sheet = doc.sheetsByIndex[0];
+  } else if (sheetName == "business") {
+    sheet = doc.sheetsByIndex[1];
+  }
+  const rows = await sheet.getRows();
+
+  for (var row of rows) {
+    if (email == row.get("email")) {
+      if (confirmedVerifyCode == row.get("code")) {
+        row.assign({ status: "1" });
+        await row.save();
+        const token = generateAccessJWT(email, ipAddresses);
+        return res.status(200).json({
+          status: "verified",
+          data: token,
+          message: "Successful verified",
+        });
+      } else {
+        return res.status(200).json({
+          status: "wrong-code",
+          data: [],
+          message: "Wrong Code",
+        });
+      }
+    }
+  }
 });
 
 //Business User
@@ -296,13 +322,6 @@ app.post("/business/register", async (req, res) => {
   // // const response = await mailchimp.users.ping()
   // console.log("mailchimp", response);
 });
-
-// Test
-app.get("/test", (req, res) => {
-  res.status(200).json({
-    message:"correctly connecting"
-  })
-})
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT: ${PORT}`);
