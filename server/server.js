@@ -47,13 +47,6 @@ const generateAccessJWT = (email, ipAddresses) => {
   return jwt.sign(payload, secretKey, options);
 };
 
-//Public User
-let logged_user = {
-  username: "",
-  email: "",
-  password: "",
-};
-
 app.post("/register", async (req, res) => {
   const { username, dob, city, ethnicity, email, password } = req.body;
   const sheet = doc.sheetsByIndex[0];
@@ -123,13 +116,12 @@ app.post("/login", async (req, res) => {
           console.log("response", response);
 
           if (response === true) {
-            console.log("===============");
             return res.status(200).json({
               status: "not-verify",
             });
-          } else res.send("Wrong Sent Email");
+          } else return res.send("Wrong Sent Email");
         }
-        res.status(200).json({
+        return res.status(200).json({
           status: "success",
           data: token,
           message: "Successfully login",
@@ -155,20 +147,9 @@ app.post("/check-token", async (req, res) => {
     if (err) {
       console.error("Token verification failed:", err.message);
     } else {
-      if (
-        decoded.email == logged_user.email &&
-        decoded.ipAddresses.join(", ") == ipAddresses.join(", ")
-      ) {
+      if (decoded.email) {
         res.status(200).json({
           status: "public_verify_token",
-          message: "Veritied token",
-        });
-      } else if (
-        decoded.email == business_logged_user.email &&
-        decoded.ipAddresses.join(", ") == ipAddresses.join(", ")
-      ) {
-        res.status(200).json({
-          status: "business_verify_token",
           message: "Veritied token",
         });
       } else console.log("wrong");
@@ -205,11 +186,11 @@ app.post("/confirmed-account", async (req, res) => {
         const response = await sendEmail({ emailType, email });
 
         if (response === true) {
-           return res.status(200).json({
-             status: "verified",
-             data: token,
-             message: "Successful verified",
-           });
+          return res.status(200).json({
+            status: "verified",
+            data: token,
+            message: "Successful verified",
+          });
         } else res.send("Wrong Sent Email");
       } else {
         return res.status(200).json({

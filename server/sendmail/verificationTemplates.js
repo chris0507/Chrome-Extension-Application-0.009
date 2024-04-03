@@ -141,7 +141,7 @@ const sendPublicUserMailContent = ({ email }) => ({
         }
 
         .container {
-            width: 70%;
+            width: 50%;
             background-color: white;
             margin-left: auto;
             margin-right: auto;

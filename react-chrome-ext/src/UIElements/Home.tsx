@@ -11,7 +11,7 @@ const override: CSSProperties = {
 };
 
 const Home = () => {
-  const [isVerifyToken, setIsVerifyToken] = useState<null | boolean>(null);
+  const [isVerifyToken, setIsVerifyToken] = useState<boolean | null>(null);
 
   const openOnBoardingpage = () => {
     chrome.tabs.create({ url: chrome.runtime.getURL("onboarding.html") });
@@ -28,8 +28,10 @@ const Home = () => {
 
   useEffect(() => {
     setIsVerifyToken(false);
+    console.log("token1", isVerifyToken);
     const initialize = async () => {
       setIsVerifyToken(await checkTokenValidity());
+      console.log("token", isVerifyToken)
     };
     initialize();
   }, []);

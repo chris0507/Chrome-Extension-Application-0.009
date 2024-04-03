@@ -43,10 +43,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
       .post(`${API_BASE_URL}register`, data)
       .then((res) => {
         // SuccessRegisterToast();
-        setLoading(false);
+        localStorage.setItem("verifyEmail", "true");
         navigate("/verify-email", {
           state: { email: getValues("email"), type: "public" },
         });
+        setLoading(false);
       })
       .catch((err) => {
         const errStatus = err.response.data.status;
