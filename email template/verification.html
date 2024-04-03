@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     <style>
         * {
@@ -13,22 +13,13 @@
             padding: 0;
         }
 
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: #1A1A1A;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 5px;
-        }
-
         .container {
             width: 50%;
             border: 2px solid #2F2F2F;
             border-radius: 20px;
             background: linear-gradient(to bottom, #797A7D, #000000 35%);
             padding: 20px;
+
         }
 
         .header {
@@ -76,8 +67,14 @@
     </style>
 </head>
 
-<body>
-    <div class="container">
+<body style="
+    font-family: 'Aleo', serif;
+    background-color: #1A1A1A;
+    padding: 5px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    ">
+    <div class="container" style="margin:auto">
         <div class="header">
             <img src="https://i.ibb.co/T11dRkZ/icon48.png" alt="0.009" width="80">
             <span class="text">0.009 Demo</span>
@@ -86,7 +83,7 @@
             <div class="title">Verify your email address</div>
             <div class="message">You need to verify your email address to continue using your 0.009 chrome extension
                 account. Enter the following code to verify your email address:</div>
-            <div class="code">3KMWCH</div>
+            <div class="code">${verifyCode}</div>
         </div>
     </div>
 </body>

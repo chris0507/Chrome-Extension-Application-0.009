@@ -120,10 +120,10 @@ app.post("/login", async (req, res) => {
           row.assign({ code: verifyCode });
           await row.save();
 
-          console.log("response", response)
+          console.log("response", response);
 
           if (response === true) {
-            console.log("===============")
+            console.log("===============");
             return res.status(200).json({
               status: "not-verify",
             });
@@ -178,12 +178,21 @@ app.post("/check-token", async (req, res) => {
 
 app.post("/confirmed-account", async (req, res) => {
   const { sheetName, email, confirmedVerifyCode } = req.body;
+  var emailType;
   let sheet = {};
+
+  if (sheetName == "public") {
+    emailType = 1;
+  } else if (sheetName == "business") {
+    emailType = 2;
+  }
+
   if (sheetName == "public") {
     sheet = doc.sheetsByIndex[0];
   } else if (sheetName == "business") {
     sheet = doc.sheetsByIndex[1];
   }
+
   const rows = await sheet.getRows();
 
   for (var row of rows) {
@@ -191,12 +200,17 @@ app.post("/confirmed-account", async (req, res) => {
       if (confirmedVerifyCode == row.get("code")) {
         row.assign({ status: "1" });
         await row.save();
+
         const token = generateAccessJWT(email, ipAddresses);
-        return res.status(200).json({
-          status: "verified",
-          data: token,
-          message: "Successful verified",
-        });
+        const response = await sendEmail({ emailType, email });
+
+        if (response === true) {
+           return res.status(200).json({
+             status: "verified",
+             data: token,
+             message: "Successful verified",
+           });
+        } else res.send("Wrong Sent Email");
       } else {
         return res.status(200).json({
           status: "wrong-code",
@@ -304,23 +318,6 @@ app.post("/business/register", async (req, res) => {
     password: hashedPassword,
   });
   res.send("Successful Registered!");
-
-  // const message = {
-  //   from_email: "info@financialcultures.com",
-  //   subject: "Hello world",
-  //   text: "Welcome to Mailchimp Transactional!",
-  //   to: [
-  //     {
-  //       email: email,
-  //       type: "to",
-  //     },
-  //   ],
-  // };
-  // const response = await mailchimp.messages.send({
-  //   message,
-  // });
-  // // const response = await mailchimp.users.ping()
-  // console.log("mailchimp", response);
 });
 
 app.listen(PORT, () => {
