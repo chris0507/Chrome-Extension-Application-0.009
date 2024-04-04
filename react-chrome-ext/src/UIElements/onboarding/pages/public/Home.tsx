@@ -51,14 +51,10 @@ const Home = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  return (
-    <>
-      <iframe src="https://xd.adobe.com/view/b770e15a-374d-4ddb-9ee0-2fa5eb1428d7-e223/screen/a3010c95-6ec3-4d7d-b190-3318a87f40c9?fullscreen"></iframe>
-    </>
-  );
+
   return (
     <div className="flex relative">
-      {/* <div className="bg-[#1A1A1A] p-5">
+      <div className="bg-[#1A1A1A] p-5">
         <div
           className="cursor-pointer focus:outline-none focus:ring focus:ring-violet-100"
           onClick={toggleMenu}
@@ -67,12 +63,10 @@ const Home = () => {
           <div className="w-4 h-px bg-white my-1"></div>
           <div className="w-4 h-px bg-white my-1"></div>
         </div>
-      </div> */}
+      </div>
 
-      {/* Menu Overlay */}
       {isMenuOpen && (
         <div className="fixed inset-0 bg-[#00080D] bg-opacity-75 z-20 flex justify-center items-center">
-          {/* Close Button */}
           <button
             onClick={toggleMenu}
             className="absolute top-5 right-5 bg-transparent text-white text-xl font-semibold"
@@ -80,7 +74,6 @@ const Home = () => {
             &times;
           </button>
 
-          {/* Menu Items Container */}
           <div className="text-center">
             {menuItems.map((menuItem, index) => (
               <div
@@ -95,11 +88,10 @@ const Home = () => {
         </div>
       )}
 
-      {/* Main Content */}
-      {/* <div className="h-screen p-5 bg-[#1D3D4A] rounded-lg">
+      <div className="h-screen p-5 bg-[#1D3D4A] rounded-lg">
         <BlocksGrid />
       </div>
-      <RightSidebar /> */}
+      <RightSidebar />
     </div>
   );
 };
