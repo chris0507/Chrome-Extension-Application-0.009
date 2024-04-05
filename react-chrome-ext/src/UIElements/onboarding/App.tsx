@@ -15,7 +15,10 @@ import BusinessLogin from "./pages/business/BusinessLogin";
 import BusinessHome from "./pages/business/BusinessHome";
 import "./App.css";
 import VerifyEmail from "./components/VerifyEmail";
-import ExploreConpons from "./pages/public/ExploreConpons";
+import Conpons from "./pages/public/Conpons";
+import { Navbar } from "@material-tailwind/react";
+import NavbarMenu from "./components/NavbarMenu";
+import ExploreCoupons from "./components/ExploreCoupons";
 
 const Wrapper = ({ children }: { children: any }) => {
   const API_BASE_URL = process.env.REACT_APP_API_URL;
@@ -35,7 +38,7 @@ const Wrapper = ({ children }: { children: any }) => {
       .post(`${API_BASE_URL}check-token`, { token })
       .then((res) => {
         if (res.data.status == "public_verify_token") {
-          if (location.pathname !== "/home") navigate("/home");
+          if (location.pathname == "/") navigate("/home");
         } else if (res.data.status == "business_verify_token") {
           if (location.pathname !== "/business-home")
             navigate("/business-home");
@@ -45,7 +48,16 @@ const Wrapper = ({ children }: { children: any }) => {
         if (location.pathname === "/home") navigate("/");
       });
   };
-  return <>{children}</>;
+  return (
+    <>
+      <div>
+        {location.pathname !== "/" && location.pathname !== "/home" && (
+          <NavbarMenu />
+        )}
+        {children}
+      </div>
+    </>
+  );
 };
 
 function App() {
@@ -95,10 +107,18 @@ function App() {
             }
           />
           <Route
+            path="/coupons"
+            element={
+              <Wrapper>
+                <Conpons />
+              </Wrapper>
+            }
+          />
+          <Route
             path="/explore-coupons"
             element={
               <Wrapper>
-                <ExploreConpons />
+                <ExploreCoupons />
               </Wrapper>
             }
           />
