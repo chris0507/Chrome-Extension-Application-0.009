@@ -15,6 +15,7 @@ import BusinessLogin from "./pages/business/BusinessLogin";
 import BusinessHome from "./pages/business/BusinessHome";
 import "./App.css";
 import VerifyEmail from "./components/VerifyEmail";
+import ExploreConpons from "./pages/public/ExploreConpons";
 
 const Wrapper = ({ children }: { children: any }) => {
   const API_BASE_URL = process.env.REACT_APP_API_URL;
@@ -90,6 +91,14 @@ function App() {
             element={
               <Wrapper>
                 <VerifyEmail />
+              </Wrapper>
+            }
+          />
+          <Route
+            path="/explore-coupons"
+            element={
+              <Wrapper>
+                <ExploreConpons />
               </Wrapper>
             }
           />

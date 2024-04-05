@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RightSidebar from "../../components/public/RightSidebar";
 import BlocksGrid from "../../components/public/BlocksGrid";
+import HamburgerMenu from "../../components/HamburgerMenu";
 
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
   const [popupId, setPopupId] = useState(0);
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     localStorage.removeItem("token");
@@ -64,6 +65,7 @@ const Home = () => {
           <div className="w-4 h-px bg-white my-1"></div>
         </div>
       </div>
+      <HamburgerMenu />
 
       {isMenuOpen && (
         <div className="fixed inset-0 bg-[#00080D] bg-opacity-75 z-20 flex justify-center items-center">
