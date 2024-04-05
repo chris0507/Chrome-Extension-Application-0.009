@@ -19,6 +19,7 @@ import Conpons from "./pages/public/Conpons";
 import { Navbar } from "@material-tailwind/react";
 import NavbarMenu from "./components/NavbarMenu";
 import ExploreCoupons from "./components/ExploreCoupons";
+import MyCoupons from "./components/MyCoupons";
 
 const Wrapper = ({ children }: { children: any }) => {
   const API_BASE_URL = process.env.REACT_APP_API_URL;
@@ -119,6 +120,14 @@ function App() {
             element={
               <Wrapper>
                 <ExploreCoupons />
+              </Wrapper>
+            }
+          />
+          <Route
+            path="/my-coupons"
+            element={
+              <Wrapper>
+                <MyCoupons />
               </Wrapper>
             }
           />
