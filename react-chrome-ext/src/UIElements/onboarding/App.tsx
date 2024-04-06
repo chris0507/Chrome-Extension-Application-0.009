@@ -20,6 +20,8 @@ import { Navbar } from "@material-tailwind/react";
 import NavbarMenu from "./components/NavbarMenu";
 import ExploreCoupons from "./components/ExploreCoupons";
 import MyCoupons from "./components/MyCoupons";
+import HighStreet from "./pages/public/HighStreet";
+import MyAccount from "./pages/public/MyAccount";
 
 const Wrapper = ({ children }: { children: any }) => {
   const API_BASE_URL = process.env.REACT_APP_API_URL;
@@ -128,6 +130,22 @@ function App() {
             element={
               <Wrapper>
                 <MyCoupons />
+              </Wrapper>
+            }
+          />
+          <Route
+            path="/high-street"
+            element={
+              <Wrapper>
+                <HighStreet />
+              </Wrapper>
+            }
+          />
+          <Route
+            path="/my-account"
+            element={
+              <Wrapper>
+                <MyAccount />
               </Wrapper>
             }
           />

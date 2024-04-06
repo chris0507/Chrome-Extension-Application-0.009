@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const MenuModal = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [popupId, setPopupId] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSignOut = () => {
     localStorage.removeItem("token");
@@ -40,8 +41,8 @@ const MenuModal = () => {
   const menuItems = [
     { title: "Dashboard", action: () => navigate("/home") },
     { title: "Coupons", action: () => navigate("/coupons") },
-    { title: "High Street" },
-    { title: "My Account" },
+    { title: "High Street", action: () => navigate("/high-street") },
+    { title: "My Account", action: () => navigate("/my-account") },
     { title: "Sign out", action: handleSignOut },
     { title: "Add URLs", action: handleAddURLs },
   ];
@@ -49,6 +50,11 @@ const MenuModal = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location]);
+
   return (
     <>
       <div className="bg-[#1A1A1A] p-5">

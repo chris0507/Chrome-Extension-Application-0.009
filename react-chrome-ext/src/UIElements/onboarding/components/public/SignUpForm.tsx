@@ -221,7 +221,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
       <form className="pb-8 mb-4 w-8/12" onSubmit={handleSubmit(submitForm)}>
         <div className="mb-3">
           <input
-            className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+            className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
             id="username"
             type="text"
             placeholder="Username/Tag"
@@ -266,7 +266,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
         </div>
         <div className="mb-3">
           <input
-            className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+            className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
             id="email"
             type="email"
             placeholder="Email address"
@@ -280,7 +280,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
         <div className="mb-3">
           <div className="flex items-center justify-end">
             <input
-              className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+              className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
               placeholder="Passwrod"
