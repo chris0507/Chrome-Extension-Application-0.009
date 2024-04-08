@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronUpIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import mainMenus from "../EthnicityCategory";
+import { useLocation } from "react-router-dom";
 
 type MainMenuKey = keyof typeof mainMenus;
 
@@ -14,6 +15,7 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
   const [customOther, setCustomOther] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   const handleOtherInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -50,7 +52,9 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
 
   return (
     <div
-      className="relative inline-block text-left bg-[#3FA9F5]  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 placeholder-gray-400 text-white"
+      className={`relative inline-block text-left ${
+        location.pathname === "/business" ? "bg-[#932580]" : "bg-[#3FA9F5]"
+      } text-sm rounded focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 placeholder-gray-400 text-white`}
       ref={dropdownRef}
     >
       <button
@@ -83,7 +87,7 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
                       setMainMenuSelected(key as MainMenuKey);
                     }}
                     className={`flex justify-between items-center w-full text-gray-700 px-2.5 py-2 text-sm text-left
-                    focus:outline-none hover:bg-[#b9d7ec] active:bg-[#b9d7ec] focus:ring focus:ring-[#b9d7ec] ${
+                    focus:outline-none hover:bg-[#b9d7ec] ${
                       mainMenuSelected === key ? "bg-gray-100" : ""
                     }`}
                   >
@@ -102,7 +106,7 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
                               setSubMenuSelected(subMenuOption);
                               setDropdownOpen(false);
                             }}
-                            className={`text-gray-700 block px-4 py-2 text-sm w-full text-left focus:outline-none hover:bg-[#b9d7ec] active:bg-[#b9d7ec] focus:ring focus:ring-[#b9d7ec] ${
+                            className={`text-gray-700 block px-4 py-2 text-sm w-full text-left focus:outline-none hover:bg-[#b9d7ec] ${
                               subMenuSelected === subMenuOption
                                 ? "bg-gray-100"
                                 : ""

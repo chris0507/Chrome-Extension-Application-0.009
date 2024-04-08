@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     <style>
         * {
@@ -14,23 +14,25 @@
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: antiquewhite;
+            font-family: "Aleo", serif;
+            font-size: 14px;
+            color: black;
         }
 
         .container {
             width: 70%;
             background-color: white;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .header {
             padding: 20px;
             padding-top: 20px;
             background-color: black;
+        }
+
+        .header-div {
             display: flex;
             justify-content: space-between;
         }
@@ -88,9 +90,9 @@
             align-items: center;
         }
 
-        .image2,
-        .image3 {
+        .first-image {
             border-radius: 10px;
+            margin-right: 3rem;
         }
 
         .w-100 {
@@ -127,17 +129,7 @@
             padding: 1rem;
             color: white;
             border-radius: 10px;
-            cursor: pointer;
             transition: background-color 0.3s;
-
-            &:hover {
-                background-color: #0272a1;
-            }
-
-            &:focus {
-                outline: none;
-                box-shadow: 0 0 0 2px #0272a1;
-            }
         }
 
         .bowl-button {
@@ -146,17 +138,7 @@
             padding: 1rem;
             color: white;
             border-radius: 10px;
-            cursor: pointer;
             transition: background-color 0.3s;
-
-            &:hover {
-                background-color: #333;
-            }
-
-            &:focus {
-                outline: none;
-                box-shadow: 0 0 0 2px #0272a1;
-            }
         }
 
         .footer {
@@ -166,22 +148,32 @@
     </style>
 </head>
 
-<body>
+<body style="background-color: antiquewhite !important; padding: 20px;">
     <div class="container">
         <div class="header">
-            <div class="flex flex-col justify-center items-cener gap-1">
-                <p class="text-white">Annie's burger shack</p>
-                <p class="text-white">Dear Annie,</p>
-            </div>
-            <div class="logo-image">
-                <img src="https://i.ibb.co/hmRVrVY/black-and-white-logo-009-3x.png" alt="0.009">
-            </div>
-
+            <p class="text-white text-center">{date}</p>
+            <table width="100%" cellspacing="0" cellpadding="0" style="font-family: Arial, sans-serif;">
+                <tr>
+                    <td style="padding: 20px;">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="text-align: left;">
+                                    <p style="color: #ffffff;">Annie's burger shack</p>
+                                    <p style="color: #ffffff;">Dear ${CEOname},</p>
+                                </td>
+                                <td style="text-align: right;">
+                                    <img src="https://i.ibb.co/hmRVrVY/black-and-white-logo-009-3x.png" alt="0.009">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div class="content">
-            <div class="flex gap-1 justify-space-between mb-2">
-                <img src="https://i.ibb.co/L8fRbSP/rupert-bloom.jpg" class="image2 w-50" alt="" />
-                <div class="w-50">
+            <div class="flex mb-2">
+                <img src="https://i.ibb.co/L8fRbSP/rupert-bloom.jpg" class="first-image w-50" alt="" />
+                <div class="w-50" style="margin-top: auto; margin-bottom: auto;">
                     <p class="mb-1"><strong>“It has come to my attention that your business has joined 0.009 to become a
                             “true” proctor of your craft. Mark my words, this is the beginning of something defiant and
                             tactile.”</strong></p>
@@ -210,16 +202,19 @@
                     platform, we hope to enable a lot of features at this stage by working closely with our developers
                     and designers to bring you an experience never seen before.</p>
                 <p class="mb-1">This Demo is supposed to give you the chance to explore .009 on your terms.</p>
-                <p class="mb-1 flex flex-col">
-                    <span>
+                <div class="mb-1">
+                    <p>
                         I hope you’ll stay with us long enough to see if our CEO speaking the truth.
-                    </span>
-                    <span>
+                    </p>
+                    <p>
                         You re-cap and teach some of the techniques demonstrated by our sales team.
-                    </span>
-                </p>
+                    </p>
+                </div>
                 <div>
-                    <button class="tutorial-button mb-1">View Demo tutorial</button>
+                    <div style="margin-bottom: 40px">
+                        <a href="#" class="tutorial-button mb-1"
+                            style="cursor: pointer; text-decoration: none; color: white;">View Demo tutorial</a>
+                    </div>
                     <div class="text-end">
                         <span><i>Thanks again, for participating</i></span>
                     </div>
@@ -231,11 +226,12 @@
                 <p>Your sincerely</p>
                 <p>Founder | Derrick Mugerwa</p>
             </div>
-            <div class="flex justify-center mb-1">
-                <button class="bowl-button">Download 0.009</button>
+            <div class="text-center mb-1">
+                <a href="#" class="bowl-button" style="cursor: pointer; text-decoration: none; color: white;">
+                    Download 0.009</a>
             </div>
-            <div class="text-center flex flex-col">
-                <span>T&C apply</span>
+            <div class="text-center">
+                <span>T&C apply</span><br />
                 <span>© 2024 Advertising Box limited</span>
             </div>
         </div>

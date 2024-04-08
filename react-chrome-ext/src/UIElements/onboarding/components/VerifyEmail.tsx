@@ -21,6 +21,7 @@ const VerifyEmail = () => {
       email: location?.state.email,
       confirmedVerifyCode: code,
     };
+    console.log("data", data);
     axios
       .post(`${API_BASE_URL}confirmed-account`, data)
       .then((res) => {
@@ -29,7 +30,13 @@ const VerifyEmail = () => {
           const token = res.data.data;
           localStorage.setItem("token", token);
           navigate("/home");
-        } else if (res.data.status == "wrong-code") WrongVerificationToast();
+        } else if (res.data.status == "business-verified") {
+           SuccessRegisterToast();
+           const token = res.data.data;
+           localStorage.setItem("token", token);
+           navigate("/business-home");
+        }
+         else if (res.data.status == "wrong-code") WrongVerificationToast();
       })
       .catch((err) => {
         const errStatus = err.response.data.status;

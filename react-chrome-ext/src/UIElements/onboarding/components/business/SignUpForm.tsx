@@ -4,10 +4,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import env from "react-dotenv";
 import { ExistEmailToast, SuccessLoginToast } from "../Alert";
+import Dropdown from "../public/Dropdown";
 interface FormData {
   brandName: string;
   city: string;
-  baseCountry: string;
+  ethnicity: string;
   CEOname: string;
   CEOemail: string;
   companyID: string;
@@ -17,20 +18,30 @@ interface FormData {
   password: string;
 }
 
-const SignUpForm = () => {
-  // const API_BASE_URL = "http://135.181.213.19:5000";
-  const API_BASE_URL = "https://chrome-extension-application-0-009-server.onrender.com/";
+interface SignUpFormProps {
+  setLoading: (status: boolean) => void;
+}
 
-  const { register, handleSubmit } = useForm<FormData>();
+const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
+  const { register, setValue, handleSubmit, getValues, watch } =
+    useForm<FormData>();
+  const [submitErrors, setSubmitErrors] = useState<FormData>();
   const navigate = useNavigate();
 
   const submitForm = (data: FormData) => {
-    console.log(data);
+    if (!validate()) return;
+    setLoading(true);
+
     data.email = data.email.toLowerCase();
     axios
       .post(`${API_BASE_URL}business/register`, data)
       .then((res) => {
-        SuccessLoginToast();
+        localStorage.setItem("verifyEmail", "true");
+        navigate("/verify-email", {
+          state: { email: getValues("email"), type: "business" },
+        });
+        setLoading(false);
       })
       .catch((err) => {
         const errStatus = err.response.data.status;
@@ -40,6 +51,99 @@ const SignUpForm = () => {
       });
     console.log(data);
   };
+
+  const handleSelect = (value: string) => {
+    setValue("ethnicity", value, { shouldValidate: true });
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSubmit(submitForm)();
+    }
+  };
+
+  // Validation checking
+  const initialValues = {
+    brandName: "",
+    city: "",
+    ethnicity: "",
+    CEOname: "",
+    CEOemail: "",
+    companyID: "",
+    businessURL: "",
+    logo: "",
+    email: "",
+    password: "",
+  };
+
+  const validate = () => {
+    const data: FormData = getValues();
+    let errors: FormData = initialValues;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const hasUpperCase = /[A-Z]/.test(data.password);
+    const hasLowerCase = /[a-z]/.test(data.password);
+    const hasDigit = /\d/.test(data.password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(data.password);
+    const isLongEnough = data.password.length >= 8;
+
+    if (!data.brandName) {
+      errors.brandName = "BrandName Empty Error";
+    }
+    if (!data.CEOname) {
+      errors.CEOname = "CEOname Empty Error";
+    }
+    if (!data.CEOemail) {
+      errors.CEOemail = "CEOemail Empty Error";
+    } else if (!emailRegex.test(data.CEOemail)) {
+      errors.CEOemail = "CEOemail is not exactly";
+    }
+    if (!data.companyID) {
+      errors.companyID = "CompanyID Empty Error";
+    }
+    if (!data.businessURL) {
+      errors.businessURL = "BusinessURL Empty Error";
+    }
+    if (!data.logo) {
+      errors.logo = "Company Logo Empty Error";
+    }
+    if (!data.email) {
+      errors.email = "Email Empty Error";
+    } else if (!emailRegex.test(data.email)) {
+      errors.email = "Email is not exactly";
+    }
+    if (!data.password) {
+      errors.password = "Password Empty Error";
+    } else if (
+      !(
+        hasUpperCase &&
+        hasLowerCase &&
+        hasDigit &&
+        hasSpecialChar &&
+        isLongEnough
+      )
+    ) {
+      errors.password =
+        "Password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long.";
+    }
+    setSubmitErrors(errors);
+    if (
+      errors.brandName ||
+      errors.CEOname ||
+      errors.CEOemail ||
+      errors.companyID ||
+      errors.businessURL ||
+      errors.logo ||
+      errors.email ||
+      errors.password ||
+      errors.city ||
+      errors.ethnicity
+    ) {
+      return 0;
+    }
+    return 1;
+  };
+
   return (
     <div className="w-full max-w-3xl flex justify-center">
       <form
@@ -60,11 +164,14 @@ const SignUpForm = () => {
                 {...register("brandName")}
                 required
               />
+              {submitErrors?.brandName && watch("brandName") === "" && (
+                <p className="text-red-500">{submitErrors?.brandName}</p>
+              )}
             </div>
             <div className="mb-3">
               <select
                 id="city"
-                className="bg-[#932580] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-white pr-10"
+                className="bg-[#932580] text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-white pr-10"
                 {...register("city")}
                 required
               >
@@ -78,20 +185,7 @@ const SignUpForm = () => {
               </select>
             </div>
             <div className="mb-3">
-              <select
-                id="baseCount"
-                className="bg-[#932580] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white"
-                {...register("baseCountry")}
-                required
-              >
-                <option value="" disabled selected>
-                  Base Country
-                </option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option>
-              </select>
+              <Dropdown onSelect={handleSelect} />
             </div>
             <div className="mb-3">
               <input
@@ -102,6 +196,9 @@ const SignUpForm = () => {
                 {...register("CEOname")}
                 required
               />
+              {submitErrors?.CEOname && watch("CEOname") === "" && (
+                <p className="text-red-500">{submitErrors?.CEOname}</p>
+              )}
             </div>
             <div className="mb-3">
               <input
@@ -112,6 +209,9 @@ const SignUpForm = () => {
                 {...register("CEOemail")}
                 required
               />
+              {submitErrors?.CEOemail && watch("CEOemail") === "" && (
+                <p className="text-red-500">{submitErrors?.CEOemail}</p>
+              )}
             </div>
             <div className="mb-3">
               <input
@@ -122,22 +222,29 @@ const SignUpForm = () => {
                 {...register("companyID")}
                 required
               />
+              {submitErrors?.companyID && watch("companyID") === "" && (
+                <p className="text-red-500">{submitErrors?.companyID}</p>
+              )}
             </div>
             <div className="mb-3">
               <input
                 className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="businessURL"
-                type="test"
+                type="text"
                 placeholder="Business URL"
                 {...register("businessURL")}
                 required
               />
+              {submitErrors?.businessURL && watch("businessURL") === "" && (
+                <p className="text-red-500">{submitErrors?.businessURL}</p>
+              )}
             </div>
             <div className="mb-3">
               <input
                 className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="logo"
-                type="upload"
+                // type="file"
+                type="text"
                 placeholder="Upload logo"
                 {...register("logo")}
                 required
@@ -154,34 +261,43 @@ const SignUpForm = () => {
                 {...register("email")}
                 required
               />
+              {submitErrors?.email && watch("email") === "" && (
+                <p className="text-red-500">{submitErrors?.email}</p>
+              )}
             </div>
-            <div className="mb-3 relative flex items-center justify-end">
-              <input
-                className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
-                type="password"
-                placeholder="Passwrod"
-                {...register("password")}
-                required
-              />
-              <div className="absolute pr-2 cursor-pointer">
-                <button type="submit">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    className="w-5 h-5 text-white"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                    />
-                  </svg>
-                </button>
+            <div className="mb-3">
+              <div className="flex items-center justify-end">
+                <input
+                  className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  id="password"
+                  type="password"
+                  placeholder="Passwrod"
+                  {...register("password")}
+                  required
+                  onKeyDown={handleKeyPress}
+                />
+                <div className="absolute pr-2 cursor-pointer">
+                  <button type="submit">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-5 h-5 text-white"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
+              {submitErrors?.password && (
+                <p className="text-red-500">{submitErrors?.password}</p>
+              )}
             </div>
           </div>
         </div>

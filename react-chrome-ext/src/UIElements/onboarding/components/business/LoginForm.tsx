@@ -29,19 +29,19 @@ const LoginForm: React.FC<LoginFormProps> = ({
     if (!validate()) return;
     setLoading(true);
     axios
-      .post(`${API_BASE_URL}login`, data)
+      .post(`${API_BASE_URL}business/login`, data)
       .then((res) => {
         if (res.data.status === "success") {
           onStatusChange("successLogin");
           SuccessLoginToast();
           const token = res.data.data;
           localStorage.setItem("token", token);
-          navigate("/home");
+          navigate("/business-home");
         } else if (res.data.status == "not-verify") {
           NotVerificationToast();
           localStorage.setItem("verifyEmail", "true");
           navigate("/verify-email", {
-            state: { email: getValues("email"), type: "public" },
+            state: { email: getValues("email"), type: "business" },
           });
         }
       })

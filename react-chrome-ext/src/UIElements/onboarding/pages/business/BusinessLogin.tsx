@@ -1,15 +1,33 @@
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
-import LoginForm from '../../components/business/LoginForm';
-import SignUpForm from '../../components/business/SignUpForm';
+import LoginForm from "../../components/business/LoginForm";
+import SignUpForm from "../../components/business/SignUpForm";
+import {
+  NoExistToast,
+  WrongPassToast,
+  SuccessLoginToast,
+  ExistEmailToast,
+} from "../../components/Alert";
 
 const BusinessLogin = () => {
   const [loginStatus, setLoginStatus] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-    const handleStatusChange = (newStatus: React.SetStateAction<string>) => {
-      setLoginStatus(newStatus);
-    };
+  const handleStatusChange = (newStatus: React.SetStateAction<string>) => {
+    setLoginStatus(newStatus);
+  };
+  useEffect(() => {
+    if (loginStatus == "noexist") {
+      NoExistToast();
+    } else if (loginStatus == "wrongPassword") {
+      WrongPassToast();
+    } else if (loginStatus == "successLogin") {
+      SuccessLoginToast();
+    } else if (loginStatus == "existed_email") {
+      ExistEmailToast();
+    }
+    setLoginStatus("");
+  }, [handleStatusChange, loginStatus]);
 
   return (
     <div className="h-full w-full flex flex-col items-center justify-center gap-10 p-5">
@@ -33,7 +51,7 @@ const BusinessLogin = () => {
             onStatusChange={handleStatusChange}
             setLoading={setIsLoading}
           />
-          <SignUpForm />
+          <SignUpForm setLoading={setIsLoading} />
         </div>
         <NavLink to="/">
           <div className="flex justify-center items-center text-white text-center text-lg mt-10 gap-2 cursor-pointer">
@@ -59,6 +77,6 @@ const BusinessLogin = () => {
       </div>
     </div>
   );
-}
+};
 
-export default BusinessLogin
+export default BusinessLogin;

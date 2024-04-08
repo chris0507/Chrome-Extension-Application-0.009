@@ -3,7 +3,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
 import LoginForm from "../../components/public/LoginForm";
 import SignUpForm from "../../components/public/SignUpForm";
-
 import {
   NoExistToast,
   WrongPassToast,

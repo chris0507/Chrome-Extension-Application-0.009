@@ -9,6 +9,7 @@ const { PORT, SECRET_ACCESS_TOKEN } = require("./config/index.js");
 const { connectSheet, doc } = require("./google/google.js");
 const generateVerificationCode = require("./sendmail/generateVerificationCode.js");
 const { sendEmail } = require("./sendmail/verificationTemplates.js");
+const e = require("express");
 
 const app = express();
 
@@ -51,7 +52,6 @@ app.post("/register", async (req, res) => {
   const { username, dob, city, ethnicity, email, password } = req.body;
   const sheet = doc.sheetsByIndex[0];
   const rows = await sheet.getRows();
-  const data = [];
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   const verifyCode = generateVerificationCode();
 
@@ -181,16 +181,39 @@ app.post("/confirmed-account", async (req, res) => {
       if (confirmedVerifyCode == row.get("code")) {
         row.assign({ status: "1" });
         await row.save();
+        const CEOname = row.get("CEOname");
+        const CEOemail = row.get("CEOemail");
 
         const token = generateAccessJWT(email, ipAddresses);
-        const response = await sendEmail({ emailType, email });
+        const response = await sendEmail({
+          emailType,
+          email,
+          CEOemail,
+          CEOname,
+        });
 
         if (response === true) {
-          return res.status(200).json({
-            status: "verified",
-            data: token,
-            message: "Successful verified",
-          });
+          if (emailType == 1) {
+            return res.status(200).json({
+              status: "verified",
+              data: token,
+              message: "Successful verified",
+            });
+          } else if (emailType == 2) {
+            const brandName = row.get("brandName");
+            const response1 = await sendEmail({
+              emailType: 0,
+              email,
+              brandName,
+            });
+            if (response1 === true) {
+              return res.status(200).json({
+                status: "business-verified",
+                data: token,
+                message: "Successful verified",
+              });
+            }
+          }
         } else res.send("Wrong Sent Email");
       } else {
         return res.status(200).json({
@@ -213,57 +236,60 @@ app.post("/business/login", async (req, res) => {
   const { email, password } = req.body;
   const businessSheet = doc.sheetsByIndex[1];
   const rows = await businessSheet.getRows();
-  business_logged_user.email = "";
 
   for (let row of rows) {
     if (email == row.get("email")) {
-      business_logged_user.password = row.get("password");
-      business_logged_user.email = row.get("email");
+      const isPasswordValid = await bcrypt.compare(
+        password,
+        row.get("password")
+      );
+
+      if (!isPasswordValid) {
+        return res.status(404).json({
+          status: "wrongPassword",
+          data: [],
+          message: "Wrong password",
+        });
+      } else {
+        const token = generateAccessJWT(email, ipAddresses);
+
+        if (row.get("status") == 0) {
+          const verifyCode = generateVerificationCode();
+          const response = await sendEmail({
+            emailType: 3,
+            email,
+            verifyCode,
+          });
+
+          row.assign({ code: verifyCode });
+          await row.save();
+
+          console.log("response", response);
+
+          if (response === true) {
+            return res.status(200).json({
+              status: "not-verify",
+            });
+          } else return res.send("Wrong Sent Email");
+        }
+        return res.status(200).json({
+          status: "success",
+          data: token,
+          message: "Successfully login",
+        });
+      }
     }
   }
-
-  if (business_logged_user.email == "") {
-    return res.status(404).json({
-      status: "noexist",
-      data: [],
-      message: "Account does not exist",
-    });
-  }
-  const isPasswordValid = await bcrypt.compare(
-    password,
-    business_logged_user.password
-  );
-
-  if (!isPasswordValid) {
-    return res.status(404).json({
-      status: "wrongPassword",
-      data: [],
-      message: "Wrong password",
-    });
-  } else {
-    let options = {
-      maxAge: 20 * 60 * 1000, // would expire in 20minutes
-      httpOnly: true, // The cookie is only accessible by the web server
-      secure: true,
-      sameSite: "None",
-    };
-
-    const token = generateAccessJWT(business_logged_user.email, ipAddresses);
-    // res.cookie("SessionID", token, options);
-
-    res.status(200).json({
-      status: "success",
-      data: token,
-      message: "Successfully login",
-    });
-  }
+  return res.status(404).json({
+    status: "not-exist",
+  });
 });
 
 app.post("/business/register", async (req, res) => {
   const {
     brandName,
     city,
-    baseCountry,
+    ethnicity,
     CEOname,
     CEOemail,
     companyID,
@@ -275,6 +301,7 @@ app.post("/business/register", async (req, res) => {
   const sheet = doc.sheetsByIndex[1];
   const rows = await sheet.getRows();
   const hashedPassword = await bcrypt.hash(password, saltRounds);
+  const verifyCode = generateVerificationCode();
 
   for (let row of rows) {
     if (email == row.get("email")) {
@@ -289,7 +316,7 @@ app.post("/business/register", async (req, res) => {
   await sheet.addRow({
     brandName: brandName,
     city: city,
-    baseCountry: baseCountry,
+    ethnicity: ethnicity,
     CEOname: CEOname,
     CEOemail: CEOemail,
     companyID: companyID,
@@ -297,8 +324,12 @@ app.post("/business/register", async (req, res) => {
     logo: logo,
     email: email,
     password: hashedPassword,
+    code: verifyCode,
+    status: 0,
   });
-  res.send("Successful Registered!");
+  const response = await sendEmail({ emailType: 3, email, verifyCode });
+  if (response === true) return res.send("Successful Sent Email");
+  else res.send("Wrong Sent Email");
 });
 
 app.listen(PORT, () => {

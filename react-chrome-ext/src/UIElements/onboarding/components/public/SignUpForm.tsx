@@ -42,7 +42,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
     axios
       .post(`${API_BASE_URL}register`, data)
       .then((res) => {
-        // SuccessRegisterToast();
         localStorage.setItem("verifyEmail", "true");
         navigate("/verify-email", {
           state: { email: getValues("email"), type: "public" },
@@ -245,7 +244,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
         <div className="mb-3">
           <select
             id="city"
-            className="bg-[#3FA9F5]  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
+            className="bg-[#3FA9F5]  text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
             {...register("city")}
             required
           >
@@ -257,9 +256,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
             <option value="FR">France</option>
             <option value="DE">Germany</option>
           </select>
-          {/* <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
-            <img src="" />
-          </div> */}
         </div>
         <div className="mb-3">
           <Dropdown onSelect={handleSelect} />

@@ -45,7 +45,9 @@ const CustomWrapper = () => {
       >
         {location.pathname !== "/" &&
           location.pathname !== "/home" &&
-          location.pathname !== "/business" && <NavbarMenu />}
+          location.pathname !== "/business" &&
+          location.pathname !== "/business-home" &&
+          location.pathname !== "/verify-email" && <NavbarMenu />}
         <Outlet />
       </div>
     </>
