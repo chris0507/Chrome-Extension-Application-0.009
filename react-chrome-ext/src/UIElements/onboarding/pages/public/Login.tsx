@@ -44,7 +44,6 @@ const Login = () => {
           />
         </div>
       )}
-
       <div>
         <img src="/images/logo.png" alt="logo" width={200} />
       </div>

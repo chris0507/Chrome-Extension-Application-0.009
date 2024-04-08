@@ -41,7 +41,7 @@ const SignUpForm = () => {
     console.log(data);
   };
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full max-w-3xl flex justify-center">
       <form
         className="w-6/12 pb-8 mb-4 flex flex-col justify-center"
         onSubmit={handleSubmit(submitForm)}
@@ -53,7 +53,7 @@ const SignUpForm = () => {
           <div className="w-full">
             <div className="mb-3">
               <input
-                className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="brandName"
                 type="text"
                 placeholder="Business brand name"
@@ -95,7 +95,7 @@ const SignUpForm = () => {
             </div>
             <div className="mb-3">
               <input
-                className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="CEOname"
                 type="text"
                 placeholder="CEO/Manager Name"
@@ -105,7 +105,7 @@ const SignUpForm = () => {
             </div>
             <div className="mb-3">
               <input
-                className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="CEOemail"
                 type="email"
                 placeholder="CEO/Manager Email"
@@ -115,7 +115,7 @@ const SignUpForm = () => {
             </div>
             <div className="mb-3">
               <input
-                className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="companyID"
                 type="text"
                 placeholder="Companies House ID"
@@ -125,7 +125,7 @@ const SignUpForm = () => {
             </div>
             <div className="mb-3">
               <input
-                className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="businessURL"
                 type="test"
                 placeholder="Business URL"
@@ -135,7 +135,7 @@ const SignUpForm = () => {
             </div>
             <div className="mb-3">
               <input
-                className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="logo"
                 type="upload"
                 placeholder="Upload logo"
@@ -147,7 +147,7 @@ const SignUpForm = () => {
           <div className="w-full">
             <div className="mb-3">
               <input
-                className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="email"
                 type="email"
                 placeholder="Email address"
@@ -157,7 +157,7 @@ const SignUpForm = () => {
             </div>
             <div className="mb-3 relative flex items-center justify-end">
               <input
-                className="bg-[#343434] shadow appearance-none rounded w-full p-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="password"
                 type="password"
                 placeholder="Passwrod"

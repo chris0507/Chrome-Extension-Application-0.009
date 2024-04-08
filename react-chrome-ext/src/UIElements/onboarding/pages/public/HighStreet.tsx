@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import HighStreetModal from "../../components/HighStreetModal";
+import { useLocation } from "react-router-dom";
 
 const HighStreet = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const location = useLocation();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -13,13 +15,14 @@ const HighStreet = () => {
   };
 
   useEffect(() => {
+    console.log("high street", location.pathname);
     if (isModalOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
   }, [isModalOpen]);
-  
+
   return (
     <div className="m-3 mt-4">
       {isModalOpen && <HighStreetModal closeModal={closeModal} />}

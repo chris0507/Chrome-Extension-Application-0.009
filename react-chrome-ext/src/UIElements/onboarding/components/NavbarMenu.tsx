@@ -48,17 +48,15 @@ const NavbarMenu = () => {
           <img src="/images/logo.png" className="" alt="logo" width={120} />
         </div>
       </div>
-      <div
-        className="flex justify-start items-center pr-2 cursor-pointer gap-1 ml-3"
-        onClick={handleBack}
-      >
+      <div className="flex justify-start items-center pr-2 gap-1 ml-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="w-5 h-5 text-white"
+          className="w-5 h-5 text-white cursor-pointer"
+          onClick={handleBack}
         >
           <path
             stroke-linecap="round"
@@ -66,8 +64,9 @@ const NavbarMenu = () => {
             d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
           />
         </svg>
-
-        <span className="text-white">Back</span>
+        <span className="text-white cursor-pointer" onClick={handleBack}>
+          Back
+        </span>
       </div>
     </div>
   );

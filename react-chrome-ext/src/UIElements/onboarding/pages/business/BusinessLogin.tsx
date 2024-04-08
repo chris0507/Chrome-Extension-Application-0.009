@@ -1,17 +1,38 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
+import { CircleLoader } from "react-spinners";
 import LoginForm from '../../components/business/LoginForm';
 import SignUpForm from '../../components/business/SignUpForm';
 
 const BusinessLogin = () => {
+  const [loginStatus, setLoginStatus] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+    const handleStatusChange = (newStatus: React.SetStateAction<string>) => {
+      setLoginStatus(newStatus);
+    };
+
   return (
     <div className="h-full w-full flex flex-col items-center justify-center gap-10 p-5">
+      {isLoading && (
+        <div className="fixed inset-0 bg-[#00080D] bg-opacity-75 z-20 flex justify-center items-center">
+          <CircleLoader
+            color={"#08A9D7"}
+            loading={true}
+            size={70}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      )}
       <div>
         <img src="/images/logo.png" alt="logo" width={200} />
       </div>
       <div className="w-full h-full border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-10">
-        <div className="flex justify-center gap-5 ">
-          <LoginForm />
+        <div className="flex justify-around gap-5 ">
+          <LoginForm
+            onStatusChange={handleStatusChange}
+            setLoading={setIsLoading}
+          />
           <SignUpForm />
         </div>
         <NavLink to="/">
