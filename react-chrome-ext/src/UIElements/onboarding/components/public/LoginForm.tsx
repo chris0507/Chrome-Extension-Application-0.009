@@ -36,6 +36,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
           SuccessLoginToast();
           const token = res.data.data;
           localStorage.setItem("token", token);
+          localStorage.setItem("userType", "public");
           navigate("/home");
         } else if (res.data.status == "not-verify") {
           NotVerificationToast();
@@ -77,7 +78,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       errors.email = "Email Empty Error";
     } else if (!emailRegex.test(data.email)) {
       errors.email = "Email format is not correct";
-      console.log("Email format is not correct", errors.email)
+      console.log("Email format is not correct", errors.email);
     }
     if (!data.password) {
       errors.password = "Username Empty Error";

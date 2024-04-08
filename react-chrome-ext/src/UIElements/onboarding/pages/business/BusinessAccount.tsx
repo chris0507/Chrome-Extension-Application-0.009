@@ -5,98 +5,7 @@ import { PieChart } from "react-minimal-pie-chart";
 import Dropdown from "../../components/public/Dropdown";
 import { useNavigate } from "react-router-dom";
 
-const MyAccount = () => {
-  //calendar
-  const [show, setShow] = useState(false);
-  const navigate = useNavigate();
-
-  const options = {
-    title: "",
-    autoHide: true,
-    todayBtn: false,
-    clearBtn: true,
-    clearBtnText: "Clear",
-    maxDate: new Date("2030-01-01"),
-    minDate: new Date("1950-01-01"),
-    theme: {
-      background: "bg-white dark:bg-[#343434]",
-      todayBtn: "",
-      clearBtn: "",
-      icons: "",
-      text: "",
-      disabledText: "bg-red-500",
-      input: "bg-[#343434] dark:bg-[#343434] rounded-full text-white",
-      inputIcon: "",
-      selected: "",
-    },
-    icons: {
-      prev: () => (
-        <span>
-          <svg
-            className="w-5 h-5 text-gray-800 dark:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 8 14"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
-            />
-          </svg>
-        </span>
-      ),
-      next: () => (
-        <span>
-          <svg
-            className="w-5 h-5 text-gray-800 dark:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 8 14"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
-            />
-          </svg>
-        </span>
-      ),
-    },
-    datepickerClassNames: "top-12",
-    defaultDate: new Date("2024-01-01"),
-    language: "en",
-    disabledDates: [],
-    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-    inputNameProp: "date",
-    inputIdProp: "date",
-    inputPlaceholderProp: "Select Date",
-  };
-
-  const handleChangeDob = (selectedDate: Date) => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    };
-    const selectedDateString = selectedDate.toLocaleDateString(
-      "en-US",
-      options
-    );
-    console.log(selectedDateString);
-    // setValue("dob", selectedDateString, { shouldValidate: true });
-  };
-
-  const handleClose = (state: boolean) => {
-    setShow(state);
-  };
-
+const BusinessAccount = () => {
   const handleSelect = (value: string) => {
     //   setValue("ethnicity", value, { shouldValidate: true });
   };
@@ -146,15 +55,7 @@ const MyAccount = () => {
                   </div>
                 </div>
               </div>
-              <div className="mb-3 flex justify-center items-center gap-4">
-                <label className="block text-white text-sm">DOB</label>
-                <Datepicker
-                  options={options}
-                  onChange={handleChangeDob}
-                  show={show}
-                  setShow={handleClose}
-                />
-              </div>
+
               <div className="mb-3">
                 <select
                   id="city"
@@ -238,7 +139,7 @@ const MyAccount = () => {
           <div className="w-full max-w-xs">
             <p className="text-[#3FA9F5] text-2xl mb-2">My coupons</p>
             <div className="flex justify-between mb-4">
-              <button className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full" onClick={() => navigate("/my-coupons")}>
+              <button className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full">
                 <span className="py-1 pr-2">My coupons</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -255,7 +156,7 @@ const MyAccount = () => {
                   />
                 </svg>
               </button>
-              <button className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full" onClick={() => navigate("/explore-coupons")}>
+              <button className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full">
                 <span className="py-1 pr-2">Expired coupons</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -355,4 +256,4 @@ const MyAccount = () => {
   );
 };
 
-export default MyAccount;
+export default BusinessAccount;

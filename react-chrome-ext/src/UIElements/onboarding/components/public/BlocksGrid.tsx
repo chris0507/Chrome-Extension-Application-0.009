@@ -168,7 +168,7 @@ const BlocksGrid = () => {
                 style={{ width: `${blockSize}px`, height: `${blockSize}px` }} // Set both width and height to blockSize
                 onClick={(e) => handleClick(row, col, e)}
               >
-                {icon && <img src={icon.image} alt={icon.key} />}
+                {icon && <img src={icon.image} className="rounded-lg" alt={icon.key} />}
               </div>
             );
           } else

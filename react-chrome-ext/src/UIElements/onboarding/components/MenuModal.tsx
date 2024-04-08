@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const MenuModal = () => {
+interface MenuModalProps {
+  userType: string;
+}
+
+const MenuModal: React.FC<MenuModalProps> = ({ userType }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [popupId, setPopupId] = useState(0);
   const navigate = useNavigate();
@@ -39,10 +43,34 @@ const MenuModal = () => {
   };
 
   const menuItems = [
-    { title: "Dashboard", action: () => navigate("/home") },
-    { title: "Coupons", action: () => navigate("/coupons") },
-    { title: "High Street", action: () => navigate("/high-street") },
-    { title: "My Account", action: () => navigate("/my-account") },
+    {
+      title: "Dashboard",
+      action:
+        userType === "public"
+          ? () => navigate("/home")
+          : () => navigate("/business-home"),
+    },
+    {
+      title: "Coupons",
+      action:
+        userType === "public"
+          ? () => navigate("/coupons")
+          : () => navigate("/manage-coupons"),
+    },
+    {
+      title: "High Street",
+      action:
+        userType === "public"
+          ? () => navigate("/high-street")
+          : () => navigate("/high-street"),
+    },
+    {
+      title: "My Account",
+      action:
+        userType === "public"
+          ? () => navigate("/public-account")
+          : () => navigate("/business-account"),
+    },
     { title: "Sign out", action: handleSignOut },
     { title: "Add URLs", action: handleAddURLs },
   ];

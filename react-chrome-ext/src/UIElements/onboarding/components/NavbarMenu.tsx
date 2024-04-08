@@ -5,46 +5,61 @@ const NavbarMenu = () => {
   const handleBack = () => {
     window.history.back();
   };
+  const userType: any = localStorage.getItem("userType");
   return (
     <div className="pt-2 ">
       <div className="flex justify-between items-center">
         <div className="flex justify-start items-center ">
-          <MenuModal />
-          <div className="flex gap-2 text-[#3FA9F5]">
-            <span className="text-2xl font-bold">200 sch |</span>
-            <span className="flex items-center text-xl">Max 500</span>
-          </div>
+          <MenuModal userType={userType} />
+          {userType === "public" ? (
+            <div className="flex gap-2 text-[#3FA9F5]">
+              <span className="text-2xl font-bold">200 sch |</span>
+              <span className="flex items-center text-xl">Max 500</span>
+            </div>
+          ) : (
+            <div className="flex gap-2 text-[#9E4080]">
+              <span className="text-2xl font-bold">6000 sch</span>
+            </div>
+          )}
         </div>
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search business of interest"
-            className="pr-10 pl-3 py-2 border rounded-full text-sm focus:outline-none"
-          />
-          <button
-            type="submit"
-            className="absolute right-1 top-1/2 transform -translate-y-1/2"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-gray-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        {userType === "public" ? (
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search business of interest"
+              className="pr-10 pl-3 py-2 border rounded-full text-sm focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="absolute right-1 top-1/2 transform -translate-y-1/2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </button>
-        </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-gray-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </button>
+          </div>
+        ) : null}
         <div className="flex justify-end items-center gap-3 mr-4">
-          <span className="text-2xl font-bold text-[#3FA9F5]">
-            Explore coupons
-          </span>
+          {userType === "public" ? (
+            <span className="text-2xl font-bold text-[#3FA9F5]">
+              Explore coupons
+            </span>
+          ) : (
+            <span className="text-2xl font-bold text-[#9E4080]">
+              Manage coupons
+            </span>
+          )}
           <img src="/images/logo.png" className="" alt="logo" width={120} />
         </div>
       </div>

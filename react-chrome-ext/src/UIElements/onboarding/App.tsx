@@ -16,6 +16,10 @@ import MyCoupons from "./components/MyCoupons";
 import HighStreet from "./pages/public/HighStreet";
 import MyAccount from "./pages/public/MyAccount";
 import CustomWrapper from "./CustomWrapper";
+import ManageCoupons from "./pages/business/ManageCoupons";
+import BusinessAccount from "./pages/business/BusinessAccount";
+import CreateCoupons from "./pages/business/CreateCoupons";
+import EditCoupon from "./pages/business/EditCoupon";
 
 const App = () => {
   return (
@@ -26,14 +30,18 @@ const App = () => {
           <Route path="/" element={<CustomWrapper />}>
             <Route path="/" element={<Login />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/business" element={<BusinessLogin />} />
-            <Route path="/business-home" element={<BusinessHome />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/coupons" element={<Conpons />} />
             <Route path="/explore-coupons" element={<ExploreCoupons />} />
-            <Route path="/my-coupons" element={<MyCoupons />} />
             <Route path="/high-street" element={<HighStreet />} />
-            <Route path="/my-account" element={<MyAccount />} />
+            <Route path="/my-coupons" element={<MyCoupons />} />
+            <Route path="/public-account" element={<MyAccount />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/business" element={<BusinessLogin />} />
+            <Route path="/business-home" element={<BusinessHome />} />
+            <Route path="/manage-coupons" element={<ManageCoupons />} />
+            <Route path="/business-account" element={<BusinessAccount />} />
+            <Route path="/create-coupons" element={<CreateCoupons />} />
+            <Route path="/edit-coupon" element={<EditCoupon />} />
           </Route>
         </Routes>
       </Router>

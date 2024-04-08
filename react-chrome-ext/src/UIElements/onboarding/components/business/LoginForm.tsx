@@ -36,6 +36,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
           SuccessLoginToast();
           const token = res.data.data;
           localStorage.setItem("token", token);
+          localStorage.setItem("userType", "business");
           navigate("/business-home");
         } else if (res.data.status == "not-verify") {
           NotVerificationToast();

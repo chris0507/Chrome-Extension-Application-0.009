@@ -5,7 +5,7 @@ import MenuModal from "../../components/MenuModal";
 const Home = () => {
   return (
     <div className="flex relative">
-      <MenuModal />
+      <MenuModal userType="public" />
       <div className="h-screen p-5 bg-[#1D3D4A] rounded-lg">
         <BlocksGrid />
       </div>

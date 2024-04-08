@@ -13,7 +13,10 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      textColor: ['placeholder'],
+      opcaity: ['disabled'],
+    },
   },
   plugins: [flowbite.plugin()],
 };
