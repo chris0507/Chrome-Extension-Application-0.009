@@ -31,8 +31,8 @@ const CustomWrapper = () => {
             location.pathname == "/my-coupons"
           ) {
             localStorage.setItem("userType", "public");
-            navigate("/home");
           }
+          navigate("/home");
         } else if (res.data.status == "business_verify_token") {
           if (location.pathname !== "/business-home") {
             if (
@@ -41,8 +41,8 @@ const CustomWrapper = () => {
               location.pathname == "/manage-coupons"
             ) {
               localStorage.setItem("userType", "business");
-              navigate("/business-home");
             }
+            navigate("/business-home");
           }
         }
       })
