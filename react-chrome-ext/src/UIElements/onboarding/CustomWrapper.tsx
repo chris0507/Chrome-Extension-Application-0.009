@@ -22,17 +22,19 @@ const CustomWrapper = () => {
       .post(`${API_BASE_URL}check-token`, { token })
       .then((res) => {
         if (res.data.status == "public_verify_token") {
-          if (
-            location.pathname == "/" ||
-            location.pathname == "/home" ||
-            location.pathname == "/explore-coupons" ||
-            location.pathname == "/coupons" ||
-            location.pathname == "/high-street" ||
-            location.pathname == "/my-coupons"
-          ) {
-            localStorage.setItem("userType", "public");
+          if (location.pathname !== "/home") {
+            if (
+              location.pathname == "/" ||
+              location.pathname == "/home" ||
+              location.pathname == "/explore-coupons" ||
+              location.pathname == "/coupons" ||
+              location.pathname == "/high-street" ||
+              location.pathname == "/my-coupons"
+            ) {
+              localStorage.setItem("userType", "public");
+            }
+            navigate("/home");
           }
-          navigate("/home");
         } else if (res.data.status == "business_verify_token") {
           if (location.pathname !== "/business-home") {
             if (
