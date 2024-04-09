@@ -20,6 +20,7 @@ import ManageCoupons from "./pages/business/ManageCoupons";
 import BusinessAccount from "./pages/business/BusinessAccount";
 import CreateCoupons from "./pages/business/CreateCoupons";
 import EditCoupon from "./pages/business/EditCoupon";
+import WrongPage from "./pages/WrongPage";
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
             <Route path="/business-account" element={<BusinessAccount />} />
             <Route path="/create-coupons" element={<CreateCoupons />} />
             <Route path="/edit-coupon" element={<EditCoupon />} />
+            <Route path="/wrong-page" element={<WrongPage />} />
           </Route>
         </Routes>
       </Router>

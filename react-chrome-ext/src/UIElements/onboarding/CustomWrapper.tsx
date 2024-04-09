@@ -13,15 +13,18 @@ const CustomWrapper = () => {
   useEffect(() => {
     if (token) checkTokenValidity();
     else {
+      console.log("not token");
       if (location.pathname === "/home") navigate("/");
     }
   }, []);
 
   const checkTokenValidity = async () => {
+    const data = { token: token, userType: localStorage.getItem("userType") };
     await axios
-      .post(`${API_BASE_URL}check-token`, { token })
+      .post(`${API_BASE_URL}check-token`, { ...data })
       .then((res) => {
         if (res.data.status == "public_verify_token") {
+          console.log("public_verify_token", res.data.status);
           if (
             location.pathname == "/" ||
             location.pathname == "/home" ||
@@ -30,27 +33,34 @@ const CustomWrapper = () => {
             location.pathname == "/high-street" ||
             location.pathname == "/my-coupons"
           ) {
+            console.log("1");
             localStorage.setItem("userType", "public");
           }
           if (location.pathname == "/home") {
+            console.log("2");
             navigate("/home");
           }
         } else if (res.data.status == "business_verify_token") {
-          if (location.pathname !== "/business-home") {
-            if (
-              location.pathname == "/business" ||
-              location.pathname == "/business-home" ||
-              location.pathname == "/manage-coupons" ||
-              location.pathname == "/business-account"
-            ) {
-              localStorage.setItem("userType", "business");
-            }
+          if (
+            location.pathname == "/business" ||
+            location.pathname == "/business-home" ||
+            location.pathname == "/manage-coupons" ||
+            location.pathname == "/business-account"
+          ) {
+            localStorage.setItem("userType", "business");
+          }
+          if (location.pathname == "/business-home") {
             navigate("/business-home");
           }
+        } else if (res.data.status == "wrong_userType") {
+          navigate("/wrong-page");
         }
       })
       .catch((err) => {
         if (location.pathname === "/home") navigate("/");
+        if (location.pathname == "/business-home") {
+          navigate("/business");
+        }
       });
   };
   return (

@@ -113,8 +113,6 @@ app.post("/login", async (req, res) => {
           row.assign({ code: verifyCode });
           await row.save();
 
-          console.log("response", response);
-
           if (response === true) {
             return res.status(200).json({
               status: "not-verify",
@@ -135,7 +133,9 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/check-token", async (req, res) => {
-  const token = req.body.token;
+  var token = req.body.token;
+  var userType = req.body.userType;
+
   if (!token) {
     return res.status(404).json({
       status: "null_token",
@@ -148,10 +148,23 @@ app.post("/check-token", async (req, res) => {
       console.error("Token verification failed:", err.message);
     } else {
       if (decoded.email) {
-        res.status(200).json({
-          status: "public_verify_token",
-          message: "Veritied token",
-        });
+        if (userType == "public") {
+          return res.status(200).json({
+            status: "public_verify_token",
+            message: "Veritied token",
+          });
+        } else if (userType == "business") {
+          return res.status(200).json({
+            status: "business_verify_token",
+            message: "Veritied token",
+          });
+        } else {
+          return res.status(200).json({
+            status: "wrong_userType",
+            data: [],
+            message: "Wrong user type",
+          });
+        }
       } else console.log("wrong");
     }
   });
@@ -263,8 +276,6 @@ app.post("/business/login", async (req, res) => {
 
           row.assign({ code: verifyCode });
           await row.save();
-
-          console.log("response", response);
 
           if (response === true) {
             return res.status(200).json({
