@@ -40,7 +40,8 @@ const CustomWrapper = () => {
             if (
               location.pathname == "/business" ||
               location.pathname == "/business-home" ||
-              location.pathname == "/manage-coupons"
+              location.pathname == "/manage-coupons" ||
+              location.pathname == "/business-account"
             ) {
               localStorage.setItem("userType", "business");
             }
