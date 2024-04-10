@@ -91,9 +91,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
   };
 
   return (
-    <div className="w-full max-w-xs">
-      <h1 className="text-[#3FA9F5] text-2xl font-bold mb-4">Existing users</h1>
-      <form className="pb-8 mb-4 w-8/12" onSubmit={handleSubmit(submitForm)}>
+    <div className="w-full sm:border-r flex justify-center  border-r-0  border-gray-400 ">
+      <form className="pb-8 mb-4" onSubmit={handleSubmit(submitForm)}>
+        <h1 className="text-[#3FA9F5] text-2xl font-bold mb-4">
+          Existing users
+        </h1>
         <div className="mb-3">
           <input
             className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"

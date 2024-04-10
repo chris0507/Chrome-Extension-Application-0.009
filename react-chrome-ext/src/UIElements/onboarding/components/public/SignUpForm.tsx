@@ -215,9 +215,9 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
   };
 
   return (
-    <div className="w-full max-w-xs">
+    <div className="w-full flex justify-center flex-col items-center ">
       <h1 className="text-[#3FA9F5] text-2xl font-bold mb-4">New users</h1>
-      <form className="pb-8 mb-4 w-8/12" onSubmit={handleSubmit(submitForm)}>
+      <form className="pb-8 mb-4 w-8/12 max-w-[200px]" onSubmit={handleSubmit(submitForm)}>
         <div className="mb-3">
           <input
             className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"

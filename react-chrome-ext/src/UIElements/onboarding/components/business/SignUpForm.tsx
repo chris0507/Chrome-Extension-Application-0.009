@@ -145,15 +145,15 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
   };
 
   return (
-    <div className="w-full max-w-3xl flex justify-center">
+    <div className="w-full  flex justify-center">
       <form
-        className="w-6/12 pb-8 mb-4 flex flex-col justify-center"
+        className="  mb-4 flex flex-col justify-center"
         onSubmit={handleSubmit(submitForm)}
       >
         <h1 className="text-[#932580] text-2xl font-bold mb-4">
           New Business users
         </h1>
-        <div className="w-full flex justify-center gap-5">
+        <div className="w-full flex sm:flex-row flex-col justify-center sm:gap-5">
           <div className="w-full">
             <div className="mb-3">
               <input

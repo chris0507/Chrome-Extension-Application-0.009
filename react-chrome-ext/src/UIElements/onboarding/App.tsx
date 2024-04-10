@@ -1,8 +1,4 @@
-import {
-  HashRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/public/Login";
 import Home from "./pages/public/Home";
@@ -25,28 +21,28 @@ import WrongPage from "./pages/WrongPage";
 const App = () => {
   return (
     <div className="min-h-screen">
-      <Toaster />
-      <Router>
-        <Routes>
-          <Route path="/" element={<CustomWrapper />}>
-            <Route path="/" element={<Login />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/coupons" element={<Conpons />} />
-            <Route path="/explore-coupons" element={<ExploreCoupons />} />
-            <Route path="/high-street" element={<HighStreet />} />
-            <Route path="/my-coupons" element={<MyCoupons />} />
-            <Route path="/public-account" element={<MyAccount />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route path="/business" element={<BusinessLogin />} />
-            <Route path="/business-home" element={<BusinessHome />} />
-            <Route path="/manage-coupons" element={<ManageCoupons />} />
-            <Route path="/business-account" element={<BusinessAccount />} />
-            <Route path="/create-coupons" element={<CreateCoupons />} />
-            <Route path="/edit-coupon" element={<EditCoupon />} />
-            <Route path="/wrong-page" element={<WrongPage />} />
-          </Route>
-        </Routes>
-      </Router>
+        <Toaster />
+        <Router>
+          <Routes>
+            <Route path="/" element={<CustomWrapper />}>
+              <Route path="/" element={<Login />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/coupons" element={<Conpons />} />
+              <Route path="/explore-coupons" element={<ExploreCoupons />} />
+              <Route path="/high-street" element={<HighStreet />} />
+              <Route path="/my-coupons" element={<MyCoupons />} />
+              <Route path="/public-account" element={<MyAccount />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route path="/business" element={<BusinessLogin />} />
+              <Route path="/business-home" element={<BusinessHome />} />
+              <Route path="/manage-coupons" element={<ManageCoupons />} />
+              <Route path="/business-account" element={<BusinessAccount />} />
+              <Route path="/create-coupons" element={<CreateCoupons />} />
+              <Route path="/edit-coupon" element={<EditCoupon />} />
+              <Route path="/wrong-page" element={<WrongPage />} />
+            </Route>
+          </Routes>
+        </Router>
     </div>
   );
 };

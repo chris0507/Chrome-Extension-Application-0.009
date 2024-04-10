@@ -91,8 +91,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
   };
 
   return (
-    <div className="w-full max-w-xs  flex justify-center">
-      <form className="pb-8 mb-4 w-8/12" onSubmit={handleSubmit(submitForm)}>
+    <div className="w-full sm:border-r flex justify-center  border-r-0  border-gray-400  ">
+      <form className="pb-8 mb-4" onSubmit={handleSubmit(submitForm)}>
         <p className="text-[#932580] text-2xl font-bold mb-4">Existing users</p>
         <div className="mb-3">
           <input
