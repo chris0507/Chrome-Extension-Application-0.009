@@ -9,6 +9,7 @@ import {
   SuccessLoginToast,
   ExistEmailToast,
 } from "../../components/Alert";
+import Footer from "../../components/Footer";
 
 const Login = () => {
   const [loginStatus, setLoginStatus] = useState("");
@@ -32,7 +33,7 @@ const Login = () => {
 
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <div className=" container flex flex-col justify-center items-center gap-10 p-5">
+      <div className=" container flex flex-col justify-center items-center gap-6 p-5">
         {isLoading && (
           <div className="fixed inset-0 bg-[#00080D] bg-opacity-75 z-20 flex justify-center items-center">
             <CircleLoader
@@ -79,6 +80,9 @@ const Login = () => {
               </span>
             </NavLink>
           </div>
+        </div>
+        <div className="flex w-full px-4">
+          <Footer />
         </div>
       </div>
     </div>

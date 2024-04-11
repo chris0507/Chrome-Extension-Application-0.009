@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { range } from "lodash";
+
 interface TooltipProps {
   show: boolean;
   content: React.ReactNode;
@@ -27,8 +28,7 @@ const BlocksGrid = () => {
     {
       row: 5,
       col: 3,
-      image:
-        "https://banner2.cleanpng.com/20201008/rtv/transparent-google-suite-icon-google-icon-5f7f985ccd60e3.5687494416021975968412.jpg",
+      image: "./images/Logo-google-icon-PNG.png",
       key: "google",
     },
     {
@@ -40,11 +40,11 @@ const BlocksGrid = () => {
     {
       row: 5,
       col: 5,
-      image:
-        "https://static-00.iconduck.com/assets.00/ebay-icon-512x512-mnrjx0zm.png",
+      image: "./images/300px-EBay_logo.svg.png",
       key: "ebay",
     },
   ];
+  const BlockContainer = useRef<HTMLDivElement>(null);
   const [blockSize, setBlockSize] = useState(0);
   const [tooltip, setTooltip] = useState<TooltipProps>({
     show: false,
@@ -54,7 +54,7 @@ const BlocksGrid = () => {
     row: null,
     col: null,
   });
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState("asd");
   const navigate = useNavigate();
 
   const checkIcons = (row: number, col: number) => {
@@ -99,12 +99,12 @@ const BlocksGrid = () => {
       setTooltip({
         show: true,
         content: (
-          <div className="p-1 bg-[#333333] rounded">
+          <div className="p-1 bg-[#333333] rounded-xl">
             <input
               type="text"
-              className="bg-[#333333] text-white p-1"
-              value={inputValue}
-              onChange={handleInput}
+              className="bg-[#333333] text-white p-1 border-0 shadow-none"
+              // value={inputValue}
+              // onChange={handleInput}
               placeholder="Add URL here..."
             />
             <button onClick={() => handleAdd(row, col)}></button>
@@ -118,7 +118,8 @@ const BlocksGrid = () => {
     }
   };
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (e: any) => {
+    console.log(e.target.value);
     setInputValue(e.target.value);
   };
 
@@ -135,15 +136,21 @@ const BlocksGrid = () => {
   useEffect(() => {
     // Calculate block size
     const updateBlockSize = () => {
+      if(BlockContainer.current) {
+        const size = Math.floor((BlockContainer.current.clientWidth - 4*7 - 40)/8);
+        setBlockSize(size);
+      }
       // Since we want to fit 8 blocks in the height, each block should take up 1/8 of the available viewport height minus the gaps
-      const size = Math.floor((window.innerHeight - 7 * 5 - 40) / 8); // For 7 gaps of 5px each
-      console.log(size);
-      setBlockSize(size);
+      // const size = Math.floor((window.innerHeight - 7 * 5 - 40) / 8); // For 7 gaps of 5px each
+      // console.log(size);
+      // setBlockSize(size);
     };
 
     // Update blockSize on mount and when window resizes
     window.addEventListener("resize", updateBlockSize);
     updateBlockSize(); // Initial calculation
+
+
 
     return () => {
       window.removeEventListener("resize", updateBlockSize);
@@ -151,11 +158,11 @@ const BlocksGrid = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-8 gap-[5px]">
+    <div className="grid grid-cols-8 gap-[5px]" ref={BlockContainer} >
       {range(8).map((row) =>
         range(8).map((col) => {
           const icon = checkIcons(row, col);
-          const blockClasses = `border-2 rounded-lg cursor-pointer ${getBackgroundColor(
+          const blockClasses = `border-2 flex items-center rounded-lg cursor-pointer ${getBackgroundColor(
             row,
             col
           )}`;
@@ -164,11 +171,13 @@ const BlocksGrid = () => {
             return (
               <div
                 key={`${row}-${col}`}
-                className={blockClasses}
+                className={`${blockClasses} hover:bg-[#FFF200] hover:border-[#F9AA16]`}
                 style={{ width: `${blockSize}px`, height: `${blockSize}px` }} // Set both width and height to blockSize
                 onClick={(e) => handleClick(row, col, e)}
               >
-                {icon && <img src={icon.image} className="rounded-lg" alt={icon.key} />}
+                {icon && (
+                  <img src={icon.image} className="rounded-lg" alt={icon.key} />
+                )}
               </div>
             );
           } else

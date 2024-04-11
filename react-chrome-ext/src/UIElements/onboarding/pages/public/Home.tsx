@@ -4,12 +4,18 @@ import MenuModal from "../../components/MenuModal";
 
 const Home = () => {
   return (
-    <div className="flex relative">
-      <MenuModal userType="public" />
-      <div className="h-screen p-5 bg-[#1D3D4A] rounded-lg">
-        <BlocksGrid />
+    <div className=" w-full flex justify-center items-center">
+      <div className="container">
+        <div className="flex w-full  relative items-start">
+          <MenuModal userType="public" />
+          <div className="flex w-full flex-col xl:flex-row items-center">
+            <div className="flex-auto w-full xl:w-2/3 h-fit  p-5 bg-[#1D3D4A] rounded-lg">
+              <BlocksGrid />
+            </div>
+            <RightSidebar />
+          </div>
+        </div>
       </div>
-      <RightSidebar />
     </div>
   );
 };

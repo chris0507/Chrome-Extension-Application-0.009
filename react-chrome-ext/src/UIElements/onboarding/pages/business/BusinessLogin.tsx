@@ -9,6 +9,7 @@ import {
   SuccessLoginToast,
   ExistEmailToast,
 } from "../../components/Alert";
+import Footer from "../../components/Footer";
 
 const BusinessLogin = () => {
   const [loginStatus, setLoginStatus] = useState("");
@@ -77,6 +78,9 @@ const BusinessLogin = () => {
               </NavLink>
             </div>
           </div>
+        </div>
+        <div className="flex w-full px-4">
+          <Footer />
         </div>
       </div>
     </div>

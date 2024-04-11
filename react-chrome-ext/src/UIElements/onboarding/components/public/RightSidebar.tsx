@@ -4,7 +4,7 @@ import { Progress } from "@material-tailwind/react";
 
 const RightSidebar = () => {
   return (
-    <div className="relative flex-auto  border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-5 m-5 mt-10">
+    <div className="relative max-w-[500px] min-w-[400px] w-full xl:w-1/3  border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-5 m-5 mt-10">
       <span className="text-[#3FA9F5] text-2xl font-bold mb-4">Top URLs</span>
       <img
         src="/images/logo.png"
@@ -17,32 +17,36 @@ const RightSidebar = () => {
           <DropdownMenu />
         </div>
         <div className="my-2 gap-5">
-          <div className="flex items-center gap-5 my-0">
-            <div className="flex justify-center items-center w-[100px]">
+          <div className="flex items-center gap-5 my-1">
+            <div className="flex justify-center items-center w-[65px]">
               <img src="images/google.svg" alt="google" width={30} />
             </div>
             <div className="text-white flex justify-center gap-3">
-              <span className="text-[15px]">Google</span>
+              <span className="text-[13px]">Google</span>
               <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px] text-lg">
                 +
               </span>
-              <span>Add to Dashboard | Report</span>
+              <span className="text-[9px] flex items-center">
+                Add to Dashboard | Report
+              </span>
             </div>
           </div>
-          <div className="flex items-center gap-5 my-0">
-            <div className="flex justify-center items-center w-[100px]">
+          <div className="flex items-center gap-5 my-1">
+            <div className="flex justify-center items-center w-[65px]">
               <img src="images/amazon.svg" alt="amazon" width={50} />
             </div>
             <div className="text-white flex justify-center gap-3">
-              <span className="text-[15px]">Amazon</span>
+              <span className="text-[13px]">Amazon</span>
               <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px] text-lg">
                 +
               </span>
-              <span>Add to Dashboard | Report</span>
+              <span className="text-[9px] flex items-center">
+                Add to Dashboard | Report
+              </span>
             </div>
           </div>
-          <div className="flex items-center gap-5 my-0">
-            <div className="flex justify-center items-center w-[100px]">
+          <div className="flex items-center gap-5 my-1">
+            <div className="flex justify-center items-center w-[65px]">
               <img
                 src="images/Annie'sBurgerShack.png"
                 alt="Annie's Burger Shack"
@@ -50,15 +54,17 @@ const RightSidebar = () => {
               />
             </div>
             <div className="text-white flex justify-center gap-3">
-              <span className="text-[15px]">Annie's Burger Shack</span>
+              <span className="text-[13px]">Annie's Burger Shack</span>
               <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px] text-lg">
                 +
               </span>
-              <span>Add to Dashboard | Report</span>
+              <span className="text-[9px] flex items-center">
+                Add to Dashboard | Report
+              </span>
             </div>
           </div>
-          <div className="flex items-center gap-5 my-0">
-            <div className="flex justify-center items-center w-[100px]">
+          <div className="flex items-center gap-5 my-1">
+            <div className="flex justify-center items-center w-[65px]">
               <img
                 src="images/Annie'sBurgerShack.png"
                 alt="Doughnuts"
@@ -66,15 +72,17 @@ const RightSidebar = () => {
               />
             </div>
             <div className="text-white flex justify-center gap-3">
-              <span className="text-[15px]">Doughnuts</span>
+              <span className="text-[13px]">Doughnuts</span>
               <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px] text-lg">
                 +
               </span>
-              <span>Add to Dashboard | Report</span>
+              <span className="text-[9px] flex items-center">
+                Add to Dashboard | Report
+              </span>
             </div>
           </div>
-          <div className="flex items-center gap-5 my-0">
-            <div className="flex justify-center items-center w-[100px]">
+          <div className="flex items-center gap-5 my-1">
+            <div className="flex justify-center items-center w-[65px]">
               <img
                 src="images/Annie'sBurgerShack.png"
                 alt="Truffles"
@@ -82,15 +90,17 @@ const RightSidebar = () => {
               />
             </div>
             <div className="text-white flex justify-center gap-3">
-              <span className="text-[15px]">Truffles</span>
+              <span className="text-[13px]">Truffles</span>
               <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px] text-lg">
                 +
               </span>
-              <span>Add to Dashboard | Report</span>
+              <span className="text-[9px] flex items-center">
+                Add to Dashboard | Report
+              </span>
             </div>
           </div>
-          <div className="flex items-center gap-5 my-0">
-            <div className="flex justify-center items-center w-[100px]">
+          <div className="flex items-center gap-5 my-1">
+            <div className="flex justify-center items-center w-[65px]">
               <img
                 src="images/Annie'sBurgerShack.png"
                 alt="Pieminister"
@@ -98,15 +108,17 @@ const RightSidebar = () => {
               />
             </div>
             <div className="text-white flex justify-center gap-3">
-              <span className="text-[15px]">Pieminister</span>
+              <span className="text-[13px]">Pieminister</span>
               <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px] text-lg">
                 +
               </span>
-              <span>Add to Dashboard | Report</span>
+              <span className="text-[9px] flex items-center">
+                Add to Dashboard | Report
+              </span>
             </div>
           </div>
-          <div className="flex items-center gap-5 my-0">
-            <div className="flex justify-center items-center w-[100px]">
+          <div className="flex items-center gap-5 my-1">
+            <div className="flex justify-center items-center w-[65px]">
               <img
                 src="images/Annie'sBurgerShack.png"
                 alt="Cod Scallops"
@@ -114,27 +126,31 @@ const RightSidebar = () => {
               />
             </div>
             <div className="text-white flex justify-center gap-3">
-              <span className="text-[15px]">Cod Scallops</span>
+              <span className="text-[13px]">Cod Scallops</span>
               <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px] text-lg">
                 +
               </span>
-              <span>Add to Dashboard | Report</span>
+              <span className="text-[9px] flex items-center">
+                Add to Dashboard | Report
+              </span>
             </div>
           </div>
-          <div className="flex items-center gap-5 my-0">
-            <div className="flex justify-center items-center w-[100px]">
+          <div className="flex items-center gap-5 my-1">
+            <div className="flex justify-center items-center w-[65px]">
               <img src="images/Annie'sBurgerShack.png" alt="Pryzm" width={50} />
             </div>
             <div className="text-white flex justify-center gap-3">
-              <span className="text-[15px]">Pryzm</span>
+              <span className="text-[13px]">Pryzm</span>
               <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px] text-lg">
                 +
               </span>
-              <span>Add to Dashboard | Report</span>
+              <span className="text-[9px] flex items-center">
+                Add to Dashboard | Report
+              </span>
             </div>
           </div>
-          <div className="flex items-center gap-5 my-0">
-            <div className="flex justify-center items-center w-[100px]">
+          <div className="flex items-center gap-5 my-1">
+            <div className="flex justify-center items-center w-[65px]">
               <img
                 src="images/Annie'sBurgerShack.png"
                 alt="Unidays"
@@ -142,11 +158,13 @@ const RightSidebar = () => {
               />
             </div>
             <div className="text-white flex justify-center gap-3">
-              <span className="text-[15px]">Unidays</span>
+              <span className="text-[13px]">Unidays</span>
               <span className="bg-[#3FA9F5] rounded-full p-1 flex items-center justify-center w-[22px] h-[22px] text-lg">
                 +
               </span>
-              <span>Add to Dashboard | Report</span>
+              <span className="text-[9px] flex items-center">
+                Add to Dashboard | Report
+              </span>
             </div>
           </div>
           <div></div>
@@ -155,18 +173,17 @@ const RightSidebar = () => {
         </div>
       </div>
       <div className="mt-3">
-        <span className="text-[#3FA9F5] text-2xl  font-bold mb-4">
-          Wallet
-        </span>
+        <span className="text-[#3FA9F5] text-2xl  font-bold mb-4">Wallet</span>
         <div className="border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-2 p-3 px-5">
           <div className="border border-solid border-[#2BAAE1] bg-white rounded-2xl p-4">
             <div className="flex gap-2">
               <span className="text-lg font-bold">200 sch |</span>
               <span className="flex items-center">Max 500</span>
             </div>
+            <div className=" bg-blue-500"></div>
             <div className="bg-black rounded-full mt-1 p-5 w-full">
               <Progress
-                value={25}
+                value={40}
                 size="sm"
                 variant="filled"
                 placeholder={undefined}
@@ -185,16 +202,28 @@ const RightSidebar = () => {
         </span>
         <div className="border flex flex-row gap-2 border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-2 p-3 px-5">
           <div className="bg-white border border-solid border-[#2BAAE1] p-2 flex justify-center items-center rounded-xl w-[50px] h-[50px]">
-            <img src="images/google.svg" alt="google" width={40} />
+            <img
+              src="images/Logo-google-icon-PNG.png"
+              alt="google"
+              width={40}
+            />
           </div>
           <div className="bg-white border border-solid border-[#2BAAE1] p-2 flex justify-center items-center rounded-xl w-[50px] h-[50px]">
-            <img src="images/google.svg" alt="google" width={40} />
+            <img src="images/300px-EBay_logo.svg.png" alt="google" width={40} />
           </div>
           <div className="bg-white border border-solid border-[#2BAAE1] p-2 flex justify-center items-center rounded-xl w-[50px] h-[50px]">
-            <img src="images/google.svg" alt="google" width={40} />
+            <img
+              src="https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/amazon-512.png"
+              alt="google"
+              width={40}
+            />
           </div>
           <div className="bg-white border border-solid border-[#2BAAE1] p-2 flex justify-center items-center rounded-xl w-[50px] h-[50px]">
-            <img src="images/google.svg" alt="google" width={40} />
+            <img
+              src="https://cdn.worldvectorlogo.com/logos/foot-locker-logo-2.svg"
+              alt="google"
+              width={40}
+            />
           </div>
         </div>
       </div>

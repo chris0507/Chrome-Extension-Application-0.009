@@ -69,7 +69,9 @@ const CustomWrapper = () => {
         style={
           location.pathname == "/high-street"
             ? {
-                backgroundImage: `url(https://i.ibb.co/BVZXN1W/New-space-009.png)`,
+                backgroundImage: `url(/images/New-space-009.png)`,
+                backgroundSize: "cover",
+                height: "100vh",
               }
             : { backgroundImage: "" }
         }

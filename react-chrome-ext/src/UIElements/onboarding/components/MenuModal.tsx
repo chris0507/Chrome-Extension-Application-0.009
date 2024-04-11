@@ -85,7 +85,7 @@ const MenuModal: React.FC<MenuModalProps> = ({ userType }) => {
 
   return (
     <>
-      <div className="bg-[#1A1A1A] p-5">
+      <div className="bg-[#1A1A1A] py-5 pr-5">
         <div
           className="cursor-pointer focus:outline-none focus:ring focus:ring-violet-100"
           onClick={toggleMenu}
