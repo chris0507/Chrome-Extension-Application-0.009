@@ -121,9 +121,9 @@ const HighStreet = () => {
         </div>
         <div className="m-3 mt-4 w-full">
           {isModalOpen && <HighStreetModal closeModal={closeModal} />}
-          <div className="inset-0 bg-[#424648] bg-opacity-50 border border-white rounded-xl p-4 flex justify-between items-center mb-4">
+          <div className="inset-0 bg-[#424648] bg-opacity-50 border border-white rounded-xl p-4 justify-between items-center mb-4 flex flex-wrap">
             {Items1.map((item, index) => (
-              <div key={index}>
+              <div key={index} className="flex flex-col items-center" >
                 <img
                   src={item.image}
                   className="border border-white rounded-lg bg-white  cursor-pointer"
