@@ -65,11 +65,7 @@ const RightSidebar = () => {
           </div>
           <div className="flex items-center gap-5 my-1">
             <div className="flex justify-center items-center w-[65px]">
-              <img
-                src="images/Annie'sBurgerShack.png"
-                alt="Doughnuts"
-                width={50}
-              />
+              <img src="images/douhnuts.png" alt="Doughnuts" width={50} />
             </div>
             <div className="text-white flex justify-center gap-3">
               <span className="text-[13px]">Doughnuts</span>
@@ -83,11 +79,7 @@ const RightSidebar = () => {
           </div>
           <div className="flex items-center gap-5 my-1">
             <div className="flex justify-center items-center w-[65px]">
-              <img
-                src="images/Annie'sBurgerShack.png"
-                alt="Truffles"
-                width={50}
-              />
+              <img src="images/truffles1.png" alt="Truffles" width={50} />
             </div>
             <div className="text-white flex justify-center gap-3">
               <span className="text-[13px]">Truffles</span>
@@ -101,11 +93,7 @@ const RightSidebar = () => {
           </div>
           <div className="flex items-center gap-5 my-1">
             <div className="flex justify-center items-center w-[65px]">
-              <img
-                src="images/Annie'sBurgerShack.png"
-                alt="Pieminister"
-                width={50}
-              />
+              <img src="images/pieminister1.png" alt="Pieminister" width={50} />
             </div>
             <div className="text-white flex justify-center gap-3">
               <span className="text-[13px]">Pieminister</span>
@@ -119,11 +107,7 @@ const RightSidebar = () => {
           </div>
           <div className="flex items-center gap-5 my-1">
             <div className="flex justify-center items-center w-[65px]">
-              <img
-                src="images/Annie'sBurgerShack.png"
-                alt="Cod Scallops"
-                width={50}
-              />
+              <img src="images/codscallops.png" alt="Cod Scallops" width={50} />
             </div>
             <div className="text-white flex justify-center gap-3">
               <span className="text-[13px]">Cod Scallops</span>
@@ -137,7 +121,7 @@ const RightSidebar = () => {
           </div>
           <div className="flex items-center gap-5 my-1">
             <div className="flex justify-center items-center w-[65px]">
-              <img src="images/Annie'sBurgerShack.png" alt="Pryzm" width={50} />
+              <img src="images/pryzm1.png" alt="Pryzm" width={50} />
             </div>
             <div className="text-white flex justify-center gap-3">
               <span className="text-[13px]">Pryzm</span>
@@ -151,11 +135,7 @@ const RightSidebar = () => {
           </div>
           <div className="flex items-center gap-5 my-1">
             <div className="flex justify-center items-center w-[65px]">
-              <img
-                src="images/Annie'sBurgerShack.png"
-                alt="Unidays"
-                width={50}
-              />
+              <img src="images/unidays1.png" alt="Unidays" width={50} />
             </div>
             <div className="text-white flex justify-center gap-3">
               <span className="text-[13px]">Unidays</span>

@@ -96,7 +96,7 @@ const MenuModal: React.FC<MenuModalProps> = ({ userType }) => {
         </div>
       </div>
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-[#00080D] bg-opacity-75 z-20 flex justify-center items-center">
+        <div className="fixed inset-0 bg-[#00080D] bg-opacity-75 z-20 flex justify-center flex-col items-center">
           <button
             onClick={toggleMenu}
             className="absolute top-5 right-5 bg-transparent text-white text-xl font-semibold"
@@ -114,6 +114,9 @@ const MenuModal: React.FC<MenuModalProps> = ({ userType }) => {
                 {menuItem.title}
               </div>
             ))}
+          </div>
+          <div className="text-white text-base relative top-[25vh]" >
+            Privacy | Terms and Conditions | @ Advertising Box 2024
           </div>
         </div>
       )}

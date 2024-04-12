@@ -46,6 +46,8 @@ const BusinessBlocksGrid = () => {
       key: "ebay",
     },
   ];
+  const BlockContainer = useRef<HTMLDivElement>(null);
+
   const [blockSize, setBlockSize] = useState(0);
   const [tooltip, setTooltip] = useState<TooltipProps>({
     show: false,
@@ -162,9 +164,12 @@ const BusinessBlocksGrid = () => {
 
   useEffect(() => {
     const updateBlockSize = () => {
-      const size = Math.floor((window.innerHeight - 7 * 5 - 40) / 8); 
-      console.log(size);
-      setBlockSize(size);
+      if (BlockContainer.current) {
+        const size = Math.floor(
+          (BlockContainer.current.clientWidth - 4 * 7 - 40) / 8
+        );
+        setBlockSize(size);
+      }
     };
 
     window.addEventListener("resize", updateBlockSize);
@@ -187,11 +192,11 @@ const BusinessBlocksGrid = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-8 gap-[5px]">
+    <div className="grid grid-cols-8 gap-[5px]" ref={BlockContainer}>
       {range(8).map((row) =>
         range(8).map((col) => {
           const icon = checkIcons(row, col);
-          const blockClasses = `border-2 rounded-lg cursor-pointer ${getBackgroundColor(
+          const blockClasses = `border-2 flex items-center rounded-lg cursor-pointer ${getBackgroundColor(
             row,
             col
           )}`;

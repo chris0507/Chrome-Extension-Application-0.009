@@ -7,15 +7,22 @@ const NavbarMenu = () => {
   const [title, setTitle] = useState("Explore coupons");
 
   useEffect(() => {
+    console.log("location.pathname", location.pathname);
     switch (location.pathname) {
       case "/high-street":
-        setTitle("High Street")
+        setTitle("High Street");
         break;
-    
+      case "/coupons":
+        setTitle("Explore coupons");
+        break;
+      case "/public-account":
+        setTitle("");
+        break;
+
       default:
         break;
     }
-  }, []);
+  }, [location]);
   const handleBack = () => {
     window.history.back();
   };

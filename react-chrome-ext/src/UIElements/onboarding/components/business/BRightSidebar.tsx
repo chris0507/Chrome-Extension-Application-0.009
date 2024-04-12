@@ -79,13 +79,13 @@ const BRightSidebar = () => {
               </div>
               <div className="bg-black rounded-full mt-1 p-5 w-full">
                 <Progress
-                  value={25}
+                  value={40}
                   variant="filled"
                   placeholder={undefined}
                   onPointerEnterCapture={undefined}
                   onPointerLeaveCapture={undefined}
-                  color="red"
-                  className="h-[3px] bg-[#434343]"
+                  color="purple"
+                  className="max-h-[2px] min-h-[2px]   bg-[#434343]"
                 />
               </div>
             </div>
@@ -136,13 +136,13 @@ const BRightSidebar = () => {
             </div>
             <div className="bg-black rounded-full mt-1 p-5 w-full">
               <Progress
-                value={25}
+                value={40}
                 variant="filled"
                 placeholder={undefined}
                 onPointerEnterCapture={undefined}
                 onPointerLeaveCapture={undefined}
                 color="red"
-                className="h-[4px] bg-[#434343]"
+                className="max-h-[2px] min-h-[2px]   bg-[#434343]"
               />
             </div>
           </div>
@@ -154,9 +154,9 @@ const BRightSidebar = () => {
           <div className="text-center">
             <PieChart
               data={[
-                { title: "One", value: 10, color: "#E38627" },
-                { title: "Two", value: 15, color: "#C13C37" },
-                { title: "Three", value: 20, color: "#6A2135" },
+                { title: "One", value: 60, color: "#932580" },
+                { title: "Two", value: 10, color: "#2E3192" },
+                { title: "Three", value: 30, color: "#DFDFDF" },
               ]}
               style={{ height: "90px" }}
             />
@@ -165,9 +165,9 @@ const BRightSidebar = () => {
           <div className="text-center">
             <PieChart
               data={[
-                { title: "One", value: 10, color: "#E38627" },
-                { title: "Two", value: 15, color: "#C13C37" },
-                { title: "Three", value: 20, color: "#6A2135" },
+                { title: "One", value: 60, color: "#932580" },
+                { title: "Two", value: 10, color: "#2E3192" },
+                { title: "Three", value: 30, color: "#DFDFDF" },
               ]}
               style={{ height: "90px" }}
             />
@@ -176,9 +176,9 @@ const BRightSidebar = () => {
           <div className="text-center">
             <PieChart
               data={[
-                { title: "One", value: 10, color: "#E38627" },
-                { title: "Two", value: 15, color: "#C13C37" },
-                { title: "Three", value: 20, color: "#6A2135" },
+                { title: "One", value: 60, color: "#932580" },
+                { title: "Two", value: 10, color: "#2E3192" },
+                { title: "Three", value: 30, color: "#DFDFDF" },
               ]}
               style={{ height: "90px" }}
             />
@@ -188,17 +188,91 @@ const BRightSidebar = () => {
       </div>
       <div className="mt-3">
         <span className="text-white text-xl font-bold">Users stats</span>
-        <div className="border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-1 p-3 px-5 flex flex-col justify-center items-center text-white">
-          <span className="text-4xl ">118,890</span>
-          <span className="text-sm">users registered</span>
+        <div className="border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-1 p-3 px-5 flex flex-row justify-between items-center text-white">
+          <div className=" -rotate-90">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-5 h-5 text-white"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+          </div>
+          <div className="flex flex-col justify-center items-center">
+            <span className="text-4xl ">118,890</span>
+            <span className="text-sm">users registered</span>
+          </div>
+          <div className=" rotate-90">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-5 h-5 text-white"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+          </div>
         </div>
       </div>
       <div className="mt-3">
         <span className="text-white text-xl font-bold">Buisness stats</span>
-        <div className="border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-1 p-3 px-5 flex flex-col justify-center items-center text-white">
-          <span className="text-4xl ">383,210</span>
-          <span className="text-sm">sch | generated by businesses</span>
-          <span className="">(100 sch| = £1)</span>
+        <div className="border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-1 p-3 px-5 flex flex-row justify-between items-center text-white">
+          <div className=" -rotate-90">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-5 h-5 text-white"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+          </div>
+          <div className="flex flex-col justify-center items-center">
+            <span className="text-4xl ">383,210</span>
+            <span className="text-sm">sch | generated by businesses</span>
+            <span className="">(100 sch| = £1)</span>
+          </div>
+          <div className=" rotate-90">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-5 h-5 text-white"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div className="text-white flex pt-3 flex-row gap-1 items-center justify-center">
+        <div>View Google Sheets</div>
+        <div>
+          <img src="./images/resize.png" width={15} alt="" />
         </div>
       </div>
     </div>
