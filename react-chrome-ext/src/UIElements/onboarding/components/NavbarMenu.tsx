@@ -16,7 +16,14 @@ const NavbarMenu = () => {
         setTitle("Explore coupons");
         break;
       case "/public-account":
+      case "/business-account":
         setTitle("");
+        break;
+      case "/edit-coupon":
+        setTitle("Manage coupons");
+        break;
+      case "/manage-coupons":
+        setTitle("Manage coupons");
         break;
 
       default:
@@ -44,7 +51,7 @@ const NavbarMenu = () => {
               </div>
             )}
           </div>
-          {userType === "public" ? (
+          {!(userType === "business" && title === "Manage coupons") ? (
             <div className="relative">
               <input
                 type="text"
@@ -74,13 +81,9 @@ const NavbarMenu = () => {
           ) : null}
           <div className="flex justify-end items-center gap-3 mr-4">
             {userType === "public" ? (
-              <span className="text-2xl font-bold text-[#3FA9F5]">
-                {title}
-              </span>
+              <span className="text-2xl font-bold text-[#3FA9F5]">{title}</span>
             ) : (
-              <span className="text-2xl font-bold text-[#9E4080]">
-                Manage coupons
-              </span>
+              <span className="text-2xl font-bold text-[#9E4080]">{title}</span>
             )}
             <img src="/images/logo.png" className="" alt="logo" width={120} />
           </div>

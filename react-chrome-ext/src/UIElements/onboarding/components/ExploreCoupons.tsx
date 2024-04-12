@@ -45,7 +45,7 @@ const ExploreCoupons = () => {
                     />
                   </svg>
                 </div>
-                <div className="border   border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35%  bg-white p-4">
+                <div className="border   border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D8f] to-[#0000008f] to-35%  bg-white p-4">
                   <div className="bg-white p-2 rounded-md border-2 border-[#43A9F5]">
                     <p className="text-dark text-xl font-bold mb-3">
                       10% Off All Burgers & Meals

@@ -17,15 +17,15 @@ const BRightSidebar = () => {
     }
   };
   return (
-    <div className="relative flex-auto  border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-5 m-5 mt-10">
+    <div className="relative flex-auto min-w-[400px] max-w-[500px] xl:w-1/3 w-full  border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-5 m-5 mt-10">
       {isMenuOpen && (
         <div
-          className="fixed inset-0 bg-[#00080D] bg-opacity-75 z-20 flex justify-center items-center"
+          className="fixed  flex-col inset-0 bg-[#00080D] bg-opacity-75 z-20 flex justify-center items-center"
           onClick={closeModal}
           ref={modalRef}
         >
-          <div className="border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-2">
-            <div className="flex justify-between pb-2 px-1">
+          <div className="">
+            <div className="flex justify-between pb-2 pl-3 px-1">
               <span className="text-white text-base font-bold">
                 Purchase sch |
               </span>
@@ -46,47 +46,49 @@ const BRightSidebar = () => {
                 />
               </svg>
             </div>
-            <div className="border border-white rounded-2xl bg-white p-2">
-              <p className="text-dark text-base font-bold mb-1">
-                Balance 6000 sch
-              </p>
-              <div className="flex justify-end items-center gap-3">
-                <input
-                  type="text"
-                  className="bg-[#333333] text-white text-sm px-2 py-1 rounded-lg w-[150px]"
-                  placeholder="Enter amount"
-                ></input>
-                <button
-                  className="flex items-center justify-between bg-[#91257D] text-white px-2 rounded-full"
-                  onClick={showModal}
-                >
-                  <span className="py-1 pr-2 text-white">Purchase sch</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+            <div className="border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797a7d8f] to-[#0000008f] to-35% p-2">
+              <div className="border border-white rounded-2xl bg-white p-2">
+                <p className="text-dark text-base font-bold mb-1">
+                  Balance 6000 sch
+                </p>
+                <div className="flex justify-end items-center gap-3">
+                  <input
+                    type="text"
+                    className="bg-[#333333] text-white text-sm px-2 py-1 rounded-lg w-[150px]"
+                    placeholder="Enter amount"
+                  ></input>
+                  <button
+                    className="flex items-center justify-between bg-[#91257D] text-white px-2 rounded-full"
+                    onClick={showModal}
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div className="bg-black rounded-full mt-1 p-5 w-full">
-                <Progress
-                  value={40}
-                  variant="filled"
-                  placeholder={undefined}
-                  onPointerEnterCapture={undefined}
-                  onPointerLeaveCapture={undefined}
-                  color="purple"
-                  className="max-h-[2px] min-h-[2px]   bg-[#434343]"
-                />
+                    <span className="py-1 pr-2 text-white">Purchase sch</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div className="bg-black rounded-full mt-1 p-5 w-full">
+                  <Progress
+                    value={40}
+                    variant="filled"
+                    placeholder={undefined}
+                    onPointerEnterCapture={undefined}
+                    onPointerLeaveCapture={undefined}
+                    color="red"
+                    className="max-h-[2px] min-h-[2px]   bg-[#434343]"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -101,7 +103,7 @@ const BRightSidebar = () => {
       />
       <div className="border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-1 p-1 flex items-center gap-3">
         <div className="flex justify-center items-center w-[100px]">
-          <img src="images/google.svg" alt="google" width={70} />
+          <img src="images/annie1.png" alt="google" width={70} />
         </div>
         <span className="text-base text-white">
           Rank:<span className="text-xl">1022 users</span>

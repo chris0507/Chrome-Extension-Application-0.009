@@ -19,30 +19,45 @@ const getBackgroundColor = (row: number, col: number): string => {
 const BusinessBlocksGrid = () => {
   const icons = [
     {
-      row: 5,
-      col: 4,
-      image:
-        "https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/amazon-512.png",
+      row: 0,
+      col: 1,
+      image: "./images/annie1.png",
       key: "amazon",
     },
     {
-      row: 5,
-      col: 3,
-      image:
-        "https://banner2.cleanpng.com/20201008/rtv/transparent-google-suite-icon-google-icon-5f7f985ccd60e3.5687494416021975968412.jpg",
+      row: 0,
+      col: 7,
+      image: "./images/annie1.png",
       key: "google",
+    },
+    {
+      row: 2,
+      col: 3,
+      image: "./images/annie1.png",
+      key: "footlocker",
     },
     {
       row: 3,
       col: 2,
-      image: "https://cdn.worldvectorlogo.com/logos/foot-locker-logo-2.svg",
-      key: "footlocker",
+      image: "./images/annie1.png",
+      key: "ebay",
+    },
+    {
+      row: 3,
+      col: 4,
+      image: "./images/annie1.png",
+      key: "ebay",
     },
     {
       row: 5,
-      col: 5,
-      image:
-        "https://static-00.iconduck.com/assets.00/ebay-icon-512x512-mnrjx0zm.png",
+      col: 1,
+      image: "./images/annie1.png",
+      key: "ebay",
+    },
+    {
+      row: 7,
+      col: 0,
+      image: "./images/annie1.png",
       key: "ebay",
     },
   ];
@@ -78,18 +93,22 @@ const BusinessBlocksGrid = () => {
           <div className="p-3 bg-[#333333] rounded-md flex flex-col  w-[400px]">
             <div>
               <p className="text-white mb-2">
-                <span className="font-bold">8%</span> market share | users{" "}
-                <span className="font-bold">80</span> | clicks{" "}
-                <span className="font-bold">170</span>
+                <span className="font-bold text-base">8%</span> market share |
+                users <span className="font-bold text-base">80</span> | clicks{" "}
+                <span className="font-bold text-base">170</span>
               </p>
             </div>
-            <div className="rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% h-full px-2 py-1 flex justify-between items-center mb-2">
+            <div
+              className="rou
+            nded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% h-full px-2 py-1 flex justify-between items-center mb-2"
+            >
               <div className="flex justify-center items-center gap-1">
                 <span className="text-white">Retarget</span>
                 <input
                   type="number"
-                  className="w-[50px] h-[30px] rounded-lg pr-[0]"
+                  className="w-[50px] h-[30px] rounded-lg px-1"
                   min="0"
+                  value={160}
                 ></input>
                 <span className="text-white">sch |</span>
               </div>
@@ -97,11 +116,14 @@ const BusinessBlocksGrid = () => {
                 <span className="text-white">Days </span>
                 <input
                   type="number"
-                  className="w-[50px] h-[30px] rounded-lg pr-[0]"
+                  className="w-[50px] h-[30px] rounded-lg px-1"
                   min="0"
+                  value={7}
                 ></input>
               </div>
-              <span className="text-white">Weight: 2sch | per user</span>
+              <div className="text-white">
+                Weight: <span className=" text-base font-bold" >2</span>sch | per user
+              </div>
             </div>
             <div className="flex justify-end">
               <button className="flex items-center justify-between bg-[#91257D] text-white px-4 rounded-full">
@@ -156,11 +178,9 @@ const BusinessBlocksGrid = () => {
     setInputValue(e.target.value);
   };
 
-  const handleAdd = (row: number, col: number) => {
-  };
+  const handleAdd = (row: number, col: number) => {};
 
-  const handleDelete = (row: number, col: number) => {
-  };
+  const handleDelete = (row: number, col: number) => {};
 
   useEffect(() => {
     const updateBlockSize = () => {
@@ -173,9 +193,9 @@ const BusinessBlocksGrid = () => {
     };
 
     window.addEventListener("resize", updateBlockSize);
-    updateBlockSize(); 
+    updateBlockSize();
 
-    function handleClickOutside(event:any) {
+    function handleClickOutside(event: any) {
       if (
         tooltipRef.current &&
         !tooltipRef.current.contains(event.target as Node)
@@ -192,48 +212,76 @@ const BusinessBlocksGrid = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-8 gap-[5px]" ref={BlockContainer}>
-      {range(8).map((row) =>
-        range(8).map((col) => {
-          const icon = checkIcons(row, col);
-          const blockClasses = `border-2 flex items-center rounded-lg cursor-pointer ${getBackgroundColor(
-            row,
-            col
-          )}`;
+    <div className="flex flex-col w-full">
+      <div className="grid grid-cols-8 gap-[5px]" ref={BlockContainer}>
+        {range(8).map((row) =>
+          range(8).map((col) => {
+            const icon = checkIcons(row, col);
+            const blockClasses = `border-2 flex items-center rounded-lg cursor-pointer ${getBackgroundColor(
+              row,
+              col
+            )}`;
 
-          if (icon) {
-            return (
-              <div
-                key={`${row}-${col}`}
-                className={blockClasses}
-                style={{ width: `${blockSize}px`, height: `${blockSize}px` }} // Set both width and height to blockSize
-                onClick={(e) => handleClick(row, col, e)}
-              >
-                {icon && (
-                  <img src={icon.image} alt={icon.key} className="rounded" />
-                )}
-              </div>
-            );
-          } else
-            return (
-              <div
-                key={`${row}-${col}`}
-                className={blockClasses}
-                style={{ width: `${blockSize}px`, height: `${blockSize}px` }} // Set both width and height to blockSize
-                onClick={(e) => handleClick(row, col, e)}
-              />
-            );
-        })
-      )}
-      {tooltip.show && (
-        <div
-          ref={tooltipRef}
-          className="tooltip z-50"
-          style={{ position: "fixed", top: tooltip.y, left: tooltip.x }}
-        >
-          {tooltip.content}
+            if (icon) {
+              return (
+                <div
+                  key={`${row}-${col}`}
+                  className={`${blockClasses} hover:bg-[#FFF200] hover:border-[#F9AA16]`}
+                  style={{ width: `${blockSize}px`, height: `${blockSize}px` }} // Set both width and height to blockSize
+                  onClick={(e) => handleClick(row, col, e)}
+                >
+                  {icon && (
+                    <img src={icon.image} alt={icon.key} className="rounded" />
+                  )}
+                </div>
+              );
+            } else
+              return (
+                <div
+                  key={`${row}-${col}`}
+                  className={blockClasses}
+                  style={{ width: `${blockSize}px`, height: `${blockSize}px` }} // Set both width and height to blockSize
+                  onClick={(e) => handleClick(row, col, e)}
+                />
+              );
+          })
+        )}
+        {tooltip.show && (
+          <div
+            ref={tooltipRef}
+            className="tooltip z-50"
+            style={{ position: "fixed", top: tooltip.y, left: tooltip.x }}
+          >
+            {tooltip.content}
+          </div>
+        )}
+      </div>
+      <div className="w-full h-5 grid text-[10px] grid-cols-8 text-white" >
+        <div className="flex justify-center" >
+          1%
         </div>
-      )}
+        <div className="flex justify-center" >
+          20%
+        </div>
+        <div className="flex justify-center" >
+          7%
+        </div>
+        <div className="flex justify-center" >
+          22%
+        </div>
+        <div className="flex justify-center" >
+          9%
+        </div>
+        <div className="flex justify-center" >
+          0%
+        </div>
+        <div className="flex justify-center" >
+          0%
+        </div>
+        <div className="flex justify-center" >
+          4%
+        </div>
+      </div>
     </div>
   );
 };
