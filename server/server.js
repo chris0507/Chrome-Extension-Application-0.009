@@ -245,6 +245,106 @@ let business_logged_user = {
   password: "",
 };
 
+app.post("/urls/add", async (req, res) => {
+  try {
+    const { url, email } = req.body;
+    const sheet = doc.sheetsByIndex[2];
+
+    //add url to sheet
+    await sheet.addRow({
+      url: url,
+      email: '',
+      created_at: new Date().toISOString().slice(0,10),
+    });
+
+    const rows = await sheet.getRows();
+    //get the rawdata of these rows
+    const data = rows.map((row) => {
+      return {
+        url: row.get("url"),
+        email: row.get("email"),
+        created_at: row.get("created_at"),
+      };
+    });
+    return res.status(200).json({
+      status: "success",
+      data: data,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+    });
+  }
+});
+
+app.get("/urls", async (req, res) => {
+  try {
+    const sheet = doc.sheetsByIndex[2];
+    const rows = await sheet.getRows();
+    //get the rawdata of these rows
+    const data = rows.map((row) => {
+      return {
+        url: row.get("url"),
+        email: row.get("email"),
+        created_at: row.get("created_at"),
+      };
+    });
+
+    return res.status(200).json({
+      status: "success",
+      data: data,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+    });
+  }
+});
+
+app.post("/urls/delete", async (req, res) => {
+  try {
+    const { url } = req.body;
+    console.log('url:', url)
+    const sheet = doc.sheetsByIndex[2];
+    const rows = await sheet.getRows();
+    let data = [];
+
+    //delete url from sheet
+    for (let row of rows) {
+      if (url == row.get("url")) {
+        await row.delete();
+        const updatedRows = await sheet.getRows();
+        data = updatedRows.map((row) => {
+          return {
+            url: row.get("url"),
+            email: row.get("email"),
+            created_at: row.get("created_at"),
+          };
+        });
+        return res.status(200).json({
+          status: "success",
+          data: data,
+        });
+      }
+    }
+    return res.status(404).json({
+      status: "not-exist",
+      data: data,
+      message: "URL does not exist",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+    });
+  }
+});
+
 app.post("/business/login", async (req, res) => {
   const { email, password } = req.body;
   const businessSheet = doc.sheetsByIndex[1];

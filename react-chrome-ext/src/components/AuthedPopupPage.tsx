@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { add } from "lodash";
 
 interface AuthedPopupPageProps {
   handleClosePopup: () => void;
@@ -11,6 +13,40 @@ const AuthedPopupPage: React.FC<AuthedPopupPageProps> = ({
   handleSignOut,
   openOnBoardingpage,
 }) => {
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
+
+  const [urls, setUrls] = useState<any[]>([]);
+  const [url, setUrl] = useState<string>("");
+  const [length, setLength] = useState<number>(0);
+
+  const addUrl = () => {
+    axios.post(`${API_BASE_URL}urls/add`, { url }).then((res) => {
+      console.log("res:", res);
+      setUrls(res.data.data);
+      setUrl("");
+    });
+  }
+
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUrl(value);
+    setLength(value.length);
+  }
+
+  const deleteUrl = (url: string) => { 
+    axios.post(`${API_BASE_URL}urls/delete`, { url:  url }).then((res) => {
+      console.log("res:", res);
+      setUrls(res.data.data);
+    });
+  }
+
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}urls`).then((res) => {
+      setUrls(res.data.data);
+      console.log("data:", res.data.data);
+      console.log('urls:', urls);
+    });
+  }, []);
   return (
     <div className="w-full h-[32rem] border border-solid border-[#08A9D7] rounded-t-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% ">
       <div className="p-2 flex justify-end">
@@ -70,12 +106,19 @@ const AuthedPopupPage: React.FC<AuthedPopupPageProps> = ({
               <input
                 type="text"
                 className="w-full border border-gray-300 rounded-md py-2 pl-2 pr-10 focus:outline-none focus:ring focus:border-blue-300"
+                value={url}
+                onChange={(e) => handleUrlChange(e)}
               />
               <span className="absolute inset-y-0 right-0 pr-2 flex items-center text-gray-400 text-xl">
-                3/64
+                {length}/64
               </span>
             </div>
-            <button className="bg-white hover:bg-blue-500 text-blue-700 font-semibold hover:text-white p-2 border border-blue-500 hover:border-transparent rounded-full">
+            <button
+              className="bg-white hover:bg-blue-500 text-blue-700 font-semibold hover:text-white p-2 border border-blue-500 hover:border-transparent rounded-full"
+              onClick={() => {
+                addUrl();
+              }}
+            >
               Add
             </button>
           </div>
@@ -85,15 +128,24 @@ const AuthedPopupPage: React.FC<AuthedPopupPageProps> = ({
         <span className="text-white text-xl">Rupert Bloom</span>
       </div>
       <div className="mt-0.5">
-        <div className="border border-solid border-[#08A9D7] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-1 text-xl text-center">
-          <span className="text-white">Tile 1</span>
-          <span className="mx-1 text-white">|</span>
-          <span className="text-white">11/03/2024</span>
-          <span className="mx-1 text-white">|</span>
-          <span className="text-[#00A1D6] cursor-pointer">visit website</span>
-          <span className="mx-1 text-white">|</span>
-          <span className="text-[#E0312A] cursor-pointer">Delete</span>
-        </div>
+        {urls &&
+          urls.length > 0 &&
+          urls.map((url, index) => (
+            <div
+              key={url.id}
+              className="border border-solid border-[#08A9D7] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-1 text-xl text-center"
+            >
+              <span className="text-white">Tile {index + 1}</span>
+              <span className="mx-1 text-white">|</span>
+              <span className="text-white">{url.created_at}</span>
+              <span className="mx-1 text-white">|</span>
+              <span className="text-[#00A1D6] cursor-pointer">
+                <a href={url.url}>visit website</a>
+              </span>
+              <span className="mx-1 text-white">|</span>
+              <span className="text-[#E0312A] cursor-pointer" onClick={()=>deleteUrl(url.url)} >Delete</span>
+            </div>
+          ))}
       </div>
     </div>
   );

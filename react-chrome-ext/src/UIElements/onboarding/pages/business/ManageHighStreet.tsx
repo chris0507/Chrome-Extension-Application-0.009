@@ -49,7 +49,8 @@ const ManageHighStreet = () => {
                 value={`URL`}
                 required
               />
-              <div className="flex flex-row gap-3 items-center">
+              <div className="flex flex-row relative gap-3 items-center">
+                <div className=" absolute -ml-[65px]">0/3 images</div>
                 <div className="w-1/3">
                   <div className="flex flex-1 items-center justify-end ">
                     <input
