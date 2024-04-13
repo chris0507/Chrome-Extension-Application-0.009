@@ -14,6 +14,18 @@ const e = require("express");
 const app = express();
 
 app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PATCH, DELETE, OPTIONS"
+  );
+  next();
+});
 app.disable("x-powered-by"); //Reduce fingerprinting
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
