@@ -5,11 +5,12 @@ import { useLocation } from "react-router-dom";
 const NavbarMenu = () => {
   const location = useLocation();
   const [title, setTitle] = useState("Explore coupons");
+  const userType: any = localStorage.getItem("userType");
 
   useEffect(() => {
     console.log("location.pathname", location.pathname);
     switch (location.pathname) {
-      case "/high-street":
+      case "/high-street": 
         setTitle("High Street");
         break;
       case "/coupons":
@@ -25,15 +26,17 @@ const NavbarMenu = () => {
       case "/manage-coupons":
         setTitle("Manage coupons");
         break;
+      case "/manage-high-street":
+        setTitle("Hight street");
+        break;
 
       default:
         break;
     }
-  }, [location]);
+  }, [location, userType]);
   const handleBack = () => {
     window.history.back();
   };
-  const userType: any = localStorage.getItem("userType");
   return (
     <div className="pt-2 flex items-center flex-col justify-center">
       <div className="container">
@@ -47,11 +50,16 @@ const NavbarMenu = () => {
               </div>
             ) : (
               <div className="flex gap-2 text-[#9E4080]">
-                <span className="text-2xl font-bold">6000 sch</span>
+                <span className="text-2xl font-bold">200 sch |</span>
+                <span className="flex items-center text-xl">Max 500</span>
               </div>
             )}
           </div>
-          {!(userType === "business" && title === "Manage coupons") ? (
+          {!(
+            userType === "business" &&
+            (title === "Manage coupons" ||
+              location.pathname === "/manage-high-street")
+          ) ? (
             <div className="relative">
               <input
                 type="text"

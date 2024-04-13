@@ -65,7 +65,7 @@ const BusinessAccount = () => {
                   <div className="flex-1">
                     <select
                       id="city"
-                      className="bg-[#932580]  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
+                      className="bg-[#932580] border-none  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
                       required
                     >
                       <option value="" disabled selected>
@@ -75,7 +75,7 @@ const BusinessAccount = () => {
                   </div>
                   <div className="flex flex-1 items-center justify-end">
                     <input
-                      className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
+                      className="bg-[#343434] border-none shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                       id="password"
                       type="text"
                       placeholder="Update Password"
@@ -106,7 +106,7 @@ const BusinessAccount = () => {
                   <div className="flex-1">
                     <select
                       id="city"
-                      className="bg-[#932580]  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
+                      className="bg-[#932580]  border-none text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
                       required
                     >
                       <option value="" disabled selected>
