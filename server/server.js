@@ -4,6 +4,8 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const os = require("os");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 const { PORT, SECRET_ACCESS_TOKEN } = require("./config/index.js");
 const { connectSheet, doc } = require("./google/google.js");
@@ -408,7 +410,7 @@ app.post("/business/login", async (req, res) => {
   });
 });
 
-app.post("/business/register", async (req, res) => {
+app.post("/business/register", upload.single('logo') ,async (req, res) => {
   const {
     brandName,
     city,
@@ -417,10 +419,10 @@ app.post("/business/register", async (req, res) => {
     CEOemail,
     companyID,
     businessURL,
-    logo,
     email,
     password,
   } = req.body;
+  const logo = req.file.path;
   const sheet = doc.sheetsByIndex[1];
   const rows = await sheet.getRows();
   const hashedPassword = await bcrypt.hash(password, saltRounds);

@@ -131,10 +131,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
       ),
     },
     datepickerClassNames: "top-12",
-    defaultDate: new Date("2024-01-01"),
+    defaultDate: new Date("1992-01-01"),
     language: "en",
     disabledDates: [],
-    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+    weekDays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
     inputNameProp: "date",
     inputIdProp: "date",
     inputPlaceholderProp: "Select Date",
@@ -217,7 +217,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
   return (
     <div className="w-full flex justify-center flex-col items-center ">
       <h1 className="text-[#3FA9F5] text-2xl font-bold mb-4">New users</h1>
-      <form className="pb-8 mb-4 w-8/12 max-w-[200px]" onSubmit={handleSubmit(submitForm)}>
+      <form
+        className="pb-8 mb-4 w-8/12 max-w-[200px]"
+        onSubmit={handleSubmit(submitForm)}
+      >
         <div className="mb-3">
           <input
             className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
@@ -240,7 +243,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
             setShow={handleClose}
           />
         </div>
-
         <div className="mb-3">
           <select
             id="city"
@@ -252,6 +254,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
               City
             </option>
             <option value="US">United States</option>
+            <option value="UK">United Kingdom</option>
             <option value="CA">Canada</option>
             <option value="FR">France</option>
             <option value="DE">Germany</option>
@@ -307,13 +310,14 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
             <p className="text-red-500">{submitErrors?.password}</p>
           )}
         </div>
-        <label className="flex items-center space-x-2">
-          {/* <input
+        <label className="flex mb-3 items-center space-x-2">
+          <input
             type="checkbox"
             // checked={isTermsAccepted}
             // onChange={handleCheckboxChange}
-            className="form-checkbox h-4 w-4 text-indigo-600"
-          /> */}
+            required
+            className="form-checkbox h-4 w-4 shadow-none ring-0 text-[#3FA9F5]"
+          />
           <span className="text-sm text-white">
             By signing up, you agree to the{" "}
             <a href="#" className="text-blue-500">
@@ -325,6 +329,12 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
             </a>
           </span>
         </label>
+        <button
+          onClick={() => handleSubmit(submitForm)()}
+          className="bg-[#3FA9F5] w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Register
+        </button>
       </form>
     </div>
   );

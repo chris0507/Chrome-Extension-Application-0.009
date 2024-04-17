@@ -8,7 +8,7 @@ const RightSidebar = () => {
       <span className="text-[#3FA9F5] text-2xl font-bold mb-4">Top URLs</span>
       <img
         src="/images/logo.png"
-        className="top-[-30px] right-[10px] absolute"
+        className="top-[-30px] right-[10px] absolute xl:block hidden"
         alt="logo"
         width={150}
       />
@@ -181,28 +181,28 @@ const RightSidebar = () => {
           Featured Coupons
         </span>
         <div className="border flex flex-row gap-2 border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-2 p-3 px-5">
-          <div className="bg-white border border-solid border-[#2BAAE1] p-2 flex justify-center items-center rounded-xl w-[50px] h-[50px]">
+          <div className="bg-white border border-solid border-[#2BAAE1] p-1 flex justify-center items-center rounded-xl w-[60px] h-[60px]">
             <img
               src="images/Logo-google-icon-PNG.png"
               alt="google"
-              width={40}
+              width={50}
             />
           </div>
-          <div className="bg-white border border-solid border-[#2BAAE1] p-2 flex justify-center items-center rounded-xl w-[50px] h-[50px]">
+          <div className="bg-white border border-solid border-[#2BAAE1] p-1 flex justify-center items-center rounded-xl w-[60px] h-[60px]">
             <img src="images/300px-EBay_logo.svg.png" alt="google" width={40} />
           </div>
-          <div className="bg-white border border-solid border-[#2BAAE1] p-2 flex justify-center items-center rounded-xl w-[50px] h-[50px]">
+          <div className="bg-white border border-solid border-[#2BAAE1] p-1 flex justify-center items-center rounded-xl w-[60px] h-[60px]">
             <img
               src="https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/amazon-512.png"
               alt="google"
-              width={40}
+              width={50}
             />
           </div>
-          <div className="bg-white border border-solid border-[#2BAAE1] p-2 flex justify-center items-center rounded-xl w-[50px] h-[50px]">
+          <div className="bg-white border border-solid border-[#2BAAE1] p-1 flex justify-center items-center rounded-xl w-[60px] h-[60px]">
             <img
               src="https://cdn.worldvectorlogo.com/logos/foot-locker-logo-2.svg"
               alt="google"
-              width={40}
+              width={50}
             />
           </div>
         </div>

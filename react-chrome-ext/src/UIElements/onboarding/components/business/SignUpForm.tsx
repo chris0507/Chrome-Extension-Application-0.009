@@ -8,7 +8,7 @@ import Dropdown from "../public/Dropdown";
 interface FormData {
   brandName: string;
   city: string;
-  ethnicity: string;
+  country: string;
   CEOname: string;
   CEOemail: string;
   companyID: string;
@@ -53,7 +53,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
   };
 
   const handleSelect = (value: string) => {
-    setValue("ethnicity", value, { shouldValidate: true });
+    setValue("country", value, { shouldValidate: true });
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -67,7 +67,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
   const initialValues = {
     brandName: "",
     city: "",
-    ethnicity: "",
+    country: "",
     CEOname: "",
     CEOemail: "",
     companyID: "",
@@ -137,7 +137,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
       errors.email ||
       errors.password ||
       errors.city ||
-      errors.ethnicity
+      errors.country
     ) {
       return 0;
     }
@@ -153,7 +153,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
         <h1 className="text-[#932580] text-2xl font-bold mb-4">
           New Business users
         </h1>
-        <div className="w-full flex sm:flex-row flex-col justify-center sm:gap-5">
+        <div className="w-full flex sm:flex-row flex-col mb-3 justify-center sm:gap-5">
           <div className="w-full">
             <div className="mb-3">
               <input
@@ -179,14 +179,30 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
                   City
                 </option>
                 <option value="US">United States</option>
+                <option value="UK">United Kingdom</option>
                 <option value="CA">Canada</option>
                 <option value="FR">France</option>
                 <option value="DE">Germany</option>
               </select>
             </div>
             <div className="mb-3">
-              <Dropdown onSelect={handleSelect} />
+              <select
+                id="country"
+                className="bg-[#932580] text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-white pr-10"
+                {...register("country")}
+                required
+              >
+                <option value="" disabled selected>
+                  Country
+                </option>
+                <option value="US">United States</option>
+                <option value="UK">United Kingdom</option>
+                <option value="CA">Canada</option>
+                <option value="FR">France</option>
+                <option value="DE">Germany</option>
+              </select>
             </div>
+
             <div className="mb-3">
               <input
                 className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
@@ -241,10 +257,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
             </div>
             <div className="mb-3">
               <input
-                className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="logo"
                 // type="file"
-                type="text"
+                type="file"
                 placeholder="Upload logo"
                 {...register("logo")}
                 required
@@ -301,6 +317,31 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
             </div>
           </div>
         </div>
+        <label className="flex mb-3 items-center space-x-2">
+          <input
+            type="checkbox"
+            // checked={isTermsAccepted}
+            // onChange={handleCheckboxChange}
+            required
+            className="form-checkbox h-4 w-4 shadow-none ring-0 text-[#3FA9F5]"
+          />
+          <span className="text-sm text-white">
+            By signing up, you agree to the{" "}
+            <a href="#" className="text-blue-500">
+              Terms and Conditions
+            </a>{" "}
+            and{" "}
+            <a href="#" className="text-blue-500">
+              Privacy Policy
+            </a>
+          </span>
+        </label>
+        <button
+          onClick={() => handleSubmit(submitForm)()}
+          className="bg-[#932580] w-full hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Register
+        </button>
       </form>
     </div>
   );

@@ -16,9 +16,7 @@ const Footer = () => {
         <div>
           <img src="./images/parental_advisory.png" width={90} alt="" />
         </div>
-        <div>
-          <img src="./images/Gooii.png" width={86} alt="" />
-        </div>
+        
       </div>
     </div>
   );

@@ -8,10 +8,11 @@ const Home = () => {
       <div className="container">
         <div className="flex w-full  relative items-start">
           <MenuModal userType="public" />
-          <div className="flex w-full flex-col xl:flex-row ">
-            <div className="flex-auto w-full xl:w-2/3 h-fit  p-5 bg-[#1D3D4A] rounded-lg">
-              <BlocksGrid />
+          <div className="flex w-full flex-col xl:flex-row xl:items-start items-center ">
+            <div className="xl:hidden w-full flex mb-3 flex-row-reverse ">
+              <img src="/images/logo.png" className="" alt="logo" width={150} />
             </div>
+            <BlocksGrid />
             <RightSidebar />
           </div>
         </div>

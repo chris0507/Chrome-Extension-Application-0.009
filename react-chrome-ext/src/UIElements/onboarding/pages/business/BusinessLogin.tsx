@@ -31,7 +31,7 @@ const BusinessLogin = () => {
   }, [handleStatusChange, loginStatus]);
 
   return (
-    <div className="h-screen w-full flex justify-center items-center">
+    <div className="w-full flex justify-center items-center">
       <div className=" container flex flex-col justify-center items-center gap-6 p-5">
         {isLoading && (
           <div className="fixed inset-0 bg-[#00080D] bg-opacity-75 z-20 flex justify-center items-center">

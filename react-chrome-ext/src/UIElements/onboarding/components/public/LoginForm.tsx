@@ -143,9 +143,16 @@ const LoginForm: React.FC<LoginFormProps> = ({
             <p className="text-red-500">{submitErrors?.password}</p>
           )}
         </div>
-        <p className="text-white text-xs text-center cursor-pointer">
+        <p className="text-white text-xs mb-3 cursor-pointer text-left">
           Reset password
         </p>
+
+        <button
+          onClick={() => handleSubmit(submitForm)()}
+          className="bg-[#3FA9F5] w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Login
+        </button>
       </form>
     </div>
   );

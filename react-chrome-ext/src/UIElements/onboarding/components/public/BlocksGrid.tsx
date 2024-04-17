@@ -55,6 +55,7 @@ const BlocksGrid = () => {
     col: null,
   });
   const [inputValue, setInputValue] = useState("asd");
+  const [gridWidth, setGridWidth] = useState(false);
   const navigate = useNavigate();
 
   const checkIcons = (row: number, col: number) => {
@@ -136,9 +137,18 @@ const BlocksGrid = () => {
   useEffect(() => {
     // Calculate block size
     const updateBlockSize = () => {
-      if(BlockContainer.current) {
-        const size = Math.floor((BlockContainer.current.clientWidth - 4*7 - 40)/8);
-        setBlockSize(size);
+      if (BlockContainer.current) {
+        if (BlockContainer.current.clientWidth < window.innerHeight) {
+          const size = Math.floor(
+            (BlockContainer.current.clientWidth - 4 * 7 - 40) / 8
+          );
+          setBlockSize(size);
+          setGridWidth(true);
+        } else {
+          const size = Math.floor((window.innerHeight - 4 * 7 - 140) / 8);
+          setBlockSize(size);
+          setGridWidth(false);
+        }
       }
       // Since we want to fit 8 blocks in the height, each block should take up 1/8 of the available viewport height minus the gaps
       // const size = Math.floor((window.innerHeight - 7 * 5 - 40) / 8); // For 7 gaps of 5px each
@@ -150,55 +160,59 @@ const BlocksGrid = () => {
     window.addEventListener("resize", updateBlockSize);
     updateBlockSize(); // Initial calculation
 
-
-
     return () => {
       window.removeEventListener("resize", updateBlockSize);
     };
   }, []);
 
   return (
-    <div className="grid grid-cols-8 gap-[5px]" ref={BlockContainer} >
-      {range(8).map((row) =>
-        range(8).map((col) => {
-          const icon = checkIcons(row, col);
-          const blockClasses = `border-2 flex items-center rounded-lg cursor-pointer ${getBackgroundColor(
-            row,
-            col
-          )}`;
+    <div className={`flex-auto w-full xl:w-2/3 h-fit  p-5 bg-[#1D3D4A] rounded-lg ` }>
+      <div className="grid grid-cols-8 gap-[5px]" ref={BlockContainer}>
+        {range(8).map((row) =>
+          range(8).map((col) => {
+            const icon = checkIcons(row, col);
+            const blockClasses = `border-2 flex items-center rounded-lg cursor-pointer ${getBackgroundColor(
+              row,
+              col
+            )}`;
 
-          if (icon) {
-            return (
-              <div
-                key={`${row}-${col}`}
-                className={`${blockClasses} hover:bg-[#FFF200] hover:border-[#F9AA16]`}
-                style={{ width: `${blockSize}px`, height: `${blockSize}px` }} // Set both width and height to blockSize
-                onClick={(e) => handleClick(row, col, e)}
-              >
-                {icon && (
-                  <img src={icon.image} className="rounded-lg" alt={icon.key} />
-                )}
-              </div>
-            );
-          } else
-            return (
-              <div
-                key={`${row}-${col}`}
-                className={blockClasses}
-                style={{ width: `${blockSize}px`, height: `${blockSize}px` }} // Set both width and height to blockSize
-                onClick={(e) => handleClick(row, col, e)}
-              />
-            );
-        })
-      )}
-      {tooltip.show && (
-        <div
-          className="tooltip"
-          style={{ position: "fixed", top: tooltip.y, left: tooltip.x }}
-        >
-          {tooltip.content}
-        </div>
-      )}
+            if (icon) {
+              return (
+                <div
+                  key={`${row}-${col}`}
+                  className={`${blockClasses} hover:bg-[#FFF200] hover:border-[#F9AA16]`}
+                  style={{ width: `${blockSize}px`, height: `${blockSize}px` }} // Set both width and height to blockSize
+                  onClick={(e) => handleClick(row, col, e)}
+                >
+                  {icon && (
+                    <img
+                      src={icon.image}
+                      className="rounded-lg"
+                      alt={icon.key}
+                    />
+                  )}
+                </div>
+              );
+            } else
+              return (
+                <div
+                  key={`${row}-${col}`}
+                  className={blockClasses}
+                  style={{ width: `${blockSize}px`, height: `${blockSize}px` }} // Set both width and height to blockSize
+                  onClick={(e) => handleClick(row, col, e)}
+                />
+              );
+          })
+        )}
+        {tooltip.show && (
+          <div
+            className="tooltip"
+            style={{ position: "fixed", top: tooltip.y, left: tooltip.x }}
+          >
+            {tooltip.content}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
