@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { range } from "lodash";
 
+import axios from "axios";
+
 interface TooltipProps {
   show: boolean;
   content: React.ReactNode;
@@ -73,6 +75,7 @@ const BusinessBlocksGrid = () => {
     col: null,
   });
   const [inputValue, setInputValue] = useState("");
+  const [userLogo, setUserLogo] = useState<string>("");
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const checkIcons = (row: number, col: number) => {
@@ -83,6 +86,22 @@ const BusinessBlocksGrid = () => {
     }
     return null;
   };
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
+
+  const getUserDetails = async () => {
+    //get token from local storage
+    const token = localStorage.getItem("token");
+    //send it to backend to get user logo using axios
+    await axios.post(`${API_BASE_URL}getUserDetails`, { token }).then((res) => {
+      console.log(res.data);
+      setUserLogo(res.data.data.logo);
+      //set icons to the response
+    });
+  };
+
+  useEffect(() => {
+    getUserDetails();
+  }, []);
 
   const handleClick = (row: number, col: number, e: React.MouseEvent) => {
     const icon = checkIcons(row, col);
@@ -122,7 +141,8 @@ const BusinessBlocksGrid = () => {
                 ></input>
               </div>
               <div className="text-white">
-                Weight: <span className=" text-base font-bold" >2</span>sch | per user
+                Weight: <span className=" text-base font-bold">2</span>sch | per
+                user
               </div>
             </div>
             <div className="flex justify-end">
@@ -231,7 +251,7 @@ const BusinessBlocksGrid = () => {
                   onClick={(e) => handleClick(row, col, e)}
                 >
                   {icon && (
-                    <img src={icon.image} alt={icon.key} className="rounded" />
+                    <img src={`${API_BASE_URL}${userLogo}`} alt={icon.key} className="rounded" />
                   )}
                 </div>
               );
@@ -256,31 +276,15 @@ const BusinessBlocksGrid = () => {
           </div>
         )}
       </div>
-      <div className="w-full h-5 grid text-[10px] grid-cols-8 text-white" >
-        <div className="flex justify-center" >
-          1%
-        </div>
-        <div className="flex justify-center" >
-          20%
-        </div>
-        <div className="flex justify-center" >
-          7%
-        </div>
-        <div className="flex justify-center" >
-          22%
-        </div>
-        <div className="flex justify-center" >
-          9%
-        </div>
-        <div className="flex justify-center" >
-          0%
-        </div>
-        <div className="flex justify-center" >
-          0%
-        </div>
-        <div className="flex justify-center" >
-          4%
-        </div>
+      <div className="w-full h-5 grid text-[10px] grid-cols-8 text-white">
+        <div className="flex justify-center">1%</div>
+        <div className="flex justify-center">20%</div>
+        <div className="flex justify-center">7%</div>
+        <div className="flex justify-center">22%</div>
+        <div className="flex justify-center">9%</div>
+        <div className="flex justify-center">0%</div>
+        <div className="flex justify-center">0%</div>
+        <div className="flex justify-center">4%</div>
       </div>
     </div>
   );

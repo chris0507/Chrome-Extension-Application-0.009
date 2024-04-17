@@ -34,8 +34,15 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
     setLoading(true);
 
     data.email = data.email.toLowerCase();
+    data.logo = data.logo[0];
+    console.log('data', data);
     axios
-      .post(`${API_BASE_URL}business/register`, data)
+      .post(`${API_BASE_URL}business/register`, data,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      
+      })
       .then((res) => {
         localStorage.setItem("verifyEmail", "true");
         navigate("/verify-email", {

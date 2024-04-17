@@ -5,7 +5,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const os = require("os");
 const multer = require("multer");
+const path = require("path");
 const upload = multer({ dest: "uploads/" });
+const findRoot = require("find-root");
 
 const { PORT, SECRET_ACCESS_TOKEN } = require("./config/index.js");
 const { connectSheet, doc } = require("./google/google.js");
@@ -32,6 +34,8 @@ app.disable("x-powered-by"); //Reduce fingerprinting
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+app.use("/uploads", express.static(path.join(findRoot(__dirname), "uploads")));
 
 //CONNECT DATABASE
 connectSheet();
@@ -143,6 +147,39 @@ app.post("/login", async (req, res) => {
   }
   return res.status(404).json({
     status: "not-exist",
+  });
+});
+
+app.post("/getUserDetails", async (req, res) => {
+  //check token
+  var token = req.body.token;
+  if (!token) {
+    return res.status(404).json({
+      status: "null_token",
+      data: [],
+      message: "Token does not exist",
+    });
+  }
+  //verify token with jwt and get user details
+  jwt.verify(token, SECRET_ACCESS_TOKEN, async (err, decoded) => {
+    if (err) {
+      console.error("Token verification failed:", err.message);
+    } else {
+      const email = decoded.email;
+      const sheet = doc.sheetsByIndex[1];
+      const rows = await sheet.getRows();
+      for (let row of rows) {
+        if (email == row.get("email")) {
+          return res.status(200).json({
+            status: "success",
+            data: {
+              email: email,
+              logo: row.get("logo"),
+            },
+          });
+        }
+      }
+    }
   });
 });
 
@@ -267,8 +304,8 @@ app.post("/urls/add", async (req, res) => {
     //add url to sheet
     await sheet.addRow({
       url: url,
-      email: '',
-      created_at: new Date().toISOString().slice(0,10),
+      email: "",
+      created_at: new Date().toISOString().slice(0, 10),
     });
 
     const rows = await sheet.getRows();
@@ -322,7 +359,7 @@ app.get("/urls", async (req, res) => {
 app.post("/urls/delete", async (req, res) => {
   try {
     const { url } = req.body;
-    console.log('url:', url)
+    console.log("url:", url);
     const sheet = doc.sheetsByIndex[2];
     const rows = await sheet.getRows();
     let data = [];
@@ -410,7 +447,7 @@ app.post("/business/login", async (req, res) => {
   });
 });
 
-app.post("/business/register", upload.single('logo') ,async (req, res) => {
+app.post("/business/register", upload.single("logo"), async (req, res) => {
   const {
     brandName,
     city,
