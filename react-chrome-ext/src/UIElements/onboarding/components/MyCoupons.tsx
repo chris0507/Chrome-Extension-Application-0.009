@@ -16,7 +16,7 @@ const MyCoupons = () => {
               .map((_, index) => (
                 <div key={index} className="mb-3">
                   <div className="flex justify-between items-center gap-5 border border-white rounded-2xl bg-[#232F3E] p-4">
-                    <div className="w-[10%] ml-auto mr-auto">
+                    <div className=" ml-auto mr-auto">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 508.97 441.88"

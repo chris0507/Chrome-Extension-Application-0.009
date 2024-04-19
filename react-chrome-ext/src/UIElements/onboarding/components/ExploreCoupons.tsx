@@ -13,6 +13,10 @@ const ExploreCoupons = () => {
       setIsMenuOpen(false);
     }
   };
+  const visitWebsite = () => {
+    window.open("https://anniesburgershack.com", "_blank");
+  };
+
   return (
     <div className="h-screen w-full flex justify-center items-center">
       <div className="container h-full ">
@@ -51,7 +55,9 @@ const ExploreCoupons = () => {
                       10% Off All Burgers & Meals
                     </p>
                     <div className="flex justify-end items-center gap-3">
-                      <span className="text-dark font-semibold">Cost: 20sch |</span>
+                      <span className="text-dark font-semibold">
+                        Cost: 20sch |
+                      </span>
                       <button
                         className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full"
                         onClick={() => navigate("/my-coupons")}
@@ -168,7 +174,10 @@ const ExploreCoupons = () => {
             </div>
             <div className="w-[20%] inset-0 bg-[#00080D] bg-opacity-75 h-full p-4 flex flex-col items-center justify-center">
               <span className="text-white text-2xl font-bold">RANK: 2000</span>
-              <button className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full">
+              <button
+                className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full"
+                onClick={()=>visitWebsite()}
+              >
                 <span className="py-1 pr-2">View website</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

@@ -44,13 +44,13 @@ const NavbarMenu = () => {
           <div className="flex justify-start items-center ">
             <MenuModal userType={userType} />
             {userType === "public" ? (
-              <div className="flex gap-2 text-[#3FA9F5]">
-                <span className="text-2xl font-bold">200 sch |</span>
-                <span className="flex items-center text-xl">Max 500</span>
+              <div className=" gap-1 text-[#3FA9F5] md:flex hidden">
+                <span className="lg:text-2xl text-xl font-bold">200 sch |</span>
+                <span className="flex items-center textl-xl">Max 500</span>
               </div>
             ) : (
-              <div className="flex gap-2 text-[#9E4080]">
-                <span className="text-2xl font-bold">200 sch |</span>
+              <div className="md:flex hidden gap-1 text-[#9E4080]">
+                <span className="lg:text-2xl text-xl font-bold">200 sch |</span>
                 <span className="flex items-center text-xl">Max 500</span>
               </div>
             )}
@@ -89,9 +89,13 @@ const NavbarMenu = () => {
           ) : null}
           <div className="flex justify-end items-center gap-3 mr-4">
             {userType === "public" ? (
-              <span className="text-2xl font-bold text-[#3FA9F5]">{title}</span>
+              <span className="text-2xl md:block hidden font-bold text-[#3FA9F5]">
+                {title}
+              </span>
             ) : (
-              <span className="text-2xl font-bold text-[#9E4080]">{title}</span>
+              <span className="text-2xl md:block hidden font-bold text-[#9E4080]">
+                {title}
+              </span>
             )}
             <img src="/images/logo.png" className="" alt="logo" width={120} />
           </div>

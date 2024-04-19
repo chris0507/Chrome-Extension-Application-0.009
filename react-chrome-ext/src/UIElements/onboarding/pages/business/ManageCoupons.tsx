@@ -2,26 +2,29 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ManageCoupons = () => {
-  const items = [{
-    image: "./images/annie1.png",
-    title: "10% Off All Burgers & Meals",
-    description: "Annie's Burger Shack dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod temporividunt ut labore et dolore magna aliquyam erat, sed diam vluptua.",
-    cost: "20 sch"  
-  },
-  {
-    image: "./images/annie1.png",
-    title: "An extra ONE us!",
-    description: "Annie's Burger Shack dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod inviduntut labore et dolore magna aliquyam erat, sed diam.",
-    cost: "400 sch"  
-  },
-  {
-    image: "./images/annie1.png",
-    title: "Free drink on us!",
-    description: "Annie's Burger Shack dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.",
-    cost: "15 sch"  
-  }
-
-]
+  const items = [
+    {
+      image: "./images/annie1.png",
+      title: "10% Off All Burgers & Meals",
+      description:
+        "Annie's Burger Shack dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod temporividunt ut labore et dolore magna aliquyam erat, sed diam vluptua.",
+      cost: "20 sch",
+    },
+    {
+      image: "./images/annie1.png",
+      title: "An extra ONE us!",
+      description:
+        "Annie's Burger Shack dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod inviduntut labore et dolore magna aliquyam erat, sed diam.",
+      cost: "400 sch",
+    },
+    {
+      image: "./images/annie1.png",
+      title: "Free drink on us!",
+      description:
+        "Annie's Burger Shack dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.",
+      cost: "15 sch",
+    },
+  ];
   const navigate = useNavigate();
   return (
     <div className="w-full flex justify-center">
@@ -74,7 +77,8 @@ const ManageCoupons = () => {
             </div>
           </div>
           <div className="w-full h-full border border-solid border-[#932580] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-5 ">
-            {items && items.map((item, index) => (
+            {items &&
+              items.map((item, index) => (
                 <div key={index} className="mb-3">
                   <div className="flex justify-between items-center gap-5 border border-white rounded-2xl bg-[#232F3E] p-4">
                     <div className="w-[10%]  ml-auto mr-auto">
@@ -84,12 +88,12 @@ const ManageCoupons = () => {
                       <p className="text-white text-xl font-bold mb-3">
                         {item.title}
                       </p>
-                      <p className="text-white text-sm">
-                        {item.description}
-                      </p>
+                      <p className="text-white text-sm">{item.description}</p>
                     </div>
                     <div className="flex flex-col justify-center items-center gap-3">
-                      <p className="text-white text-xl mb-1">Cost {item.cost} |</p>
+                      <p className="text-white text-xl mb-1 text-nowrap">
+                        Cost {item.cost} |
+                      </p>
                       <button
                         className="flex items-center justify-between bg-[#932580] px-2 pl-5 rounded-full"
                         onClick={() => {
