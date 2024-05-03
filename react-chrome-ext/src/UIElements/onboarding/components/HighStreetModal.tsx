@@ -12,10 +12,14 @@ const HighStreetModal: React.FC<HighStreetModalProps> = ({ closeModal }) => {
     <div className="fixed inset-0 flex justify-center items-start bg-black bg-opacity-95 z-50 overflow-auto">
       <div className="container w-full ">
         <div className="gap-10 flex-col w-full flex items-center lg:items-start lg:flex-row">
-          <div className="flex flex-col w-full lg:px-0 px-5 lg:w-[30%] pt-5">
-            <div className="flex justify-start items-center">
+          <div className="flex flex-col w-full lg:px-0 relative px-5 lg:w-[30%] pt-5">
+            <div className="lg:hidden w-full absolute flex mb-3 flex-row-reverse ">
+              <img src="/images/logo.png" className="" alt="logo" width={150} />
+            </div>
+            <div className="flex  justify-start items-center">
               <img src="./images/annie1.png" alt="" />
             </div>
+
             <div className="flex flex-col mb-6 text-base">
               <p className="text-white text-2xl font-semibold mb-3">
                 Business overview
@@ -70,7 +74,12 @@ const HighStreetModal: React.FC<HighStreetModalProps> = ({ closeModal }) => {
                   userType === "business" ? "bg-[#932580]" : "bg-[#43A9F5]"
                 }`}
               >
-                <span className="py-1 pr-2">View website</span>
+                <span
+                  className="py-1 pr-2"
+                  onClick={() => window.open("http://your-url.com", "_blank")}
+                >
+                  View website
+                </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -94,7 +103,7 @@ const HighStreetModal: React.FC<HighStreetModalProps> = ({ closeModal }) => {
           </div>
           <div className="flex flex-auto gap-5 flex-col">
             <div className="flex flex-col gap-5 items-end justify-end">
-              <div>
+              <div className=" lg:block hidden">
                 <img src="./images/logo.png" width={120} alt="" />
               </div>
               <div>

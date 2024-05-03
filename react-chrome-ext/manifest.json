@@ -7,7 +7,7 @@
     "default_popup": "index.html",
     "default_title": "0.009"
   },
-  "permissions": ["tabs"],
+  "permissions": [""],
   "background": {
     "persistent": false
   },

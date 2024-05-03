@@ -9,12 +9,13 @@ const CustomWrapper = () => {
   const token = localStorage.getItem("token");
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location.pathname);
+  console.log("custom wrapper:", location.pathname);
   useEffect(() => {
+
     if (token) checkTokenValidity();
     else {
       console.log("not token");
-      if (location.pathname === "/home") navigate("/");
+      navigate("/");
     }
   }, []);
 
@@ -57,12 +58,15 @@ const CustomWrapper = () => {
         }
       })
       .catch((err) => {
-        if (location.pathname === "/home") navigate("/");
-        if (location.pathname == "/business-home") {
-          navigate("/business");
+        console.log(err);
+        if (err.response.data.status == "invalid_token") {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userType");
+          navigate("/");
         }
       });
   };
+
   return (
     <>
       <div

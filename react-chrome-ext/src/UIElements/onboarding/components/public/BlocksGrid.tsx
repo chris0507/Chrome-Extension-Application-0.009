@@ -166,52 +166,63 @@ const BlocksGrid = () => {
   }, []);
 
   return (
-    <div className={`flex-auto w-full xl:w-2/3 h-fit  p-5 bg-[#1D3D4A] rounded-lg ` }>
-      <div className="grid grid-cols-8 gap-[5px]" ref={BlockContainer}>
-        {range(8).map((row) =>
-          range(8).map((col) => {
-            const icon = checkIcons(row, col);
-            const blockClasses = `border-2 flex items-center rounded-lg cursor-pointer ${getBackgroundColor(
-              row,
-              col
-            )}`;
+    <div
+      className={`flex-auto w-full flex xl:w-2/3 h-fit xl:h-screen justify-center items-center `}
+      ref={BlockContainer}
+    >
+      <div className="w-fit   p-5 bg-[#1D3D4A] rounded-lg">
+        <div className="grid grid-cols-8 gap-[5px]">
+          {range(8).map((row) =>
+            range(8).map((col) => {
+              const icon = checkIcons(row, col);
+              const blockClasses = `border-2 flex items-center rounded-lg cursor-pointer ${getBackgroundColor(
+                row,
+                col
+              )}`;
 
-            if (icon) {
-              return (
-                <div
-                  key={`${row}-${col}`}
-                  className={`${blockClasses} hover:bg-[#FFF200] hover:border-[#F9AA16]`}
-                  style={{ width: `${blockSize}px`, height: `${blockSize}px` }} // Set both width and height to blockSize
-                  onClick={(e) => handleClick(row, col, e)}
-                >
-                  {icon && (
-                    <img
-                      src={icon.image}
-                      className="rounded-lg"
-                      alt={icon.key}
-                    />
-                  )}
-                </div>
-              );
-            } else
-              return (
-                <div
-                  key={`${row}-${col}`}
-                  className={blockClasses}
-                  style={{ width: `${blockSize}px`, height: `${blockSize}px` }} // Set both width and height to blockSize
-                  onClick={(e) => handleClick(row, col, e)}
-                />
-              );
-          })
-        )}
-        {tooltip.show && (
-          <div
-            className="tooltip"
-            style={{ position: "fixed", top: tooltip.y, left: tooltip.x }}
-          >
-            {tooltip.content}
-          </div>
-        )}
+              if (icon) {
+                return (
+                  <div
+                    key={`${row}-${col}`}
+                    className={`${blockClasses} hover:bg-[#FFF200] hover:border-[#F9AA16]`}
+                    style={{
+                      width: `${blockSize}px`,
+                      height: `${blockSize}px`,
+                    }} // Set both width and height to blockSize
+                    onClick={(e) => handleClick(row, col, e)}
+                  >
+                    {icon && (
+                      <img
+                        src={icon.image}
+                        className="rounded-lg"
+                        alt={icon.key}
+                      />
+                    )}
+                  </div>
+                );
+              } else
+                return (
+                  <div
+                    key={`${row}-${col}`}
+                    className={blockClasses}
+                    style={{
+                      width: `${blockSize}px`,
+                      height: `${blockSize}px`,
+                    }} // Set both width and height to blockSize
+                    onClick={(e) => handleClick(row, col, e)}
+                  />
+                );
+            })
+          )}
+          {tooltip.show && (
+            <div
+              className="tooltip"
+              style={{ position: "fixed", top: tooltip.y, left: tooltip.x }}
+            >
+              {tooltip.content}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

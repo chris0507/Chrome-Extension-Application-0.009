@@ -114,16 +114,16 @@ const HighStreet = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="container flex-col w-full">
+      <div className="flex-col w-full">
         <div className="w-full text-white text-base gap-2 flex flex-row-reverse">
           <img src="./images/location.png" alt="" />
           <span>Local | National </span>
         </div>
-        <div className="m-3 mt-4 w-full">
+        <div className="m-3 mt-4 w-full flex flex-col items-center">
           {isModalOpen && <HighStreetModal closeModal={closeModal} />}
-          <div className="inset-0 bg-[#424648] bg-opacity-50 border border-white rounded-xl p-4 justify-around items-center mb-4 flex flex-wrap">
+          <div className="inset-0 bg-[#424648] bg-opacity-50 border border-white rounded-xl p-4 justify-around items-center mb-4 grid grid-cols-2 lg:grid-cols-6 w-fit sm:grid-cols-3">
             {Items1.map((item, index) => (
-              <div key={index} className=" ">
+              <div key={index} className=" flex flex-col items-center">
                 <img
                   src={item.image}
                   className="border border-white rounded-lg bg-white  cursor-pointer"
@@ -143,7 +143,7 @@ const HighStreet = () => {
               </div>
             ))}
           </div>
-          <div className="inset-0 bg-[#424648] bg-opacity-50 border border-white rounded-xl p-4 justify-around items-center mb-4 flex flex-wrap">
+          <div className="inset-0 bg-[#424648] bg-opacity-50 border border-white rounded-xl p-4 justify-around items-center mb-4 grid grid-cols-2 lg:grid-cols-6 w-fit sm:grid-cols-3">
             {Items2.map((item, index) => (
               <div key={index} className="flex flex-col items-center">
                 <img

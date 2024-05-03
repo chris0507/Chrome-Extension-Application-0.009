@@ -61,7 +61,7 @@ const generateAccessJWT = (email, ipAddresses) => {
     ipAddresses,
   };
   const options = {
-    expiresIn: "1h", // Token expiration time
+    expiresIn: "24h", // Token expiration time
   };
   return jwt.sign(payload, secretKey, options);
 };
@@ -188,8 +188,8 @@ app.post("/check-token", async (req, res) => {
   var userType = req.body.userType;
 
   if (!token) {
-    return res.status(404).json({
-      status: "null_token",
+    return res.status(500).json({
+      status: "invalid_token",
       data: [],
       message: "Token does not exist",
     });
@@ -197,6 +197,11 @@ app.post("/check-token", async (req, res) => {
   await jwt.verify(token, SECRET_ACCESS_TOKEN, (err, decoded) => {
     if (err) {
       console.error("Token verification failed:", err.message);
+      return res.status(500).json({
+        status: "invalid_token",
+        data: [],
+        message: "invalid_token",
+      });
     } else {
       if (decoded.email) {
         if (userType == "public") {
