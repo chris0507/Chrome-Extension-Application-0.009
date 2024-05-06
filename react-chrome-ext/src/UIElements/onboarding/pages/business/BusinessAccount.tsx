@@ -14,7 +14,7 @@ const BusinessAccount = () => {
   return (
     <div className="flex justify-center w-full">
       <div className="container flex-col ">
-        <div className=" w-2/3 flex justify-end pr-4">
+        <div className="  flex justify-end pr-4">
           <div className="flex flex-row gap-4">
             <button
               className="flex items-center justify-between bg-[#932580] text-white px-2 pl-4 rounded-full"
@@ -40,8 +40,8 @@ const BusinessAccount = () => {
             </button>
           </div>
         </div>
-        <div className="border w-2/3 border-solid border-[#9E4080] rounded-2xl bg-gradient-to-b from-[#3E3733] to-[#000000] to-35% py-10 m-5">
-          <div className="flex justify-around gap-5 ">
+        <div className="border w-full max-w-4xl border-solid border-[#9E4080] rounded-2xl bg-gradient-to-b from-[#3E3733] to-[#000000] to-35% py-10 m-5">
+          <div className="flex justify-around gap-5 md:flex-row flex-col ">
             <div className="w-full flex justify-center ">
               <form className="gap-3 mb-4 w-10/12 flex flex-col">
                 <p className="text-[#9E4080] text-2xl mb-4">Business account</p>

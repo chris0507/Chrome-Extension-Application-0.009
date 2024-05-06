@@ -3,6 +3,7 @@ import DropdownMenu from "../DropdownMenu";
 import { Progress } from "@material-tailwind/react";
 import { PieChart } from "react-minimal-pie-chart";
 import { useNavigate } from "react-router-dom";
+import { set } from "lodash";
 
 const BRightSidebar = () => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -26,7 +27,7 @@ const BRightSidebar = () => {
         >
           <div className="">
             <div className="flex justify-between pb-2 pl-3 px-1">
-              <span className="text-white text-base font-bold">
+              <span className="text-white text-base font-bold" >
                 Purchase sch |
               </span>
               <svg
@@ -59,7 +60,7 @@ const BRightSidebar = () => {
                   ></input>
                   <button
                     className="flex items-center justify-between bg-[#91257D] text-white px-2 rounded-full"
-                    onClick={showModal}
+                    onClick={()=> setIsMenuOpen(false)}
                   >
                     <span className="py-1 pr-2 text-white">Purchase sch</span>
                     <svg

@@ -76,7 +76,9 @@ const HighStreetModal: React.FC<HighStreetModalProps> = ({ closeModal }) => {
               >
                 <span
                   className="py-1 pr-2"
-                  onClick={() => window.open("http://your-url.com", "_blank")}
+                  onClick={() =>
+                    window.open("https://anniesburgershack.com/", "_blank")
+                  }
                 >
                   View website
                 </span>

@@ -114,12 +114,12 @@ const HighStreet = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="flex-col w-full">
-        <div className="w-full text-white text-base gap-2 flex flex-row-reverse">
+      <div className="flex-col w-full items-center flex">
+        <div className="w-full justify-end container text-white text-base gap-2 flex flex-row-reverse" style={{justifyContent: 'end'}}>
           <img src="./images/location.png" alt="" />
           <span>Local | National </span>
         </div>
-        <div className="m-3 mt-4 w-full flex flex-col items-center">
+        <div className="m-3 mt-4 w-fit flex flex-col items-center">
           {isModalOpen && <HighStreetModal closeModal={closeModal} />}
           <div className="inset-0 bg-[#424648] bg-opacity-50 border border-white rounded-xl p-4 justify-around items-center mb-4 grid grid-cols-2 lg:grid-cols-6 w-fit sm:grid-cols-3">
             {Items1.map((item, index) => (

@@ -18,6 +18,8 @@ const getBackgroundColor = (row: number, col: number): string => {
     : "bg-[#91257D] border-[#A03B7F]";
 };
 
+
+
 const BusinessBlocksGrid = () => {
   const icons = [
     {
@@ -88,6 +90,10 @@ const BusinessBlocksGrid = () => {
   };
   const API_BASE_URL = process.env.REACT_APP_API_URL;
 
+  const handleStartCampaign = () => {
+    setTooltip((prevTooltip) => ({ ...prevTooltip, show: false }));
+  };
+
   const getUserDetails = async () => {
     //get token from local storage
     const token = localStorage.getItem("token");
@@ -146,7 +152,7 @@ const BusinessBlocksGrid = () => {
               </div>
             </div>
             <div className="flex justify-end">
-              <button className="flex items-center justify-between bg-[#91257D] text-white px-4 rounded-full">
+              <button onClick={handleStartCampaign} className="flex items-center justify-between bg-[#91257D] text-white px-4 rounded-full">
                 <span className="py-1 pr-2 text-white">Start campaign</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -273,7 +279,7 @@ const BusinessBlocksGrid = () => {
                     }} // Set both width and height to blockSize
                     onClick={(e) => handleClick(row, col, e)}
                   >
-                    {icon && (
+                    {userLogo && (
                       <img
                         src={`${API_BASE_URL}${userLogo}`}
                         alt={icon.key}
