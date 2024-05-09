@@ -28,6 +28,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
   const submitForm = (data: FormData) => {
     if (!validate()) return;
     setLoading(true);
+    console.log('api_abse_url:', API_BASE_URL)
     axios
       .post(`${API_BASE_URL}login`, data)
       .then((res) => {
