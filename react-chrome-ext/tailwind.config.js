@@ -12,6 +12,7 @@ module.exports = {
   theme: {
     extend: {},
   },
+  darkMode:'class',
   variants: {
     extend: {
       textColor: ['placeholder'],

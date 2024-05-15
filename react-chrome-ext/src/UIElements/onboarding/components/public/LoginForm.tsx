@@ -5,6 +5,7 @@ import axios from "axios";
 import env from "react-dotenv";
 import { NotVerificationToast, SuccessLoginToast } from "../Alert";
 import { getValue } from "@testing-library/user-event/dist/utils";
+import { Modal, Button } from "flowbite-react";
 
 interface LoginFormProps {
   onStatusChange: (status: string) => void;
@@ -24,6 +25,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
   const { register, getValues, handleSubmit, watch } = useForm<FormData>();
   const navigate = useNavigate();
   const [submitErrors, setSubmitErrors] = useState<FormData>();
+  const [showReSetPassword, setShowReSetPassword] = useState<boolean>(false);
+
+  const handleReSetPassword = () => {
+    setShowReSetPassword(true);
+  };
 
   const submitForm = (data: FormData) => {
     if (!validate()) return;
@@ -144,9 +150,43 @@ const LoginForm: React.FC<LoginFormProps> = ({
             <p className="text-red-500">{submitErrors?.password}</p>
           )}
         </div>
-        <p className="text-white text-xs mb-3 cursor-pointer text-left">
-          Reset password
-        </p>
+
+        <button
+          data-modal-target="default-modal"
+          data-modal-toggle="default-modal"
+          className="text-white text-xs mb-3 cursor-pointer text-left"
+          type="button"
+          onClick={() => setShowReSetPassword(true)}
+        >
+          Reset Password
+        </button>
+        <Modal
+          show={showReSetPassword}
+          onClose={() => setShowReSetPassword(false)}
+        >
+          <div className="border border-solid border-[#2F2F2F]  bg-gradient-to-b from-[#797A7D] to-[#000000]">
+            <Modal.Header>Reset Password</Modal.Header>
+            <Modal.Body>
+              <div className="space-y-6">
+                <label htmlFor="">Enter Your Email Address</label>
+                <input
+                  className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  id="email"
+                  type="email"
+                  placeholder="Email address"
+                  {...register("email")}
+                  required
+                />
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={() => setShowReSetPassword(false)}>Reset</Button>
+              <Button color="gray" onClick={() => setShowReSetPassword(false)}>
+                Cancel
+              </Button>
+            </Modal.Footer>
+          </div>
+        </Modal>
 
         <button
           onClick={() => handleSubmit(submitForm)()}
