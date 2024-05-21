@@ -150,6 +150,106 @@ app.post("/login", async (req, res) => {
   });
 });
 
+
+app.post("/verify-code", async (req, res) => {
+  const { email, code, type } = req.body;
+  let rows = []
+  if( type == "public") {
+    const sheet = doc.sheetsByIndex[0];
+    rows = await sheet.getRows();
+  } else if(type == "business") {
+    const sheet = doc.sheetsByIndex[1];
+    rows = await sheet.getRows();
+  }
+
+  for (let row of rows) {
+    if (email == row.get("email")) {
+      if (code == row.get("code")) {
+        row.assign({ status: "1" });
+        await row.save();
+        const token = generateAccessJWT(email, ipAddresses);
+        return res.status(200).json({
+          status: "success",
+          data: token,
+          message: "Successfully verified",
+        });
+      } else {
+        return res.status(200).json({
+          status: "wrong-code",
+          data: [],
+          message: "Wrong Code",
+        });
+      }
+    }
+  }
+});
+
+app.post('/reset-password', async (req, res) => {
+  const { email, type, password } = req.body;
+  let rows = []
+  if( type == "public") {
+    const sheet = doc.sheetsByIndex[0];
+    rows = await sheet.getRows();
+  } else if(type == "business") {
+    const sheet = doc.sheetsByIndex[1];
+    rows = await sheet.getRows();
+  }
+
+  for (let row of rows) {
+    if (email == row.get("email")) {
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      row.assign({ password: hashedPassword });
+      await row.save();
+      return res.status(200).json({
+        status: "success",
+        message: "Successfully reset password",
+      });
+    }
+  }
+  return res.status(404).json({
+    status: "not-exist",
+    message: "Email does not exist",
+  });
+});
+
+app.post("/forgot-password", async (req, res) => {
+  const { email, type } = req.body;
+  let rows
+  if(type == "public") {
+    const sheet = doc.sheetsByIndex[0];
+     rows = await sheet.getRows();
+  }
+  else if(type == "business") {
+    const sheet = doc.sheetsByIndex[1];
+     rows = await sheet.getRows();
+  }
+
+  for (let row of rows) {
+    if (email == row.get("email")) {
+      const verifyCode = generateVerificationCode();
+      const response = await sendEmail({
+        emailType: 4,
+        email,
+        verifyCode,
+      });
+
+      row.assign({ code: verifyCode });
+      await row.save();
+
+      if (response === true) {
+        return res.status(200).json({
+          status: "success",
+          message: "Successfully sent email",
+        });
+      } else return res.send("Wrong Sent Email");
+    }
+  }
+  return res.status(404).json({
+    status: "not-exist",
+    message: "Email does not exist",
+  });
+});
+
 app.post("/getUserDetails", async (req, res) => {
   //check token
   var token = req.body.token;

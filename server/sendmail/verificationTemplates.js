@@ -109,6 +109,102 @@ const createVerficiationMailContent = ({ email, verifyCode }) => ({
 
 </html>`,
 });
+const createPasswordResetVerficiationMailContent = ({ email, verifyCode }) => ({
+  from: process.env.MAILER_EMAIL,
+  to: email,
+  subject: "0.009 Password reset",
+  html: `<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 50%;
+            border: 2px solid #2F2F2F;
+            border-radius: 20px;
+            background: linear-gradient(to bottom, #797A7D, #000000 35%);
+            padding: 20px;
+
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid #fff;
+            padding-bottom: 10px;
+        }
+
+        .header img {
+            width: 80px;
+        }
+
+        .header .text {
+            color: #fff;
+            font-size: 20px;
+            margin-left: 10px;
+        }
+
+        .content {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .content .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .content .message {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .content .code {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body style="
+    font-family: 'Aleo', serif;
+    background-color: #1A1A1A;
+    padding: 5px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    ">
+    <div class="container" style="margin:auto">
+        <div class="header">
+            <img src="https://i.ibb.co/T11dRkZ/icon48.png" alt="0.009" width="80">
+            <span class="text">0.009 Demo</span>
+        </div>
+        <div class="content">
+            <div class="title">Dear User</div>
+            <div class="message">Thank you for requesting a password reset, and we understand that these type of things happen. You will need to verify your email address to continue your access to the 0.009 demo.</div>
+            <div class="message">Enter the following code to verify your email address:</div>
+            <div class="code">${verifyCode}</div>
+        </div>
+    </div>
+</body>
+
+</html>`,
+});
 
 const sendPublicUserMailContent = ({ email }) => ({
   from: process.env.MAILER_EMAIL,
@@ -922,7 +1018,20 @@ const sendEmail = async ({
             console.log("Email sent: " + info.response);
           }
         };
-    }
+    } else if (emailType === 4) {
+        const mailOptions = createPasswordResetVerficiationMailContent({
+            email,
+            verifyCode,
+        });
+        await transporter.sendMail(mailOptions),
+            function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log("Email sent: " + info.response);
+            }
+            };
+        }
     return true;
   } catch (err) {
     return false;

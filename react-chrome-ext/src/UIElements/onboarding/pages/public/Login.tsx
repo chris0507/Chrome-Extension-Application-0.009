@@ -14,6 +14,8 @@ import Footer from "../../components/Footer";
 const Login = () => {
   const [loginStatus, setLoginStatus] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isResetpasswordEmailValid, setIsResetpasswordEmailValid] =
+    useState<boolean>(false);
   const handleStatusChange = (newStatus: React.SetStateAction<string>) => {
     setLoginStatus(newStatus);
   };
@@ -28,8 +30,10 @@ const Login = () => {
     } else if (loginStatus == "existed_email") {
       ExistEmailToast();
     }
+
+    if (isResetpasswordEmailValid) NoExistToast();
     setLoginStatus("");
-  }, [handleStatusChange, loginStatus]);
+  }, [handleStatusChange, loginStatus, isResetpasswordEmailValid]);
 
   return (
     <div className=" w-full flex justify-center items-center">
@@ -53,6 +57,7 @@ const Login = () => {
             <LoginForm
               onStatusChange={handleStatusChange}
               setLoading={setIsLoading}
+              setResetpasswordEmailValid={setIsResetpasswordEmailValid}
             />
             <SignUpForm setLoading={setIsLoading} />
           </div>

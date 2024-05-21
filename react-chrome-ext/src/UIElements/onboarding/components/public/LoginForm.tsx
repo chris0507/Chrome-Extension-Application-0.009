@@ -3,13 +3,20 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import env from "react-dotenv";
-import { NotVerificationToast, SuccessLoginToast } from "../Alert";
+import {
+  NotVerificationToast,
+  VerifyCodeSentSuccessFullyToast,
+  SuccessLoginToast,
+  SuccessPasswordChangedToast,
+  SomeThingwentWrongToast,
+} from "../Alert";
 import { getValue } from "@testing-library/user-event/dist/utils";
 import { Modal, Button } from "flowbite-react";
 
 interface LoginFormProps {
   onStatusChange: (status: string) => void;
   setLoading: (status: boolean) => void;
+  setResetpasswordEmailValid: (status: boolean) => void;
 }
 interface FormData {
   email: string;
@@ -19,6 +26,7 @@ interface FormData {
 const LoginForm: React.FC<LoginFormProps> = ({
   onStatusChange,
   setLoading,
+  setResetpasswordEmailValid,
 }) => {
   const API_BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -26,15 +34,85 @@ const LoginForm: React.FC<LoginFormProps> = ({
   const navigate = useNavigate();
   const [submitErrors, setSubmitErrors] = useState<FormData>();
   const [showReSetPassword, setShowReSetPassword] = useState<boolean>(false);
+  const [showResetPasswordEmail, setShowResetPasswordEmail] =
+    useState<boolean>(false);
+  const [resetPasswordEmail, setResetPasswordEmail] = useState<string>("");
+  const [verifyCode, setVerifyCode] = useState<string>("");
+  const [showEnterVerifyCode, setShowEnterVerifyCode] =
+    useState<boolean>(false);
 
-  const handleReSetPassword = () => {
-    setShowReSetPassword(true);
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [resetpasswordValidation, setResetpasswordValidation] =
+    useState<boolean>(false);
+
+  const handleSetPassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setResetpasswordValidation(true);
+      return;
+    }
+    axios
+      .post(`${API_BASE_URL}reset-password`, {
+        email: resetPasswordEmail,
+        password: password,
+        type: "public",
+      })
+      .then((res) => {
+        console.log(res);
+        setShowReSetPassword(false);
+        SuccessPasswordChangedToast();
+      })
+      .catch((err) => {
+        console.log(err);
+        SomeThingwentWrongToast();
+      });
+  };
+
+  const handleResetPasswordEmail = (e: React.FormEvent) => {
+    e.preventDefault();
+    axios
+      .post(`${API_BASE_URL}forgot-password`, {
+        email: resetPasswordEmail,
+        type: "public",
+      })
+      .then((res) => {
+        console.log(res);
+        VerifyCodeSentSuccessFullyToast();
+        setShowResetPasswordEmail(false);
+        setShowEnterVerifyCode(true);
+      })
+      .catch((err) => {
+        if (err.response.data.status == "not-exist") {
+          setResetpasswordEmailValid(true);
+        }
+        console.log(err);
+      });
+  };
+
+  const handleVerifyCode = (e: React.FormEvent) => {
+    e.preventDefault();
+    axios
+      .post(`${API_BASE_URL}verify-code`, {
+        email: resetPasswordEmail,
+        code: verifyCode,
+        type: "public",
+      })
+      .then((res) => {
+        console.log(res);
+        setShowEnterVerifyCode(false);
+        setShowReSetPassword(true);
+      })
+      .catch((err) => {
+        SomeThingwentWrongToast();
+        console.log(err);
+      });
   };
 
   const submitForm = (data: FormData) => {
     if (!validate()) return;
     setLoading(true);
-    console.log('api_abse_url:', API_BASE_URL)
+    console.log("api_abse_url:", API_BASE_URL);
     axios
       .post(`${API_BASE_URL}login`, data)
       .then((res) => {
@@ -156,37 +234,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
           data-modal-toggle="default-modal"
           className="text-white text-xs mb-3 cursor-pointer text-left"
           type="button"
-          onClick={() => setShowReSetPassword(true)}
+          onClick={() => setShowResetPasswordEmail(true)}
         >
           Reset Password
         </button>
-        <Modal
-          show={showReSetPassword}
-          onClose={() => setShowReSetPassword(false)}
-        >
-          <div className="border border-solid border-[#2F2F2F]  bg-gradient-to-b from-[#797A7D] to-[#000000]">
-            <Modal.Header>Reset Password</Modal.Header>
-            <Modal.Body>
-              <div className="space-y-6">
-                <label htmlFor="">Enter Your Email Address</label>
-                <input
-                  className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
-                  id="email"
-                  type="email"
-                  placeholder="Email address"
-                  {...register("email")}
-                  required
-                />
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button onClick={() => setShowReSetPassword(false)}>Reset</Button>
-              <Button color="gray" onClick={() => setShowReSetPassword(false)}>
-                Cancel
-              </Button>
-            </Modal.Footer>
-          </div>
-        </Modal>
 
         <button
           onClick={() => handleSubmit(submitForm)()}
@@ -195,6 +246,114 @@ const LoginForm: React.FC<LoginFormProps> = ({
           Login
         </button>
       </form>
+      <Modal
+        dismissible
+        show={showResetPasswordEmail}
+        size={"sm"}
+        onClose={() => setShowResetPasswordEmail(false)}
+      >
+        <div className="border border-solid border-[#2F2F2F] bg-[#374151] rounded">
+          <Modal.Body>
+            <form action="" onSubmit={handleResetPasswordEmail}>
+              <div className="space-y-6">
+                <label htmlFor="" className="text-white">
+                  Enter Your Email Address
+                </label>
+                <input
+                  className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  type="email"
+                  placeholder="Email address"
+                  required
+                  onChange={(e) => setResetPasswordEmail(e.target.value)}
+                />
+                <div className=" flex justify-end">
+                  <Button type="submit" className="">
+                    Reset Password
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </Modal.Body>
+        </div>
+      </Modal>
+      <Modal
+        dismissible
+        show={showEnterVerifyCode}
+        size={"sm"}
+        onClose={() => setShowEnterVerifyCode(false)}
+      >
+        <div className="border border-solid border-[#2F2F2F] bg-[#374151] rounded">
+          <Modal.Body>
+            <form action="" onSubmit={handleVerifyCode}>
+              <div className="space-y-6">
+                <label htmlFor="" className="text-white">
+                  Enter Veirfy Code you received
+                </label>
+                <input
+                  className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  type="text"
+                  placeholder="Verify Code"
+                  required
+                  onChange={(e) => setVerifyCode(e.target.value)}
+                />
+                <div className=" flex justify-end">
+                  <Button type="submit" className="">
+                    Verify
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </Modal.Body>
+        </div>
+      </Modal>
+      <Modal
+        dismissible
+        show={showReSetPassword}
+        size={"sm"}
+        onClose={() => setShowReSetPassword(false)}
+      >
+        <div className="border border-solid border-[#2F2F2F] bg-[#374151] rounded">
+          <Modal.Body>
+            <form action="" onSubmit={handleSetPassword}>
+              <div className="space-y-6">
+                <label htmlFor="" className="text-white">
+                  Reset Password
+                </label>
+                <input
+                  className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  type="password"
+                  placeholder="New Password"
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {resetpasswordValidation && (
+                  <p className="text-red-500">
+                    Password and Confirm Password should be same
+                  </p>
+                )}
+                <input
+                  className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  type="password"
+                  placeholder="Confirm Password"
+                  required
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                {resetpasswordValidation && (
+                  <p className="text-red-500">
+                    Password and Confirm Password should be same
+                  </p>
+                )}
+
+                <div className=" flex justify-end">
+                  <Button type="submit" className="">
+                    Reset Password
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </Modal.Body>
+        </div>
+      </Modal>
     </div>
   );
 };
