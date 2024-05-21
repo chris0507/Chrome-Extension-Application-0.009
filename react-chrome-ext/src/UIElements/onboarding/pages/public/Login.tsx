@@ -11,6 +11,7 @@ import {
 } from "../../components/Alert";
 import Footer from "../../components/Footer";
 
+
 const Login = () => {
   const [loginStatus, setLoginStatus] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -36,8 +37,8 @@ const Login = () => {
   }, [handleStatusChange, loginStatus, isResetpasswordEmailValid]);
 
   return (
-    <div className=" w-full flex justify-center items-center">
-      <div className=" container flex flex-col justify-center items-center gap-6 p-5">
+    <div className="flex items-center justify-center w-full ">
+      <div className="container flex flex-col items-center justify-center gap-6 p-5 ">
         {isLoading && (
           <div className="fixed inset-0 bg-[#00080D] bg-opacity-75 z-20 flex justify-center items-center">
             <CircleLoader
@@ -53,7 +54,7 @@ const Login = () => {
           <img src="/images/logo.png" alt="logo" width={200} />
         </div>
         <div className="w-full h-full border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-10">
-          <div className="flex flex-1 sm:flex-row flex-col  justify-around gap-5 ">
+          <div className="flex flex-col justify-around flex-1 gap-5 sm:flex-row ">
             <LoginForm
               onStatusChange={handleStatusChange}
               setLoading={setIsLoading}
@@ -61,7 +62,7 @@ const Login = () => {
             />
             <SignUpForm setLoading={setIsLoading} />
           </div>
-          <div className="flex justify-center items-center text-white text-center text-lg mt-10 gap-2 cursor-pointer">
+          <div className="flex items-center justify-center gap-2 mt-10 text-lg text-center text-white cursor-pointer">
             <NavLink
               to="business"
               className={`flex flex-row items-center gap-3`}

@@ -7,7 +7,8 @@ const os = require("os");
 const multer = require("multer");
 const path = require("path");
 const upload = multer({ dest: "uploads/" });
-const {mongooseConnection} = require('./config/db.js')
+const { mongooseConnection } = require("./config/db.js");
+const User = require("./schemas/user.models.js");
 
 const findRoot = require("find-root");
 
@@ -19,7 +20,7 @@ const e = require("express");
 
 const app = express();
 
-mongooseConnection()
+mongooseConnection();
 
 app.use(cors());
 app.use((req, res, next) => {
@@ -72,22 +73,20 @@ const generateAccessJWT = (email, ipAddresses) => {
 
 app.post("/register", async (req, res) => {
   const { username, dob, city, ethnicity, email, password } = req.body;
-  const sheet = doc.sheetsByIndex[0];
-  const rows = await sheet.getRows();
+  const user = await User.findOne({ email: email });
+  console.log("user:", user);
+  if (user) {
+    return res.status(404).json({
+      status: "existed_email",
+      data: [],
+      message: "It seems you already have an account, please log in instead.",
+    });
+  }
+
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   const verifyCode = generateVerificationCode();
 
-  for (let row of rows) {
-    if (email == row.get("email")) {
-      return res.status(404).json({
-        status: "existed_email",
-        data: [],
-        message: "It seems you already have an account, please log in instead.",
-      });
-    }
-  }
-
-  await sheet.addRow({
+  const newUser = new User({
     username: username,
     dob: dob,
     city: city,
@@ -96,11 +95,19 @@ app.post("/register", async (req, res) => {
     password: hashedPassword,
     code: verifyCode,
     status: 0,
+    role: "public",
   });
 
-  const response = await sendEmail({ emailType: 3, email, verifyCode });
-  if (response === true) return res.send("Successful Sent Email");
-  else res.send("Wrong Sent Email");
+  newUser
+    .save()
+    .then(async (user) => {
+      const response = await sendEmail({ emailType: 3, email, verifyCode });
+      if (response === true) return res.send("Successful Sent Email");
+      else res.send("Wrong Sent Email");
+    })
+    .catch((err) => {
+      return res.send("Something went wrong!");
+    });
 });
 
 app.post("/login", async (req, res) => {
@@ -154,14 +161,13 @@ app.post("/login", async (req, res) => {
   });
 });
 
-
 app.post("/verify-code", async (req, res) => {
   const { email, code, type } = req.body;
-  let rows = []
-  if( type == "public") {
+  let rows = [];
+  if (type == "public") {
     const sheet = doc.sheetsByIndex[0];
     rows = await sheet.getRows();
-  } else if(type == "business") {
+  } else if (type == "business") {
     const sheet = doc.sheetsByIndex[1];
     rows = await sheet.getRows();
   }
@@ -188,13 +194,13 @@ app.post("/verify-code", async (req, res) => {
   }
 });
 
-app.post('/reset-password', async (req, res) => {
+app.post("/reset-password", async (req, res) => {
   const { email, type, password } = req.body;
-  let rows = []
-  if( type == "public") {
+  let rows = [];
+  if (type == "public") {
     const sheet = doc.sheetsByIndex[0];
     rows = await sheet.getRows();
-  } else if(type == "business") {
+  } else if (type == "business") {
     const sheet = doc.sheetsByIndex[1];
     rows = await sheet.getRows();
   }
@@ -218,14 +224,13 @@ app.post('/reset-password', async (req, res) => {
 
 app.post("/forgot-password", async (req, res) => {
   const { email, type } = req.body;
-  let rows
-  if(type == "public") {
+  let rows;
+  if (type == "public") {
     const sheet = doc.sheetsByIndex[0];
-     rows = await sheet.getRows();
-  }
-  else if(type == "business") {
+    rows = await sheet.getRows();
+  } else if (type == "business") {
     const sheet = doc.sheetsByIndex[1];
-     rows = await sheet.getRows();
+    rows = await sheet.getRows();
   }
 
   for (let row of rows) {
@@ -332,68 +337,68 @@ app.post("/check-token", async (req, res) => {
 
 app.post("/confirmed-account", async (req, res) => {
   const { sheetName, email, confirmedVerifyCode } = req.body;
-  var emailType;
-  let sheet = {};
+  // var emailType;
+  // let sheet = {};
 
-  if (sheetName == "public") {
-    emailType = 1;
-  } else if (sheetName == "business") {
-    emailType = 2;
+  // if (sheetName == "public") {
+  //   emailType = 1;
+  // } else if (sheetName == "business") {
+  //   emailType = 2;
+  // }
+
+  // if (sheetName == "public") {
+  //   sheet = doc.sheetsByIndex[0];
+  // } else if (sheetName == "business") {
+  //   sheet = doc.sheetsByIndex[1];
+  // }
+
+  // const rows = await sheet.getRows();
+
+  const user = await User.findOne({ email: email, role: sheetName });
+  console.log('user:', user)
+  if (!user) {
+    return res.status(404).json({
+      status: "not-exist",
+      data: [],
+      message: "Email does not exist",
+    });
   }
 
-  if (sheetName == "public") {
-    sheet = doc.sheetsByIndex[0];
-  } else if (sheetName == "business") {
-    sheet = doc.sheetsByIndex[1];
-  }
-
-  const rows = await sheet.getRows();
-
-  for (var row of rows) {
-    if (email == row.get("email")) {
-      if (confirmedVerifyCode == row.get("code")) {
-        row.assign({ status: "1" });
-        await row.save();
-        const CEOname = row.get("CEOname");
-        const CEOemail = row.get("CEOemail");
-
-        const token = generateAccessJWT(email, ipAddresses);
-        const response = await sendEmail({
-          emailType,
-          email,
-          CEOemail,
-          CEOname,
-        });
-
-        if (response === true) {
-          if (emailType == 1) {
-            return res.status(200).json({
-              status: "verified",
-              data: token,
-              message: "Successful verified",
-            });
-          } else if (emailType == 2) {
-            const brandName = row.get("brandName");
-            const response1 = await sendEmail({
-              emailType: 0,
-              email,
-              brandName,
-            });
-            if (response1 === true) {
-              return res.status(200).json({
-                status: "business-verified",
-                data: token,
-                message: "Successful verified",
-              });
-            }
-          }
-        } else res.send("Wrong Sent Email");
-      } else {
+  if (user.code != confirmedVerifyCode) {
+    return res.status(404).json({
+      status: "wrong-code",
+      data: [],
+      message: "Wrong Code",
+    });
+  } else {
+    user.status = 1;
+    await user.save();
+    const token = generateAccessJWT(email, ipAddresses);
+    if (sheetName == "public") {
+      const response = await sendEmail({
+        emailType: 1,
+        email,
+      });
+      if (response === true) {
         return res.status(200).json({
-          status: "wrong-code",
-          data: [],
-          message: "Wrong Code",
+          status: "verified",
+          data: token,
+          message: "Successful verified",
         });
+      } else if (sheetName == "business") {
+        const brandName = user.brandName;
+        const response1 = await sendEmail({
+          emailType: 0,
+          email,
+          brandName,
+        });
+        if (response1 === true) {
+          return res.status(200).json({
+            status: "business-verified",
+            data: token,
+            message: "Successful verified",
+          });
+        }
       }
     }
   }

@@ -1,5 +1,5 @@
-import mongoose, { Document, Schema } from "mongoose";
-import bcrypt from "bcrypt";
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 
 const Role={
@@ -24,8 +24,7 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      enum: Object.values(Role),
-      default: Role.USER,
+      required:true,
     },
     dob:{
         type:String,
@@ -50,4 +49,6 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("User", UserSchema);
+
+module.exports = mongoose.model("User", UserSchema);
+

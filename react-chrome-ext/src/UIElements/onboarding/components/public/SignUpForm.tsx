@@ -50,7 +50,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
       })
       .catch((err) => {
         const errStatus = err.response.data.status;
-        if (errStatus == "existed_email") {
+        if (errStatus === "existed_email") {
           ExistEmailToast();
         }
         setLoading(false);
@@ -215,7 +215,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
   };
 
   return (
-    <div className="w-full flex justify-center flex-col items-center ">
+    <div className="flex flex-col items-center justify-center w-full ">
       <h1 className="text-[#3FA9F5] text-2xl font-bold mb-4">New users</h1>
       <form
         className="pb-8 mb-4 w-8/12 max-w-[200px]"
@@ -234,8 +234,8 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
             <p className="text-red-500">{submitErrors?.username}</p>
           )}
         </div>
-        <div className="mb-3 flex justify-center items-center gap-4">
-          <label className="block text-white text-sm">DOB</label>
+        <div className="flex items-center justify-center gap-4 mb-3">
+          <label className="block text-sm text-white">DOB</label>
           <Datepicker
             options={options}
             onChange={handleChangeDob}
@@ -310,7 +310,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
             <p className="text-red-500">{submitErrors?.password}</p>
           )}
         </div>
-        <label className="flex mb-3 items-center space-x-2">
+        <label className="flex items-center mb-3 space-x-2">
           <input
             type="checkbox"
             // checked={isTermsAccepted}
@@ -330,7 +330,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
           </span>
         </label>
         <button
-          onClick={() => handleSubmit(submitForm)()}
+          type="submit"
           className="bg-[#3FA9F5] w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Register

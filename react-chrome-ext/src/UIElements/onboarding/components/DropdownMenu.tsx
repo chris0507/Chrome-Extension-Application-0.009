@@ -42,7 +42,7 @@ const DropdownMenu: React.FC = () => {
         >
           Popular
           <svg
-            className="-mr-1 h-5 w-5 text-white"
+            className="w-5 h-5 -mr-1 text-white"
             viewBox="0 0 20 20"
             fill="currentColor"
             aria-hidden="true"
@@ -58,29 +58,49 @@ const DropdownMenu: React.FC = () => {
 
       {menuOpen && (
         <div
-          className="absolute transition-all z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="absolute z-10 w-56 mt-2 transition-all origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
           tabIndex={-1}
         >
           <div className="py-1" role="none">
-            <a
-              className="text-gray-700 block px-4 py-2 text-sm"
+            <div
+              className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-300"
               role="menuitem"
               tabIndex={-1}
               id="menu-item-0"
+              onClick={() => setMenuOpen(false)}
             >
-              Ethnicities
-            </a>
-            <a
-              className="text-gray-700 block px-4 py-2 text-sm"
+              Ethnicity
+            </div>
+            <div
+              className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-300"
               role="menuitem"
               tabIndex={-1}
               id="menu-item-1"
+              onClick={() => setMenuOpen(false)}
             >
-              Countries
-            </a>
+              City
+            </div>
+            <div
+              className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-300"
+              role="menuitem"
+              tabIndex={-1}
+              id="menu-item-1"
+              onClick={() => setMenuOpen(false)}
+            >
+              Country
+            </div>
+            <div
+              className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-300"
+              role="menuitem"
+              tabIndex={-1}
+              id="menu-item-1"
+              onClick={() => setMenuOpen(false)}
+            >
+              International
+            </div>
             
             
           </div>
