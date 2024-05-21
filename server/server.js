@@ -112,151 +112,127 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const sheet = doc.sheetsByIndex[0];
-  const rows = await sheet.getRows();
-
-  for (let row of rows) {
-    if (email == row.get("email")) {
-      const isPasswordValid = await bcrypt.compare(
-        password,
-        row.get("password")
-      );
-
-      if (!isPasswordValid) {
-        return res.status(404).json({
-          status: "wrongPassword",
-          data: [],
-          message: "Wrong password",
-        });
-      } else {
-        const token = generateAccessJWT(email, ipAddresses);
-
-        if (row.get("status") == 0) {
-          const verifyCode = generateVerificationCode();
-          const response = await sendEmail({
-            emailType: 3,
-            email,
-            verifyCode,
-          });
-
-          row.assign({ code: verifyCode });
-          await row.save();
-
-          if (response === true) {
-            return res.status(200).json({
-              status: "not-verify",
-            });
-          } else return res.send("Wrong Sent Email");
-        }
-        return res.status(200).json({
-          status: "success",
-          data: token,
-          message: "Successfully login",
-        });
-      }
-    }
+  const user = await User.findOne({ email: email });
+  if (!user) {
+    return res.status(404).json({
+      status: "not-exist",
+      data: [],
+      message: "Email does not exist",
+    });
   }
-  return res.status(404).json({
-    status: "not-exist",
-  });
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return res.status(404).json({
+      status: "wrongPassword",
+      data: [],
+      message: "Wrong password",
+    });
+  } else {
+    const token = generateAccessJWT(email, ipAddresses);
+
+    if (user.status == 0) {
+      const verifyCode = generateVerificationCode();
+      const response = await sendEmail({
+        emailType: 3,
+        email,
+        verifyCode,
+      });
+
+      user.code = verifyCode;
+      await user.save();
+
+      if (response === true) {
+        return res.status(200).json({
+          status: "not-verify",
+        });
+      } else return res.send("Wrong Sent Email");
+    }
+    return res.status(200).json({
+      status: "success",
+      data: token,
+      message: "Successfully login",
+    });
+  }
 });
 
 app.post("/verify-code", async (req, res) => {
   const { email, code, type } = req.body;
-  let rows = [];
-  if (type == "public") {
-    const sheet = doc.sheetsByIndex[0];
-    rows = await sheet.getRows();
-  } else if (type == "business") {
-    const sheet = doc.sheetsByIndex[1];
-    rows = await sheet.getRows();
+  const user = await User.findOne({ email: email, role: type });
+
+  if (!user) {
+    return res.status(404).json({
+      status: "not-exist",
+      data: [],
+      message: "Email does not exist",
+    });
   }
 
-  for (let row of rows) {
-    if (email == row.get("email")) {
-      if (code == row.get("code")) {
-        row.assign({ status: "1" });
-        await row.save();
-        const token = generateAccessJWT(email, ipAddresses);
-        return res.status(200).json({
-          status: "success",
-          data: token,
-          message: "Successfully verified",
-        });
-      } else {
-        return res.status(200).json({
-          status: "wrong-code",
-          data: [],
-          message: "Wrong Code",
-        });
-      }
-    }
+  if (code != user.code) {
+    return res.status(404).json({
+      status: "wrong-code",
+      data: [],
+      message: "Wrong Code",
+    });
+  } else {
+    user.status = 1;
+    await user.save();
+    const token = generateAccessJWT(email, ipAddresses);
+    return res.status(200).json({
+      status: "verified",
+      data: token,
+      message: "Successful verified",
+    });
   }
 });
 
 app.post("/reset-password", async (req, res) => {
   const { email, type, password } = req.body;
-  let rows = [];
-  if (type == "public") {
-    const sheet = doc.sheetsByIndex[0];
-    rows = await sheet.getRows();
-  } else if (type == "business") {
-    const sheet = doc.sheetsByIndex[1];
-    rows = await sheet.getRows();
+  const user = await User.findOne({email:email, role:type})
+  if(!user){
+    return res.status(404).json({
+      status: "not-exist",
+      data: [],
+      message: "Email does not exist",
+    });
   }
-
-  for (let row of rows) {
-    if (email == row.get("email")) {
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-      row.assign({ password: hashedPassword });
-      await row.save();
-      return res.status(200).json({
-        status: "success",
-        message: "Successfully reset password",
-      });
-    }
-  }
-  return res.status(404).json({
-    status: "not-exist",
-    message: "Email does not exist",
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  user.password = hashedPassword;
+  await user.save();
+  return res.status(200).json({
+    status: "success",
+    message: "Successfully reset password",
   });
 });
 
+
 app.post("/forgot-password", async (req, res) => {
   const { email, type } = req.body;
-  let rows;
-  if (type == "public") {
-    const sheet = doc.sheetsByIndex[0];
-    rows = await sheet.getRows();
-  } else if (type == "business") {
-    const sheet = doc.sheetsByIndex[1];
-    rows = await sheet.getRows();
+
+  const user = await User.findOne({ email: email, role: type });
+  if (!user) {
+    return res.status(404).json({
+      status: "not-exist",
+      message: "Email does not exist",
+    });
   }
 
-  for (let row of rows) {
-    if (email == row.get("email")) {
-      const verifyCode = generateVerificationCode();
-      const response = await sendEmail({
-        emailType: 4,
-        email,
-        verifyCode,
-      });
-
-      row.assign({ code: verifyCode });
-      await row.save();
-
-      if (response === true) {
-        return res.status(200).json({
-          status: "success",
-          message: "Successfully sent email",
-        });
-      } else return res.send("Wrong Sent Email");
-    }
-  }
-  return res.status(404).json({
-    status: "not-exist",
-    message: "Email does not exist",
+  const verifyCode = generateVerificationCode();
+  const response = await sendEmail({
+    emailType: 4,
+    email,
+    verifyCode,
   });
+
+  user.code = verifyCode;
+  await user.save();
+
+  if (response === true) {
+    return res.status(200).json({
+      status: "success",
+      message: "Successfully sent email",
+    });
+  } else return res.send("Wrong Sent Email");
+
 });
 
 app.post("/getUserDetails", async (req, res) => {
@@ -275,22 +251,22 @@ app.post("/getUserDetails", async (req, res) => {
       console.error("Token verification failed:", err.message);
     } else {
       const email = decoded.email;
-      const sheet = doc.sheetsByIndex[1];
-      const rows = await sheet.getRows();
-      for (let row of rows) {
-        if (email == row.get("email")) {
-          return res.status(200).json({
-            status: "success",
-            data: {
-              email: email,
-              logo: row.get("logo"),
-            },
-          });
-        }
+      const user =  await User.findOne({ email: email });
+      if (!user) {
+        return res.status(404).json({
+          status: "not-exist",
+          data: [],
+          message: "Email does not exist",
+        });
       }
+      return res.status(200).json({
+        status: "success",
+        data: user,
+      });
     }
   });
 });
+
 
 app.post("/check-token", async (req, res) => {
   var token = req.body.token;
@@ -313,6 +289,7 @@ app.post("/check-token", async (req, res) => {
       });
     } else {
       if (decoded.email) {
+
         if (userType == "public") {
           return res.status(200).json({
             status: "public_verify_token",
@@ -337,25 +314,9 @@ app.post("/check-token", async (req, res) => {
 
 app.post("/confirmed-account", async (req, res) => {
   const { sheetName, email, confirmedVerifyCode } = req.body;
-  // var emailType;
-  // let sheet = {};
-
-  // if (sheetName == "public") {
-  //   emailType = 1;
-  // } else if (sheetName == "business") {
-  //   emailType = 2;
-  // }
-
-  // if (sheetName == "public") {
-  //   sheet = doc.sheetsByIndex[0];
-  // } else if (sheetName == "business") {
-  //   sheet = doc.sheetsByIndex[1];
-  // }
-
-  // const rows = await sheet.getRows();
 
   const user = await User.findOne({ email: email, role: sheetName });
-  console.log('user:', user)
+  console.log("user:", user);
   if (!user) {
     return res.status(404).json({
       status: "not-exist",
@@ -403,12 +364,6 @@ app.post("/confirmed-account", async (req, res) => {
     }
   }
 });
-
-//Business User
-let business_logged_user = {
-  email: "",
-  password: "",
-};
 
 app.post("/urls/add", async (req, res) => {
   try {
@@ -512,54 +467,51 @@ app.post("/urls/delete", async (req, res) => {
 
 app.post("/business/login", async (req, res) => {
   const { email, password } = req.body;
-  const businessSheet = doc.sheetsByIndex[1];
-  const rows = await businessSheet.getRows();
-
-  for (let row of rows) {
-    if (email == row.get("email")) {
-      const isPasswordValid = await bcrypt.compare(
-        password,
-        row.get("password")
-      );
-
-      if (!isPasswordValid) {
-        return res.status(404).json({
-          status: "wrongPassword",
-          data: [],
-          message: "Wrong password",
-        });
-      } else {
-        const token = generateAccessJWT(email, ipAddresses);
-
-        if (row.get("status") == 0) {
-          const verifyCode = generateVerificationCode();
-          const response = await sendEmail({
-            emailType: 3,
-            email,
-            verifyCode,
-          });
-
-          row.assign({ code: verifyCode });
-          await row.save();
-
-          if (response === true) {
-            return res.status(200).json({
-              status: "not-verify",
-            });
-          } else return res.send("Wrong Sent Email");
-        }
-        return res.status(200).json({
-          status: "success",
-          data: token,
-          message: "Successfully login",
-        });
-      }
-    }
+  const user = await User.findOne({ email: email, role: "business" });
+  if (!user) {
+    return res.status(404).json({
+      status: "not-exist",
+      data: [],
+      message: "Email does not exist",
+    });
   }
-  return res.status(404).json({
-    status: "not-exist",
-  });
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return res.status(404).json({
+      status: "wrongPassword",
+      data: [],
+      message: "Wrong password",
+    });
+  } else {
+    const token = generateAccessJWT(email, ipAddresses);
+
+    if (user.status == 0) {
+      const verifyCode = generateVerificationCode();
+      const response = await sendEmail({
+        emailType: 3,
+        email,
+        verifyCode,
+      });
+
+      user.code = verifyCode;
+      await user.save();
+
+      if (response === true) {
+        return res.status(200).json({
+          status: "not-verify",
+
+        });
+      } else return res.send("Wrong Sent Email");
+    }
+
+    return res.status(200).json({
+      status: "success",
+      data: token,
+      message: "Successfully login",
+    });
+  }
 });
+
 
 app.post("/business/register", upload.single("logo"), async (req, res) => {
   const {
@@ -574,22 +526,19 @@ app.post("/business/register", upload.single("logo"), async (req, res) => {
     password,
   } = req.body;
   const logo = req.file.path;
-  const sheet = doc.sheetsByIndex[1];
-  const rows = await sheet.getRows();
+  const user = await User.findOne({email:email, role:"business"})
+  if(user){
+    return res.status(404).json({
+      status: "existed_email",
+      data: [],
+      message: "It seems you already have an account, please log in instead.",
+    });
+  }
+
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   const verifyCode = generateVerificationCode();
 
-  for (let row of rows) {
-    if (email == row.get("email")) {
-      return res.status(404).json({
-        status: "existed_email",
-        data: [],
-        message: "It seems you already have an account, please log in instead.",
-      });
-    }
-  }
-
-  await sheet.addRow({
+  await User.create({
     brandName: brandName,
     city: city,
     ethnicity: ethnicity,
@@ -602,6 +551,7 @@ app.post("/business/register", upload.single("logo"), async (req, res) => {
     password: hashedPassword,
     code: verifyCode,
     status: 0,
+    role:'business'
   });
   const response = await sendEmail({ emailType: 3, email, verifyCode });
   if (response === true) return res.send("Successful Sent Email");

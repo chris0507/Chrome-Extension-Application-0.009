@@ -43,8 +43,10 @@ const UserSchema = new Schema(
     },
     brandName:{
         type:String,
-    }
-    
+    },
+    urls:{
+        type:Array,
+    },
   },
   { timestamps: true }
 );
