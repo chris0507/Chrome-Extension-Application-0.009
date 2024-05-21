@@ -58,7 +58,7 @@ const DropdownMenu: React.FC = () => {
 
       {menuOpen && (
         <div
-          className="absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="absolute transition-all z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
@@ -66,7 +66,6 @@ const DropdownMenu: React.FC = () => {
         >
           <div className="py-1" role="none">
             <a
-              href="#"
               className="text-gray-700 block px-4 py-2 text-sm"
               role="menuitem"
               tabIndex={-1}
@@ -75,7 +74,6 @@ const DropdownMenu: React.FC = () => {
               Ethnicities
             </a>
             <a
-              href="#"
               className="text-gray-700 block px-4 py-2 text-sm"
               role="menuitem"
               tabIndex={-1}

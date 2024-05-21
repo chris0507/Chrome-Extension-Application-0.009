@@ -7,6 +7,8 @@ const os = require("os");
 const multer = require("multer");
 const path = require("path");
 const upload = multer({ dest: "uploads/" });
+const {mongooseConnection} = require('./config/db.js')
+
 const findRoot = require("find-root");
 
 const { PORT, SECRET_ACCESS_TOKEN } = require("./config/index.js");
@@ -16,6 +18,8 @@ const { sendEmail } = require("./sendmail/verificationTemplates.js");
 const e = require("express");
 
 const app = express();
+
+mongooseConnection()
 
 app.use(cors());
 app.use((req, res, next) => {

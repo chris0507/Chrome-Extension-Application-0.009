@@ -27,7 +27,7 @@ const BRightSidebar = () => {
         >
           <div className="">
             <div className="flex justify-between pb-2 pl-3 px-1">
-              <span className="text-white text-base font-bold" >
+              <span className="text-white text-base font-bold">
                 Purchase sch |
               </span>
               <svg
@@ -60,7 +60,7 @@ const BRightSidebar = () => {
                   ></input>
                   <button
                     className="flex items-center justify-between bg-[#91257D] text-white px-2 rounded-full"
-                    onClick={()=> setIsMenuOpen(false)}
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     <span className="py-1 pr-2 text-white">Purchase sch</span>
                     <svg
@@ -98,7 +98,7 @@ const BRightSidebar = () => {
       <span className="text-white text-xl font-bold mb-1">Website</span>
       <img
         src="/images/logo.png"
-        className="top-[-30px] right-[10px] absolute"
+        className="top-[-30px] right-[10px] absolute xl:block hidden"
         alt="logo"
         width={150}
       />
