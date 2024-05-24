@@ -5,33 +5,20 @@ const ManageCoupons = () => {
   const items = [
     {
       image: "./images/annie1.png",
-      title: "10% Off All Burgers & Meals",
+      title: "Get 10% off your purchase.",
       description:
-        "Annie's Burger Shack dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod temporividunt ut labore et dolore magna aliquyam erat, sed diam vluptua.",
+        "It's not a deal if you're not getting a bargain for your troubles. Let us give you 10% off on your purchase saying thank you for your business; offer ends January 2025.",
       cost: "20 sch",
     },
-    {
-      image: "./images/annie1.png",
-      title: "An extra ONE us!",
-      description:
-        "Annie's Burger Shack dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod inviduntut labore et dolore magna aliquyam erat, sed diam.",
-      cost: "400 sch",
-    },
-    {
-      image: "./images/annie1.png",
-      title: "Free drink on us!",
-      description:
-        "Annie's Burger Shack dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.",
-      cost: "15 sch",
-    },
+   
   ];
   const navigate = useNavigate();
   return (
-    <div className="w-full flex justify-center">
+    <div className="flex justify-center w-full">
       <div className="container w-full">
         <div className="p-4">
-          <div className="flex justify-between items-center p-4">
-            <span className="text-white text-2xl font-bold">
+          <div className="flex items-center justify-between p-4">
+            <span className="text-2xl font-bold text-white">
               Coupons and offers
             </span>
             <div className="flex gap-2">
@@ -48,7 +35,7 @@ const ManageCoupons = () => {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                  className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                 >
                   <path
                     stroke-linecap="round"
@@ -65,7 +52,7 @@ const ManageCoupons = () => {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                  className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                 >
                   <path
                     stroke-linecap="round"
@@ -85,13 +72,13 @@ const ManageCoupons = () => {
                       <img src={item.image} alt="" />
                     </div>
                     <div className="w-[70%]">
-                      <p className="text-white text-xl font-bold mb-3">
+                      <p className="mb-3 text-xl font-bold text-white">
                         {item.title}
                       </p>
-                      <p className="text-white text-sm">{item.description}</p>
+                      <p className="text-sm text-white">{item.description}</p>
                     </div>
-                    <div className="flex flex-col justify-center items-center gap-3">
-                      <p className="text-white text-xl mb-1 text-nowrap">
+                    <div className="flex flex-col items-center justify-center gap-3">
+                      <p className="mb-1 text-xl text-white text-nowrap">
                         Cost {item.cost} |
                       </p>
                       <button
@@ -109,7 +96,7 @@ const ManageCoupons = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          className="w-6 h-6 border-l-2 border-dashed py-1 pl-2 text-white"
+                          className="w-6 h-6 py-1 pl-2 text-white border-l-2 border-dashed"
                         >
                           <path
                             stroke-linecap="round"
@@ -121,7 +108,7 @@ const ManageCoupons = () => {
                     </div>
                   </div>
                   <div className="text-end">
-                    <span className="text-white text-sm">
+                    <span className="text-sm text-white">
                       Coupon terms and conditions
                     </span>
                   </div>

@@ -12,7 +12,6 @@ const UserSchema = new Schema(
   {
     username:{
         type:String,
-        required:true,
     },
     email: {
       type: String,
@@ -44,8 +43,28 @@ const UserSchema = new Schema(
     brandName:{
         type:String,
     },
+    businessURL:{
+      type:String,
+    },
+    CEOname:{
+      type:String,
+    },
+    CEOemail:{
+      type:String,
+    },
+    companyID:{
+      type:String,
+    },
+    logo:{
+      type:String,
+    },
     urls:{
-        type:Array,
+        type:[{
+          url:String,
+          row:Number,
+          col:Number,
+          date:Date,
+        }],
     },
   },
   { timestamps: true }

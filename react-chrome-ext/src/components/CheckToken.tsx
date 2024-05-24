@@ -10,6 +10,7 @@ export const checkTokenValidity = async () => {
       token,
     });
     if ([200, 201, 204].includes(response.status)) {
+      localStorage.setItem('email', response.data.data)
       return true;
     }
   } catch (err) {

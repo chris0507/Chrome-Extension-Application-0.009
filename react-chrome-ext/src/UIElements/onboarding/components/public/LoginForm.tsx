@@ -12,6 +12,9 @@ import {
 } from "../Alert";
 import { getValue } from "@testing-library/user-event/dist/utils";
 import { Modal, Button } from "flowbite-react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../../store";
+import { setUserInfo } from "../../features/auth/authSlice";
 
 interface LoginFormProps {
   onStatusChange: (status: string) => void;
@@ -29,7 +32,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
   setResetpasswordEmailValid,
 }) => {
   const API_BASE_URL = process.env.REACT_APP_API_URL;
-
+const dispatch = useDispatch<AppDispatch>();
   const { register, getValues, handleSubmit, watch } = useForm<FormData>();
   const navigate = useNavigate();
   const [submitErrors, setSubmitErrors] = useState<FormData>();
@@ -119,11 +122,12 @@ const LoginForm: React.FC<LoginFormProps> = ({
         if (res.data.status === "success") {
           onStatusChange("successLogin");
           SuccessLoginToast();
-          const token = res.data.data;
+          const token = res.data.token;
           localStorage.setItem("token", token);
           localStorage.setItem("userType", "public");
+          dispatch(setUserInfo(res.data.data))
           navigate("/home");
-        } else if (res.data.status == "not-verify") {
+        } else if (res.data.status === "not-verify") {
           NotVerificationToast();
           localStorage.setItem("verifyEmail", "true");
           navigate("/verify-email", {
@@ -176,7 +180,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
   };
 
   return (
-    <div className="w-full sm:border-r flex justify-center  border-r-0  border-gray-400 ">
+    <div className="flex justify-center w-full border-r-0 border-gray-400 sm:border-r ">
       <form className="pb-8 mb-4" onSubmit={handleSubmit(submitForm)}>
         <h1 className="text-[#3FA9F5] text-2xl font-bold mb-4">
           Existing users
@@ -232,7 +236,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         <button
           data-modal-target="default-modal"
           data-modal-toggle="default-modal"
-          className="text-white text-xs mb-3 cursor-pointer text-left"
+          className="mb-3 text-xs text-left text-white cursor-pointer"
           type="button"
           onClick={() => setShowResetPasswordEmail(true)}
         >
@@ -266,7 +270,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                   required
                   onChange={(e) => setResetPasswordEmail(e.target.value)}
                 />
-                <div className=" flex justify-end">
+                <div className="flex justify-end ">
                   <Button type="submit" className="">
                     Reset Password
                   </Button>
@@ -296,7 +300,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                   required
                   onChange={(e) => setVerifyCode(e.target.value)}
                 />
-                <div className=" flex justify-end">
+                <div className="flex justify-end ">
                   <Button type="submit" className="">
                     Verify
                   </Button>
@@ -344,7 +348,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                   </p>
                 )}
 
-                <div className=" flex justify-end">
+                <div className="flex justify-end ">
                   <Button type="submit" className="">
                     Reset Password
                   </Button>

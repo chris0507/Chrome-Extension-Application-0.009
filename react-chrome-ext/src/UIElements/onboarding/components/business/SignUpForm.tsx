@@ -152,15 +152,15 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
   };
 
   return (
-    <div className="w-full  flex justify-center">
+    <div className="flex justify-center w-full">
       <form
-        className="  mb-4 flex flex-col justify-center"
+        className="flex flex-col justify-center mb-4 "
         onSubmit={handleSubmit(submitForm)}
       >
         <h1 className="text-[#932580] text-2xl font-bold mb-4">
           New Business users
         </h1>
-        <div className="w-full flex sm:flex-row flex-col mb-3 justify-center sm:gap-5">
+        <div className="flex flex-col justify-center w-full mb-3 sm:flex-row sm:gap-5">
           <div className="w-full">
             <div className="mb-3">
               <input
@@ -264,7 +264,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
             </div>
             <div className="mb-3">
               <input
-                className="shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="w-full p-2 leading-tight text-white rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 id="logo"
                 // type="file"
                 type="file"
@@ -297,7 +297,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
                   placeholder="Passwrod"
                   {...register("password")}
                   required
-                  onKeyDown={handleKeyPress}
                 />
                 <div className="absolute pr-2 cursor-pointer">
                   <button type="submit">
@@ -324,7 +323,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
             </div>
           </div>
         </div>
-        <label className="flex mb-3 items-center space-x-2">
+        <label className="flex items-center mb-3 space-x-2">
           <input
             type="checkbox"
             // checked={isTermsAccepted}
@@ -344,7 +343,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ setLoading }) => {
           </span>
         </label>
         <button
-          onClick={() => handleSubmit(submitForm)()}
+          type="submit"
           className="bg-[#932580] w-full hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
         >
           Register

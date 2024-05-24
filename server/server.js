@@ -149,7 +149,8 @@ app.post("/login", async (req, res) => {
     }
     return res.status(200).json({
       status: "success",
-      data: token,
+      token: token,
+      data: user,
       message: "Successfully login",
     });
   }
@@ -279,7 +280,7 @@ app.post("/check-token", async (req, res) => {
       message: "Token does not exist",
     });
   }
-  await jwt.verify(token, SECRET_ACCESS_TOKEN, (err, decoded) => {
+  await jwt.verify(token, SECRET_ACCESS_TOKEN, async (err, decoded) => {
     if (err) {
       console.error("Token verification failed:", err.message);
       return res.status(500).json({
@@ -289,16 +290,18 @@ app.post("/check-token", async (req, res) => {
       });
     } else {
       if (decoded.email) {
-
+        const user = await User.findOne({email:decoded.email})
         if (userType == "public") {
           return res.status(200).json({
             status: "public_verify_token",
             message: "Veritied token",
+            data: user
           });
         } else if (userType == "business") {
           return res.status(200).json({
             status: "business_verify_token",
             message: "Veritied token",
+            data: user
           });
         } else {
           return res.status(200).json({
@@ -557,6 +560,39 @@ app.post("/business/register", upload.single("logo"), async (req, res) => {
   if (response === true) return res.send("Successful Sent Email");
   else res.send("Wrong Sent Email");
 });
+
+app.post("/addTile", async (req, res) => {
+  const { url, row, col, email } = req.body;
+ const user = await User.findOne({ email: email });
+  if (!user) {
+    return res.status(404).json({
+      status: "not-exist",
+      data: [],
+      message: "Email does not exist",
+    });
+  }
+  user.urls.push({ url: url, row: row, col: col, date: new Date() });
+  await user.save();
+  return res.status(200).json({
+    status: "success",
+    message: "Successfully added tile",
+    data: user,
+  });
+})
+
+app.post("/removeURL", async (req, res) => {
+  const { row, col, email } = req.body;
+   await User.updateOne(
+    { email: email },
+    { $pull: { urls: { row: row, col: col } } }
+  );
+  const user = await User.findOne({ email: email })
+  return res.status(200).json({
+    status: "success",
+    message: "Successfully removed URL",
+    data: user,
+  });
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT: ${PORT}`);

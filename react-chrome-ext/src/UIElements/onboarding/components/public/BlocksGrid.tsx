@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { range } from "lodash";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store";
+import { AppDispatch } from "../../../../store";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "../../features/auth/authSlice";
 
 interface TooltipProps {
   show: boolean;
@@ -16,7 +22,10 @@ const getBackgroundColor = (row: number, col: number): string => {
     : "bg-[#2BAAE1] border-[#0070B7]";
 };
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
 const BlocksGrid = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const icons = [
     {
       row: 5,
@@ -46,95 +55,109 @@ const BlocksGrid = () => {
   ];
   const BlockContainer = useRef<HTMLDivElement>(null);
   const [blockSize, setBlockSize] = useState(0);
-  const [tooltip, setTooltip] = useState<TooltipProps>({
-    show: false,
-    content: "",
-    x: 0,
-    y: 0,
-    row: null,
-    col: null,
-  });
-  const [inputValue, setInputValue] = useState("asd");
-  const [gridWidth, setGridWidth] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const navigate = useNavigate();
 
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+
+  const [dropdown, setDropdown] = useState<{ x: number; y: number, row:number, col:number } | null>(
+    null
+  );
   const checkIcons = (row: number, col: number) => {
     for (let icon of icons) {
-      if (icon.row == row && icon.col == col) {
+      if (icon.row === row && icon.col === col) {
         return icon;
       }
     }
     return null;
   };
 
+  const handleRightClick = (e: React.MouseEvent, row:number, col:number) => {
+    e.preventDefault();
+    setDropdown({ x: e.clientX, y: e.clientY, row:row, col:col });
+  };
+
+  const handleRemoveURL = (row: number, col: number) => {
+    const email = localStorage.getItem("email");
+    axios
+      .post(`${API_BASE_URL}removeURL`, {
+        email,
+        row,
+        col,
+      })
+      .then((res) => {
+        console.log("res", res);
+        setDropdown(null)
+        dispatch(setUserInfo(res.data.data));
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }
+
+  const handleClickTile = (url: string) => {
+    //open new tab with url
+    if (url) {
+      window.open(url, "_blank");
+    }
+  };
+
+  const checkUrl = (row: number, col: number) => {
+    if (userInfo?.urls)
+      for (let index = 0; index < userInfo.urls.length; index++) {
+        const url = userInfo.urls[index];
+        if (url.row === row && url.col === col) {
+          console.log("date:", url.date);
+          return url;
+        }
+      }
+    return false;
+  };
+
   const handleClick = (row: number, col: number, e: React.MouseEvent) => {
     const icon = checkIcons(row, col);
     if (icon) {
       navigate("/explore-coupons");
-      setTooltip({
-        show: true,
-        content: (
-          <div className="p-1 bg-[#333333] rounded flex justify-between items-center w-[150px]">
-            <p className="text-white">{icon.key}</p>
-            <button onClick={() => handleDelete(row, col)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="20"
-                height="20"
-                viewBox="0 0 30 30"
-                style={{ fill: "#FFFFFF" }}
-              >
-                <path d="M 14.984375 2.4863281 A 1.0001 1.0001 0 0 0 14 3.5 L 14 4 L 8.5 4 A 1.0001 1.0001 0 0 0 7.4863281 5 L 6 5 A 1.0001 1.0001 0 1 0 6 7 L 24 7 A 1.0001 1.0001 0 1 0 24 5 L 22.513672 5 A 1.0001 1.0001 0 0 0 21.5 4 L 16 4 L 16 3.5 A 1.0001 1.0001 0 0 0 14.984375 2.4863281 z M 6 9 L 7.7929688 24.234375 C 7.9109687 25.241375 8.7633438 26 9.7773438 26 L 20.222656 26 C 21.236656 26 22.088031 25.241375 22.207031 24.234375 L 24 9 L 6 9 z"></path>
-              </svg>
-            </button>
-          </div>
-        ),
-        x: e.clientX,
-        y: e.clientY,
-        row,
-        col,
-      });
-    } else {
-      setTooltip({
-        show: true,
-        content: (
-          <div className="p-1 bg-[#333333] rounded-xl">
-            <input
-              type="text"
-              className="bg-[#333333] text-white p-1 border-0 shadow-none"
-              // value={inputValue}
-              // onChange={handleInput}
-              placeholder="Add URL here..."
-            />
-            <button onClick={() => handleAdd(row, col)}></button>
-          </div>
-        ),
-        x: e.clientX,
-        y: e.clientY,
-        row,
-        col,
-      });
     }
   };
 
-  const handleInput = (e: any) => {
-    console.log(e.target.value);
-    setInputValue(e.target.value);
-  };
+  const [url, setUrl] = useState<string>("");
+  const [urls, setUrls] = useState<any[]>([]);
 
-  const handleAdd = (row: number, col: number) => {
-    // Add the image at the input URL to the block at the specified row and col
-    // This will depend on how your checkIcons and setIcons functions are implemented
-  };
+  const handleKeyDown = (e: React.KeyboardEvent, row: number, col: number) => {
+    if (e.key === "Enter") {
+      console.log("enter pressed:", url, row, col);
+      const email = localStorage.getItem("email");
+      axios
+        .post(`${API_BASE_URL}addTile`, {
+          email,
+          url,
+          row,
+          col,
+        })
+        .then((res) => {
+          console.log("res", res);
+          dispatch(setUserInfo(res.data.data));
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
 
-  const handleDelete = (row: number, col: number) => {
-    // Delete the image from the block at the specified row and col
-    // This will depend on how your checkIcons and setIcons functions are implemented
+      (e.currentTarget as HTMLInputElement).value = "";
+    }
+  };
+  const handleChangeUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUrl(e.target.value);
   };
 
   useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdown(null);
+      }
+    };
+
     // Calculate block size
     const updateBlockSize = () => {
       if (BlockContainer.current) {
@@ -143,11 +166,9 @@ const BlocksGrid = () => {
             (BlockContainer.current.clientWidth - 4 * 7 - 40) / 8
           );
           setBlockSize(size);
-          setGridWidth(true);
         } else {
           const size = Math.floor((window.innerHeight - 4 * 7 - 140) / 8);
           setBlockSize(size);
-          setGridWidth(false);
         }
       }
       // Since we want to fit 8 blocks in the height, each block should take up 1/8 of the available viewport height minus the gaps
@@ -159,9 +180,10 @@ const BlocksGrid = () => {
     // Update blockSize on mount and when window resizes
     window.addEventListener("resize", updateBlockSize);
     updateBlockSize(); // Initial calculation
-
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
       window.removeEventListener("resize", updateBlockSize);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -210,16 +232,47 @@ const BlocksGrid = () => {
                       height: `${blockSize}px`,
                     }} // Set both width and height to blockSize
                     onClick={(e) => handleClick(row, col, e)}
-                  />
+                  >
+                    {(() => {
+                      const url = checkUrl(row, col);
+                      if (url !== false) {
+                        return (
+                          <div
+                            onContextMenu={(e) => handleRightClick(e, row, col)}
+                            onClick={() => handleClickTile(url.url)}
+                            className="flex flex-col items-center justify-center w-full"
+                          >
+                            <span className="text-lg text-center">
+                              Tile {row * 8 + col + 1}
+                            </span>
+                            <span className="text-center text-nowrap">
+                              {new Date(url.date).toISOString().split("T")[0]}
+                            </span>
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <input
+                            onChange={(e) => handleChangeUrl(e)}
+                            onKeyDown={(e) => handleKeyDown(e, row, col)}
+                            type="text"
+                            className="w-full bg-transparent border-none active:border-none focus:border-none"
+                          />
+                        );
+                      }
+                    })()}
+                  </div>
                 );
             })
           )}
-          {tooltip.show && (
+          {dropdown && (
             <div
-              className="tooltip"
-              style={{ position: "fixed", top: tooltip.y, left: tooltip.x }}
+              ref={dropdownRef}
+              style={{ position: "fixed", top: dropdown.y, left: dropdown.x }}
+              className="px-2 py-1 bg-gray-300 rounded cursor-pointer hover:bg-gray-400"
+              onClick={() => handleRemoveURL(dropdown.row, dropdown.col)}
             >
-              {tooltip.content}
+              Remove URL
             </div>
           )}
         </div>

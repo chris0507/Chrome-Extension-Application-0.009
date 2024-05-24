@@ -14,13 +14,60 @@ const ExploreCoupons = () => {
     }
   };
   const visitWebsite = () => {
-    window.open("https://anniesburgershack.com", "_blank");
+    window.open("https://anniesburgershack.com/gallery", "_blank");
   };
 
+
+  const items = [
+    {
+      image: "./images/annie1.png",
+      title: " 10% off your meal",
+      description:
+        "Get 10% off your meal between 12 and 4pm with this coupon. Applies to our burgers menu and additional sides starts next month ends October 2024.",
+      cost: "20 sch",
+    },
+    {
+      image: "./images/annie1.png",
+      title: "Free drinks with your Buffalo Ranch",
+      description:
+        "Swweten the deal with this latesst additions to our menu, the Buffalo Ranch burger. Get a free drink to help wash it down; offer ends 10th Nov 2024",
+      cost: "400 sch",
+    },
+    {
+      image: "./images/annie1.png",
+      title: "Guess the ingredient for 25% off your meal",
+      description:
+        "Try out our mystery menu this week, guess the missing ingredient to get 25% off your meal. Ends next month, applies only to the mystery menu.",
+      cost: "15 sch",
+    },
+    {
+      image: "./images/annie1.png",
+      title: "Gets a free dessert with your meal.",
+      description:
+        "Any dessert you want with your meal offer ends soon.",
+      cost: "15 sch",
+    },
+    {
+      image: "./images/annie1.png",
+      title: "Agroup of 5 and curly fries for everyone!",
+      description:
+        "We really shouldn't be telling you this, curly fires in a group can make you hair curly. Try it for your self Offer ends July 2025",
+      cost: "15 sch",
+    },
+    {
+      image: "./images/annie1.png",
+      title: "The God father 6 wings",
+      description:
+        "6 Godfather wings please, applies only when the God father is on the table, end December 2025.",
+      cost: "15 sch",
+    },
+  ];
+
+
   return (
-    <div className="h-screen w-full flex justify-center items-center">
+    <div className="flex items-center justify-center w-full h-screen">
       <div className="container h-full ">
-        <div className="flex flex-col mt-4 h-full">
+        <div className="flex flex-col h-full mt-4">
           {isMenuOpen && (
             <div
               className="fixed inset-0 bg-[#00080D] bg-opacity-75 z-20 flex justify-center items-center"
@@ -28,12 +75,12 @@ const ExploreCoupons = () => {
               ref={modalRef}
             >
               <div className="">
-                <div className="flex justify-between pb-2 px-1">
+                <div className="flex justify-between px-1 pb-2">
                   <span className="text-[#43A9F5] text-lg font-bold">
                     Unlock coupon
                   </span>
                   <svg
-                    className="h-4 w-4 border border-white rounded-full cursor-pointer text-white"
+                    className="w-4 h-4 text-white border border-white rounded-full cursor-pointer"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -51,11 +98,11 @@ const ExploreCoupons = () => {
                 </div>
                 <div className="border   border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D8f] to-[#0000008f] to-35%  bg-white p-4">
                   <div className="bg-white p-2 rounded-md border-2 border-[#43A9F5]">
-                    <p className="text-dark text-xl font-bold mb-3">
+                    <p className="mb-3 text-xl font-bold text-dark">
                       10% Off All Burgers & Meals
                     </p>
-                    <div className="flex justify-end items-center gap-3">
-                      <span className="text-dark font-semibold">
+                    <div className="flex items-center justify-end gap-3">
+                      <span className="font-semibold text-dark">
                         Cost: 20sch |
                       </span>
                       <button
@@ -69,7 +116,7 @@ const ExploreCoupons = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                          className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                         >
                           <path
                             stroke-linecap="round"
@@ -80,7 +127,7 @@ const ExploreCoupons = () => {
                       </button>
                     </div>
                     <div className="text-end">
-                      <span className="text-dark text-sm">
+                      <span className="text-sm text-dark">
                         Coupon terms and conditions
                       </span>
                     </div>
@@ -90,15 +137,15 @@ const ExploreCoupons = () => {
             </div>
           )}
           <div
-            className="border-y-2 border-[#A9A9A9] flex items-center"
+            className="border-y-2 border-[#A9A9A9] flex items-center lg:flex-row flex-col lg:h-[150px] h-full"
             style={{
               backgroundImage: `url(https://i.ibb.co/cLNkPTM/annies-background-image.png)`,
-              height: "150px",
+              
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
             }}
           >
-            <div className="flex justify-center items-center gap-3 w-[45%] h-full bg-[#00080D] bg-opacity-75 border-r-2 border-dashed border-[#A9A9A9]">
+            <div className="flex justify-center items-center gap-3 w-full lg:w-[45%] h-full bg-[#00080D] bg-opacity-75 lg:border-r-2 lg:border-dashed lg:border-[#A9A9A9]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 508.97 441.88"
@@ -161,22 +208,22 @@ const ExploreCoupons = () => {
                   fill="#70787c"
                 ></path>
               </svg>
-              <span className="text-white text-3xl font-bold">
+              <span className="text-3xl font-bold text-white">
                 ANNIE'S BURGER SHACK
               </span>
             </div>
-            <div className="w-[35%] h-full bg-[#00080D] bg-opacity-50 border-r-2 border-dashed border-[#A9A9A9] p-4 flex items-center text-center">
-              <span className="text-white text-lg">
-                Annie's Burger Shack dolor sit amet, consetetur sadipscing
-                elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                dolore.
+            <div className="lg:w-[35%] w-full h-full bg-[#00080D] bg-opacity-50 border-r-2 lg:border-dashed lg:border-[#A9A9A9] p-4 flex items-center text-center">
+              <span className="text-lg text-white">
+                Remind yourself of Rhodel Island and if you don’t know get to
+                know with our burger shack style dining of the Americas. Our
+                traditions and how we’ve make our tasty burgers since 2009
               </span>
             </div>
-            <div className="w-[20%] inset-0 bg-[#00080D] bg-opacity-75 h-full p-4 flex flex-col items-center justify-center">
-              <span className="text-white text-2xl font-bold">RANK: 2000</span>
+            <div className="lg:w-[20%] w-full inset-0 bg-[#00080D] bg-opacity-75 h-full p-4 flex flex-col items-center justify-center">
+              <span className="text-2xl font-bold text-white">RANK: 2000</span>
               <button
                 className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full"
-                onClick={()=>visitWebsite()}
+                onClick={() => visitWebsite()}
               >
                 <span className="py-1 pr-2">View website</span>
                 <svg
@@ -185,7 +232,7 @@ const ExploreCoupons = () => {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                  className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                 >
                   <path
                     stroke-linecap="round"
@@ -196,9 +243,9 @@ const ExploreCoupons = () => {
               </button>
             </div>
           </div>
-          <div className="mt-4 p-4">
-            <div className="flex justify-between items-center p-4">
-              <span className="text-white text-2xl font-bold">
+          <div className="p-4 mt-4">
+            <div className="flex items-center justify-between p-4">
+              <span className="text-2xl font-bold text-white">
                 Coupons and offers
               </span>
               <button className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full">
@@ -209,7 +256,7 @@ const ExploreCoupons = () => {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                  className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                 >
                   <path
                     stroke-linecap="round"
@@ -219,29 +266,38 @@ const ExploreCoupons = () => {
                 </svg>
               </button>
             </div>
-            <div className="w-full h-full border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-5">
-              {Array(6)
-                .fill(0)
-                .map((_, index) => (
-                  <div key={index}>
-                    <div className="border border-white rounded-2xl bg-[#232F3E] p-4">
-                      <p className="text-white text-xl font-bold mb-3">
-                        10% Off All Burgers & Meals
+            <div className="w-full h-full border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35%  flex-col flex gap-4 p-5">
+            {items &&
+              items.map((item, index) => (
+                <div key={index} className="mb-3">
+                  <div className="flex justify-between items-center gap-5 border border-white rounded-2xl bg-[#232F3E] p-4">
+                    <div className="w-[10%]  ml-auto mr-auto">
+                      <img src={item.image} alt="" />
+                    </div>
+                    <div className="w-[70%]">
+                      <p className="mb-3 text-xl font-bold text-white">
+                        {item.title}
                       </p>
-                      <div className="flex justify-end items-center gap-3">
-                        <span className="text-white">Cost: 20sch |</span>
-                        <button
-                          className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full"
-                          onClick={showModal}
-                        >
-                          <span className="py-1 pr-2">Unlock coupon</span>
-                          <svg
+                      <p className="text-sm text-white">{item.description}</p>
+                    </div>
+                    <div className="flex flex-col items-center justify-center gap-3">
+                      <p className="mb-1 text-xl text-white text-nowrap">
+                        Cost {item.cost} |
+                      </p>
+                      <button
+                        className="flex items-center justify-between bg-[#43A9F5] px-2 pl-5 rounded-full"
+                        onClick={showModal}
+                      >
+                        <span className="py-1 pr-2 text-white">
+                          Unlock Coupon
+                        </span>
+                        <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                            className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                           >
                             <path
                               stroke-linecap="round"
@@ -249,16 +305,17 @@ const ExploreCoupons = () => {
                               d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
                             />
                           </svg>
-                        </button>
-                      </div>
-                    </div>
-                    <div className="text-end">
-                      <span className="text-white text-sm">
-                        Coupon terms and conditions
-                      </span>
+                      </button>
                     </div>
                   </div>
-                ))}
+                  <div className="text-end">
+                    <span className="text-sm text-white">
+                      Coupon terms and conditions
+                    </span>
+                  </div>
+                </div>
+              ))}
+              
             </div>
           </div>
         </div>
