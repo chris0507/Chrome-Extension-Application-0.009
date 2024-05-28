@@ -1,6 +1,29 @@
 import React from "react";
 
 const MyCoupons = () => {
+  const items = [
+    {
+      image:'',
+      title:'10% Off All Burgers & Meals',
+      name:"Annie's Burger Shack",
+      content:'dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+      coupon_code:'B49H5577'
+    },
+    {
+      image:'',
+      title:'Free Boots Meal Deal',
+      name:'Boots',
+      content:'dolor sit amet, sonsetetur sadipscing elitr, sed diam eirmod invidunt ut labore et dolore magna aliquyam eratm, sed diam.',
+      coupon_code:'B16T8844'
+    },
+    {
+      image:'',
+      title:'PE-1-Get-1FREE',
+      name:"Pieminister",
+      content:'dolor sit amet, consetetur sadipsciing elitr, sed diam eirmod invidunt ut labore et dolore magna aliquyam erat sed.',
+      coupon_code:'T16T8844'
+    }
+  ]
   return (
     <div className="mt-2 p-4 flex justify-center">
       <div className="container flex-col w-full">
@@ -11,9 +34,8 @@ const MyCoupons = () => {
             </span>
           </div>
           <div className="w-full h-full border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-5">
-            {Array(3)
-              .fill(0)
-              .map((_, index) => (
+            {items
+              .map((item, index) => (
                 <div key={index} className="mb-3">
                   <div className="flex justify-between items-center gap-5 border border-white rounded-2xl bg-[#232F3E] p-4">
                     <div className=" ml-auto mr-auto">
@@ -82,19 +104,17 @@ const MyCoupons = () => {
                     </div>
                     <div className="w-[70%]">
                       <p className="text-white text-xl font-bold mb-3">
-                        10% Off All Burgers & Meals
+                       {item.title}
                       </p>
                       <p className="text-white text-sm">
-                        Annie's Burger Shack dolor sit amet, consetetur
-                        sadipscing elitr, sed diam nonumy eirmod temporividunt
-                        ut labore et dolore magna aliquyam erat, sed diam
-                        vluptua.
+                        <span className=" font-bold" >{item.name} </span>
+                        {item.content}
                       </p>
                     </div>
                     <div className="flex flex-col justify-center items-center gap-3">
                       <p className="text-white text-xl mb-1">Coupon code</p>
                       <button className="flex items-center justify-between bg-white px-2 pl-5 rounded">
-                        <span className="py-1 pr-2">B49H5577</span>
+                        <span className="py-1 pr-2">{item.coupon_code}</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"

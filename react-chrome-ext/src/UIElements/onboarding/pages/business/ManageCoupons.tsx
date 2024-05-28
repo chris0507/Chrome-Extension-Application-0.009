@@ -1,17 +1,41 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../../../store";
+import { useSelector } from "react-redux";
+
+
 
 const ManageCoupons = () => {
+  const {userInfo} =  useSelector((state:RootState)=>state.auth)
+  const backendURL = process.env.REACT_APP_API_URL
+  
   const items = [
     {
-      image: "./images/annie1.png",
-      title: "Get 10% off your purchase.",
+      image: backendURL + userInfo?.logo,
+      title: "10% off All Burgers & Meals",
+      name:"Annie's Burger Shack",
       description:
-        "It's not a deal if you're not getting a bargain for your troubles. Let us give you 10% off on your purchase saying thank you for your business; offer ends January 2025.",
+        "dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
       cost: "20 sch",
     },
-   
+    {
+      image: backendURL + userInfo?.logo,
+      title: "An extra ONE us!",
+      name:"Annie's Burger Shack",
+      description:
+        "dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod invidunt ut labore et dolore magna aliquyam erat, sed diam.",
+      cost: "20 sch",
+    },
+    {
+      image: backendURL + userInfo?.logo,
+      title: "Free drink on us!",
+      name:"Annie's Burger Shack",
+      description:
+        "dolor sit amet, consetetur sadpscing elitr, sed diam nonumy eirmod eufrat invidunt ut labore et dolore magna aliquyam erat.",
+      cost: "20 sch",
+    },
   ];
+
   const navigate = useNavigate();
   return (
     <div className="flex justify-center w-full">
