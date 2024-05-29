@@ -9,44 +9,32 @@ const HighStreetModal: React.FC<HighStreetModalProps> = ({ closeModal }) => {
   const userType: any = localStorage.getItem("userType");
   const navigate = useNavigate();
   return (
-    <div className="fixed inset-0 flex justify-center items-start bg-black bg-opacity-95 z-50 overflow-auto">
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-auto bg-black bg-opacity-95">
       <div className="container w-full ">
-        <div className="gap-10 flex-col w-full flex items-center lg:items-start lg:flex-row">
+        <div className="flex flex-col items-center w-full gap-10 lg:items-start lg:flex-row">
           <div className="flex flex-col w-full lg:px-0 relative px-5 lg:w-[30%] pt-5">
-            <div className="lg:hidden w-full absolute flex mb-3 flex-row-reverse ">
+            <div className="absolute flex flex-row-reverse w-full mb-3 lg:hidden ">
               <img src="/images/logo.png" className="" alt="logo" width={150} />
             </div>
-            <div className="flex  justify-start items-center">
+            <div className="flex items-center justify-start">
               <img src="./images/annie1.png" alt="" />
             </div>
 
             <div className="flex flex-col mb-6 text-base">
-              <p className="text-white text-2xl font-semibold mb-3">
+              <p className="mb-3 text-2xl font-semibold text-white">
                 Business overview
               </p>
-              <p className="text-white mb-3">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
-                diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-                aliquam erat volutpat.
+              <p className="mb-3 text-white">
+                Ever had an authentic Rhode Island style burger? Or maybe tired a very much vegan, vegetarian burger that will 100% not want to end. Remind yourself Rholdel Island and if you don't know get to know with our burger shack style dining of the Americas. Learn about our traditions and how we've make our tasty burgers since 2009. Fresh off the grill, packed with the perfect blend of seasons that will keep you coming back for more.
               </p>
-              <p className="text-white mb-3">
-                Pieminister Available to purchase Ut wisi enim ad minim veniam,
-                quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut
-                aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor
-                in hendrerit in vulputate velit esse molestie consequat, vel
-                illum dolore eu feugiat nulla facilisis at vero eros et accumsan
-                et iusto odio dignissim qui blandit praesent luptatum zzril
-                delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum
-                dolor sit amet, consectetuer adipiscing
+              <p className="mb-3 text-white">
+                We re not about fast food, we are for the experience come join the fun and enjoy yourself to make history with us... reminds me of home.
               </p>
               <p className="text-white">
-                elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-                magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-                nostrud exerci tation ullamcorper suscipit lobortis nisl ut
-                aliquip ex ea commodo consequat.
+                Not Just meaty but ethically inclusive with a twist.
               </p>
             </div>
-            <div className="flex justify-center items-center gap-3 mb-4">
+            <div className="flex items-center justify-center gap-3 mb-4">
               <button
                 className={`flex items-center justify-between  text-white px-4 rounded-full ${
                   userType === "business" ? "bg-[#932580]" : "bg-[#43A9F5]"
@@ -60,7 +48,7 @@ const HighStreetModal: React.FC<HighStreetModalProps> = ({ closeModal }) => {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                  className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                 >
                   <path
                     stroke-linecap="round"
@@ -88,7 +76,7 @@ const HighStreetModal: React.FC<HighStreetModalProps> = ({ closeModal }) => {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                  className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                 >
                   <path
                     stroke-linecap="round"
@@ -98,19 +86,19 @@ const HighStreetModal: React.FC<HighStreetModalProps> = ({ closeModal }) => {
                 </svg>
               </button>
             </div>
-            <div className="m-auto text-white flex items-center justify-center flex-row gap-2">
+            <div className="flex flex-row items-center justify-center gap-2 m-auto text-white">
               <a href="https://google.com">View Google Sheets</a>
               <img src="./images/resize.png" width={15} height={15} alt="" />
             </div>
           </div>
-          <div className="flex flex-auto gap-5 flex-col">
-            <div className="flex flex-col gap-5 items-end justify-end">
-              <div className=" lg:block hidden">
+          <div className="flex flex-col flex-auto gap-5">
+            <div className="flex flex-col items-end justify-end gap-5">
+              <div className="hidden lg:block">
                 <img src="./images/logo.png" width={120} alt="" />
               </div>
               <div>
                 <svg
-                  className="h-4 w-4 text-white border border-white rounded-full cursor-pointer"
+                  className="w-4 h-4 text-white border border-white rounded-full cursor-pointer"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -127,7 +115,7 @@ const HighStreetModal: React.FC<HighStreetModalProps> = ({ closeModal }) => {
                 </svg>
               </div>
             </div>
-            <p className="text-white text-3xl pl-16 font-bold mb-4">
+            <p className="pl-16 mb-4 text-3xl font-bold text-white">
               ANNIE'S BURGER SHACK NOTTINGHAM
             </p>
             <div className="flex flex-row items-center gap-10">
@@ -147,7 +135,7 @@ const HighStreetModal: React.FC<HighStreetModalProps> = ({ closeModal }) => {
                   />
                 </svg>
               </div>
-              <div className=" flex-auto">
+              <div className="flex-auto ">
                 <img
                   src="./images/annie'sburger.png"
                   className="w-full h-full"

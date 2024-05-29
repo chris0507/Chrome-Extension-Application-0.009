@@ -1,39 +1,46 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../../store";
 import { useSelector } from "react-redux";
 
-
-
 const ManageCoupons = () => {
-  const {userInfo} =  useSelector((state:RootState)=>state.auth)
-  const backendURL = process.env.REACT_APP_API_URL
-  
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const [color, setColor] = useState("");
+  const backendURL = process.env.REACT_APP_API_URL;
+  const userType: any = localStorage.getItem("userType");
+  useEffect(() => {
+    if (userType == "business") {
+      setColor("bg-[#932580]");
+    } else {
+      setColor("bg-[#3FA9F5]");
+    }
+  }, [userType]);
+
   const items = [
     {
       image: backendURL + userInfo?.logo,
-      title: "10% off All Burgers & Meals",
-      name:"Annie's Burger Shack",
+      title: "GEt 10% off your purchase",
+      name: "",
       description:
-        "dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
+        "It's not a deal if you're not getting a bargain for your troubles. Let us give you 10% off on your purchase saying thank you for your business; offer ends January 2025.",
       cost: "20 sch",
     },
-    {
-      image: backendURL + userInfo?.logo,
-      title: "An extra ONE us!",
-      name:"Annie's Burger Shack",
-      description:
-        "dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod invidunt ut labore et dolore magna aliquyam erat, sed diam.",
-      cost: "20 sch",
-    },
-    {
-      image: backendURL + userInfo?.logo,
-      title: "Free drink on us!",
-      name:"Annie's Burger Shack",
-      description:
-        "dolor sit amet, consetetur sadpscing elitr, sed diam nonumy eirmod eufrat invidunt ut labore et dolore magna aliquyam erat.",
-      cost: "20 sch",
-    },
+    // {
+    //   image: backendURL + userInfo?.logo,
+    //   title: "An extra ONE us!",
+    //   name:"Annie's Burger Shack",
+    //   description:
+    //     "dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod invidunt ut labore et dolore magna aliquyam erat, sed diam.",
+    //   cost: "20 sch",
+    // },
+    // {
+    //   image: backendURL + userInfo?.logo,
+    //   title: "Free drink on us!",
+    //   name:"Annie's Burger Shack",
+    //   description:
+    //     "dolor sit amet, consetetur sadpscing elitr, sed diam nonumy eirmod eufrat invidunt ut labore et dolore magna aliquyam erat.",
+    //   cost: "20 sch",
+    // },
   ];
 
   const navigate = useNavigate();
@@ -47,7 +54,7 @@ const ManageCoupons = () => {
             </span>
             <div className="flex gap-2">
               <button
-                className="flex items-center justify-between bg-[#932580] text-white px-2 pl-4 rounded-full"
+                className={`flex items-center justify-between ${color} text-white px-2 pl-4 rounded-full`}
                 onClick={() => {
                   navigate("/create-coupons");
                 }}
@@ -68,7 +75,7 @@ const ManageCoupons = () => {
                   />
                 </svg>
               </button>
-              <button className="flex items-center justify-between bg-[#932580] text-white px-2 pl-4 rounded-full">
+              <button className={`flex items-center justify-between ${color} text-white px-2 pl-4 rounded-full`}>
                 <span className="py-1 pr-2">Track</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +94,7 @@ const ManageCoupons = () => {
               </button>
             </div>
           </div>
-          <div className="w-full h-full border border-solid border-[#932580] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-5 ">
+          <div className={`w-full h-full border border-solid ${color} rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% p-5 `}>
             {items &&
               items.map((item, index) => (
                 <div key={index} className="mb-3">
@@ -106,7 +113,7 @@ const ManageCoupons = () => {
                         Cost {item.cost} |
                       </p>
                       <button
-                        className="flex items-center justify-between bg-[#932580] px-2 pl-5 rounded-full"
+                        className={`flex items-center justify-between ${color} px-2 pl-5 rounded-full`}
                         onClick={() => {
                           navigate("/edit-coupon");
                         }}

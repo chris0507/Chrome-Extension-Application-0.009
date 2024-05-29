@@ -8,90 +8,102 @@ const HighStreet = () => {
 
   const Items1 = [
     {
-      image: "./images/pieminister.png",
-      name: "Pieminister",
+      image: "./images/castlerock.png",
+      name: "Castle rock brewery",
       rank: "2000",
       published: "12-09-2022",
       clicks: "75",
+      url:'https://www.castlerockbrewery.co.uk/'
     },
     {
-      image: "./images/annie.png",
-      name: "Annie's Burger Shack",
+      image: "./images/logos/Antenna nottingham logo.png",
+      name: "Antenna",
       rank: "2000",
       published: "12-09-2022",
       clicks: "300",
-    },
-    {
-      image: "./images/truffles.png",
-      name: "Truffles",
-      rank: "2000",
-      published: "12-09-2022",
-      clicks: "100",
-    },
-    {
-      image: "./images/pryzm.png",
-      name: "Pryzm",
-      rank: "2000",
-      published: "12-09-2022",
-      clicks: "500",
-    },
-    {
-      image: "./images/finefish.png",
-      name: "The Cod Scallops",
-      rank: "2000",
-      published: "12-09-2022",
-      clicks: "200",
-    },
-    {
-      image: "./images/amazon.png",
-      name: "Amazon",
-      rank: "2",
-      published: "12-09-2022",
-      clicks: "500",
-    },
-  ];
-  const Items2 = [
-    {
-      image: "./images/daughuatts.png",
-      name: "Doughnotts",
-      rank: "2000",
-      published: "12-09-2022",
-      clicks: "100",
-    },
-    {
-      image: "./images/Logo-google-icon-PNG.png",
-      name: "Google",
-      rank: "1",
-      published: "12-09-2022",
-      clicks: "10m",
-    },
-    {
-      image: "./images/boots.png",
-      name: "Boots",
-      rank: "2000",
-      published: "12-09-2022",
-      clicks: "500",
+      url:'https://antenna.uk.com'
     },
     {
       image: "./images/forest.png",
       name: "Nottingham Forest",
       rank: "2000",
       published: "12-09-2022",
-      clicks: "200",
-    },
-    {
-      image: "./images/antenna.png",
-      name: "Antenna",
-      rank: "2000",
-      published: "12-09-2022",
       clicks: "100",
+      url:'https://www.nottinghamforest.co.uk'
     },
     {
-      image: "./images/castlerock.png",
-      name: "Castle Rock",
+      image: "./images/logos/Boots logo.png",
+      name: "Boots or (Experian/Capital one)",
       rank: "2000",
       published: "12-09-2022",
       clicks: "500",
+      url:'https://www.boots-uk.com/about-boots-uk/company-information/boots-in-nottingham/'
+    },
+    {
+      image: "./images/Logo-google-icon-PNG.png",
+      name: "Google",
+      rank: "2000",
+      published: "12-09-2022",
+      clicks: "200",
+      url:'https://www.google.co.uk'
+    },
+    {
+      image: "./images/daughuatts.png",
+      name: "Doughnotts",
+      rank: "2",
+      published: "12-09-2022",
+      clicks: "500",
+      url:'https://www.xn--doughnottsoicial-8he.com/'
+    },
+  ];
+  const Items2 = [
+    {
+      image: "./images/logos/Amazon logo.jpg",
+      name: "Amazon",
+      rank: "2000",
+      published: "12-09-2022",
+      clicks: "100",
+      url:'https://amazon.co.uk'
+    },
+    {
+      image: "./images/finefish.png",
+      name: "The cod Scallops",
+      rank: "1",
+      published: "12-09-2022",
+      clicks: "10m",
+      url:'https://www.codsscallops.com/'
+    },
+    {
+      image: "./images/logos/Bunk nottingham logo.png",
+      name: "Bunk",
+      rank: "2000",
+      published: "12-09-2022",
+      clicks: "500",
+      url:'https://www.bunkwings.com/'
+    },
+    {
+      image: "./images/logos/Nottingham College.jpeg",
+      name: "Nottingham College",
+      rank: "2000",
+      published: "12-09-2022",
+      clicks: "200",
+      url:'https://www.nottinghamcollege.ac.uk/'
+    },
+    {
+      image: "./images/logos/piemininister logo.png",
+      name: "Peiminster",
+      rank: "2000",
+      published: "12-09-2022",
+      clicks: "100",
+      url:'https://pieminister.co.uk/'
+    },
+    {
+      image: "./images/annie.png",
+      name: "Demo Business Annies burger shack",
+      rank: "2000",
+      published: "12-09-2022",
+      clicks: "500",
+      url:'https://anniesburgershack.com/gallery'
     },
   ];
 
@@ -114,51 +126,57 @@ const HighStreet = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="flex-col w-full items-center flex">
-        <div className="w-full justify-end container text-white text-base gap-2 flex flex-row-reverse" style={{justifyContent: 'end'}}>
+      <div className="flex flex-col items-center w-full">
+        <div className="container flex flex-row-reverse justify-end w-full gap-2 text-base text-white" style={{justifyContent: 'end'}}>
           <img src="./images/location.png" alt="" />
           <span>Local | National </span>
         </div>
-        <div className="m-3 mt-4 w-fit flex flex-col items-center">
+        <div className="container flex flex-col items-center m-3 mt-4 w-fit">
           {isModalOpen && <HighStreetModal closeModal={closeModal} />}
-          <div className="inset-0 bg-[#424648] bg-opacity-50 border border-white rounded-xl p-4 justify-around items-center mb-4 grid grid-cols-2 lg:grid-cols-6 w-fit sm:grid-cols-3">
+          <div className="inset-0 bg-[#424648] bg-opacity-50 border gap-4 border-white rounded-xl p-4 justify-around items-center mb-4 grid grid-cols-2 lg:grid-cols-6 w-full sm:grid-cols-3">
             {Items1.map((item, index) => (
-              <div key={index} className=" flex flex-col items-center">
+              <div key={index} className="flex flex-col items-center ">
                 <img
                   src={item.image}
-                  className="border border-white rounded-lg bg-white  cursor-pointer"
+                  className="w-full bg-white border border-white rounded-lg cursor-pointer"
                   alt="google"
                   width={150}
-                  onClick={showModal}
+                  onClick={()=>{
+                    if(item.name === "Demo Business Annies burger shack")
+                      showModal()
+                  }}
                 />
                 <div className="p-4 text-white leading-[1.2] text-base flex flex-col">
                   <span>{item.name}</span>
                   <span>Rank {item.rank}</span>
                   <span>Published {item.published}</span>
                   <span>Clicks {item.clicks}</span>
-                  <a href="https://google.com" className=" text-[#3EA5EE]">
+                  <a href={item.url} className=" text-[#3EA5EE]">
                     Visite site
                   </a>
                 </div>
               </div>
             ))}
           </div>
-          <div className="inset-0 bg-[#424648] bg-opacity-50 border border-white rounded-xl p-4 justify-around items-center mb-4 grid grid-cols-2 lg:grid-cols-6 w-fit sm:grid-cols-3">
+          <div className="inset-0 bg-[#424648] bg-opacity-50 gap-4 border  border-white rounded-xl p-4 justify-around items-center mb-4 grid grid-cols-2 lg:grid-cols-6 w-full sm:grid-cols-3">
             {Items2.map((item, index) => (
               <div key={index} className="flex flex-col items-center">
                 <img
                   src={item.image}
-                  className="border border-white rounded-lg bg-white  cursor-pointer"
+                  className="w-full bg-white border border-white rounded-lg cursor-pointer"
                   alt="google"
                   width={150}
-                  onClick={showModal}
+                  onClick={()=>{
+                    if(item.name === "Demo Business Annies burger shack")
+                      showModal()
+                  }}
                 />
                 <div className="p-4 text-base leading-[1.2]  text-white flex flex-col">
                   <span>{item.name}</span>
                   <span>Rank {item.rank}</span>
                   <span>Published {item.published}</span>
                   <span>Clicks {item.clicks}</span>
-                  <a href="https://google.com" className="text-[#3EA5EE]">
+                  <a href={item.url} className="text-[#3EA5EE]">
                     Visite site
                   </a>
                 </div>
