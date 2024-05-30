@@ -18,6 +18,7 @@ import CreateCoupons from "./pages/business/CreateCoupons";
 import EditCoupon from "./pages/business/EditCoupon";
 import WrongPage from "./pages/WrongPage";
 import ManageHighStreet from "./pages/business/ManageHighStreet";
+import ExpiredCoupons from "./pages/public/ExpiredCoupons";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
               <Route path="/home" element={<Home />} />
               <Route path="/coupons" element={<Conpons />} />
               <Route path="/explore-coupons" element={<ExploreCoupons />} />
+              <Route path="/expired-coupons" element={<ExpiredCoupons />} />
               <Route path="/high-street" element={<HighStreet />} />
               <Route path="/my-coupons" element={<MyCoupons />} />
               <Route path="/public-account" element={<MyAccount />} />

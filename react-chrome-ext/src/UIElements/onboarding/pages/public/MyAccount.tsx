@@ -102,13 +102,13 @@ const MyAccount = () => {
   };
 
   return (
-    <div className="flex justify-center items-center">
-      <div className="container h-full border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% py-10 m-5">
-        <div className="flex justify-around gap-5 w-full grid-cols-2">
-          <div className="w-full flex justify-center ">
+    <div className="flex items-center justify-center w-full">
+      <div className=" h-full border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% py-10 m-5">
+        <div className="flex flex-col justify-around w-full max-w-6xl md:flex-row">
+          <div className="flex justify-center w-full px-16 py-5 ">
             <div className="max-w-[400px] flex items-center flex-col">
               <p className="text-[#3FA9F5] text-2xl mb-4">My account</p>
-              <form className="pb-8 mb-4 w-8/12">
+              <form className="">
                 <div className="mb-3">
                   <input
                     className="bg-[#343434] shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
@@ -147,8 +147,8 @@ const MyAccount = () => {
                     </div>
                   </div>
                 </div>
-                <div className="mb-3 flex justify-center items-center gap-4">
-                  <label className="block text-white text-sm">DOB</label>
+                <div className="flex items-center justify-center gap-4 mb-3">
+                  <label className="block text-sm text-white">DOB</label>
                   <Datepicker
                     options={options}
                     onChange={handleChangeDob}
@@ -220,7 +220,7 @@ const MyAccount = () => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                    className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                   >
                     <path
                       stroke-linecap="round"
@@ -237,22 +237,22 @@ const MyAccount = () => {
               </form>
             </div>
           </div>
-          <div className="flex items-center w-full flex-col border-l-2 border-gray-500">
+          <div className="flex flex-col items-center w-full px-16 py-5 border-0 border-gray-500 md:border-l-2">
             <div className="flex flex-col">
               <p className="text-[#3FA9F5] text-2xl mb-2">My coupons</p>
-              <div className="flex justify-between mb-4">
+              <div className="flex justify-between gap-3 mb-4">
                 <button
-                  className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full"
+                  className="flex items-center w-full justify-between bg-[#43A9F5] text-white px-4 rounded-full"
                   onClick={() => navigate("/my-coupons")}
                 >
-                  <span className="py-1 pr-2">My coupons</span>
+                  <span className="py-1 pr-2 text-nowrap">My coupons</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                    className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                   >
                     <path
                       stroke-linecap="round"
@@ -262,17 +262,17 @@ const MyAccount = () => {
                   </svg>
                 </button>
                 <button
-                  className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full"
-                  onClick={() => navigate("/explore-coupons")}
+                  className="flex items-center w-full justify-between bg-[#43A9F5] text-white px-4 rounded-full"
+                  onClick={() => navigate("/expired-coupons")}
                 >
-                  <span className="py-1 pr-2">Expired coupons</span>
+                  <span className="py-1 pr-2 text-nowrap">Expired coupons</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                    className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                   >
                     <path
                       stroke-linecap="round"
@@ -290,7 +290,7 @@ const MyAccount = () => {
                       <span className="text-lg font-bold">200 sch |</span>
                       <span className="flex items-center">Max 500</span>
                     </div>
-                    <div className="bg-black rounded-full mt-1 p-5 w-full">
+                    <div className="w-full p-5 mt-1 bg-black rounded-full">
                       <Progress
                         value={40}
                         variant="filled"
@@ -348,7 +348,7 @@ const MyAccount = () => {
                     Users stats
                   </span>
                   <div className="border flex flex-row justify-between border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-2 p-3 px-5  items-center text-white">
-                    <div className=" -rotate-90">
+                    <div className="-rotate-90 ">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -368,7 +368,7 @@ const MyAccount = () => {
                       <span className="text-4xl ">118,890</span>
                       <span className="text-sm">users registered</span>
                     </div>
-                    <div className=" rotate-90">
+                    <div className="rotate-90 ">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -390,7 +390,7 @@ const MyAccount = () => {
               <div className="mt-3">
                 <span className="text-[#3FA9F5] text-2xl">Buisness stats</span>
                 <div className="border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-2 p-3 px-5 flex flex-row justify-between items-center text-white">
-                  <div className=" -rotate-90">
+                  <div className="-rotate-90 ">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -413,7 +413,7 @@ const MyAccount = () => {
                     </span>
                     <span className="">(100 sch| = £1)</span>
                   </div>
-                  <div className=" rotate-90">
+                  <div className="rotate-90 ">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"

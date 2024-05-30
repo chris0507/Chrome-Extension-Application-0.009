@@ -14,7 +14,7 @@ const BusinessAccount = () => {
   return (
     <div className="flex justify-center w-full">
       <div className="container flex-col ">
-        <div className="  flex justify-end pr-4">
+        <div className="flex justify-end pr-4 ">
           <div className="flex flex-row gap-4">
             <button
               className="flex items-center justify-between bg-[#932580] text-white px-2 pl-4 rounded-full"
@@ -24,7 +24,7 @@ const BusinessAccount = () => {
               <img
                 src="./images/repair.png"
                 alt=""
-                className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
               />
             </button>
             <button
@@ -35,17 +35,17 @@ const BusinessAccount = () => {
               <img
                 src="./images/repair.png"
                 alt=""
-                className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
               />
             </button>
           </div>
         </div>
         <div className="border w-full max-w-4xl border-solid border-[#9E4080] rounded-2xl bg-gradient-to-b from-[#3E3733] to-[#000000] to-35% py-10 m-5">
-          <div className="flex justify-around gap-5 md:flex-row flex-col ">
-            <div className="w-full flex justify-center ">
-              <form className="gap-3 mb-4 w-10/12 flex flex-col">
+          <div className="flex flex-col justify-around gap-5 md:flex-row ">
+            <div className="flex justify-center w-full ">
+              <form className="flex flex-col w-10/12 gap-3 mb-4">
                 <p className="text-[#9E4080] text-2xl mb-4">Business account</p>
-                <div className=" flex flex-row gap-3">
+                <div className="flex flex-row gap-3 ">
                   <input
                     className="bg-[#343434] border-none shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                     id="username"
@@ -61,7 +61,7 @@ const BusinessAccount = () => {
                     required
                   />
                 </div>
-                <div className=" flex flex-row  gap-3">
+                <div className="flex flex-row gap-3 ">
                   <div className="flex-1">
                     <select
                       id="city"
@@ -73,7 +73,7 @@ const BusinessAccount = () => {
                       </option>
                     </select>
                   </div>
-                  <div className="flex flex-1 items-center justify-end">
+                  <div className="flex items-center justify-end flex-1">
                     <input
                       className="bg-[#343434] border-none shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                       id="password"
@@ -102,7 +102,7 @@ const BusinessAccount = () => {
                     </div>
                   </div>
                 </div>
-                <div className=" flex flex-row  gap-3">
+                <div className="flex flex-row gap-3 ">
                   <div className="flex-1">
                     <select
                       id="city"
@@ -114,7 +114,7 @@ const BusinessAccount = () => {
                       </option>
                     </select>
                   </div>
-                  <div className="flex flex-1 items-center justify-end"></div>
+                  <div className="flex items-center justify-end flex-1"></div>
                 </div>
                 <div className="flex flex-row gap-3">
                   <div className="flex flex-1">
@@ -164,12 +164,12 @@ const BusinessAccount = () => {
                   </div>
                   <div className="flex flex-1"></div>
                 </div>
-                <div className="flex flex-row gap-3 items-center ">
-                  <div className="flex flex-1 gap-4 items-center">
+                <div className="flex flex-row items-center gap-3 ">
+                  <div className="flex items-center flex-1 gap-4">
                     <div className="flex flex-1">
                       <img src="./images/annie1.png" alt="" />
                     </div>
-                    <div className="flex-1 flex justify-start  ">
+                    <div className="flex justify-start flex-1 ">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -188,8 +188,8 @@ const BusinessAccount = () => {
                   </div>
                   <div className="flex flex-1"></div>
                 </div>
-                <div className=" flex flex-row gap-4 items-center">
-                  <div className=" w-4/5">
+                <div className="flex flex-row items-center gap-4 ">
+                  <div className="w-4/5 ">
                     <img src="./images/annielogo.png" alt="" />
                   </div>
                   <div className="flex justify-start">
@@ -211,13 +211,13 @@ const BusinessAccount = () => {
                 </div>
               </form>
             </div>
-            <div className="w-full border-l-2 border-gray-400 flex justify-center ">
-              <div className=" w-8/12 flex flex-col gap-3">
+            <div className="flex justify-center w-full border-gray-400 md:border-l-2 ">
+              <div className="flex flex-col w-8/12 gap-3 ">
                 <div className="">
                   <span className="text-[#9E4080] text-2xl">Account</span>
                   <div className="border border-solid border-[#9E4080] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-2 p-3 px-5">
                     <div className="border border-solid border-[#9E4080] bg-white rounded-2xl py-2 px-3">
-                      <div className="flex gap-2 flex-row justify-between">
+                      <div className="flex flex-row justify-between gap-2">
                         <span className="text-lg font-bold">6000 sch</span>
                         <button className="flex items-center justify-between bg-[#91257D] text-white px-2 rounded-full">
                           <span className="py-1 pr-2 text-white">
@@ -229,7 +229,7 @@ const BusinessAccount = () => {
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                            className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                           >
                             <path
                               stroke-linecap="round"
@@ -239,7 +239,7 @@ const BusinessAccount = () => {
                           </svg>
                         </button>
                       </div>
-                      <div className="bg-black rounded-full mt-1 p-3 w-full">
+                      <div className="w-full p-3 mt-1 bg-black rounded-full">
                         <Progress
                           value={40}
                           variant="filled"
@@ -294,7 +294,7 @@ const BusinessAccount = () => {
                 <div className="">
                   <span className="text-[#9E4080] text-2xl">Users stats</span>
                   <div className="border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-2 p-3 px-5 flex flex-row justify-between items-center text-white">
-                    <div className=" -rotate-90">
+                    <div className="-rotate-90 ">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -310,11 +310,11 @@ const BusinessAccount = () => {
                         />
                       </svg>
                     </div>
-                    <div className="flex flex-col justify-center items-center">
+                    <div className="flex flex-col items-center justify-center">
                       <span className="text-4xl ">118,890</span>
                       <span className="text-sm">users registered</span>
                     </div>
-                    <div className=" rotate-90">
+                    <div className="rotate-90 ">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -337,7 +337,7 @@ const BusinessAccount = () => {
                     Buisness stats
                   </span>
                   <div className="border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-2 p-3 px-5 flex flex-row justify-between items-center text-white">
-                    <div className=" -rotate-90">
+                    <div className="-rotate-90 ">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -353,14 +353,14 @@ const BusinessAccount = () => {
                         />
                       </svg>
                     </div>
-                    <div className="flex flex-col justify-center items-center">
+                    <div className="flex flex-col items-center justify-center">
                       <span className="text-4xl ">383,210</span>
                       <span className="text-sm">
                         sch | generated by businesses
                       </span>
                       <span className="">(100 sch| = £1)</span>
                     </div>
-                    <div className=" rotate-90">
+                    <div className="rotate-90 ">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -382,7 +382,7 @@ const BusinessAccount = () => {
             </div>
           </div>
         </div>
-        <div className="w-2/3 flex flex-row items-center justify-end text-white gap-2 pr-4" >
+        <div className="flex flex-row items-center justify-end w-2/3 gap-2 pr-4 text-white" >
           <div>View Google Sheets</div>
           <div>
             <img src="./images/resize.png" width={15} alt="" />

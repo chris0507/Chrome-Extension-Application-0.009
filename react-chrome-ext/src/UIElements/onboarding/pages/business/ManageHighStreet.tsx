@@ -35,9 +35,9 @@ const ManageHighStreet = () => {
   return (
     <div className="flex justify-center w-full">
       <div className="container flex-col">
-        <div className="border w-10/12 border-solid border-[#9E4080] rounded-2xl bg-gradient-to-b from-[#3E3733] to-[#000000] to-35% p-5 m-5">
-          <div className="flex flex-col lg:flex-row gap-4 items-center text-white">
-            <div className="flex flex-1 flex-col gap-3 pl-0 lg:pl-[8%]">
+        <div className="border  border-solid border-[#9E4080] rounded-2xl bg-gradient-to-b from-[#3E3733] to-[#000000] to-35% p-5 m-5">
+          <div className="flex flex-col items-center gap-4 text-white xl:flex-row">
+            <div className="flex flex-1 flex-col gap-3 pl-0 xl:pl-[8%]">
               <p className="text-lg font-semibold">Manage Highstreet</p>
               <div className="text-sm">
                 All windows available to purchase at a cost of 6.25 sch | each
@@ -49,10 +49,10 @@ const ManageHighStreet = () => {
                 value={`URL`}
                 required
               />
-              <div className="flex flex-row relative gap-3 items-center">
+              <div className="relative flex flex-row items-center gap-3">
                 <div className=" absolute -ml-[65px]">0/3 images</div>
                 <div className="w-1/3">
-                  <div className="flex flex-1 items-center justify-end ">
+                  <div className="flex items-center justify-end flex-1 ">
                     <input
                       className="bg-[#343434] w-full shadow appearance-none rounded  p-2 text-white border-none leading-tight focus:outline-none focus:shadow-outline"
                       id="password"
@@ -81,12 +81,12 @@ const ManageHighStreet = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-row gap-2 items-center">
+                <div className="flex flex-row items-center gap-2">
                   <div>600 &times; 600px</div>
                   <img src="./images/plus.png" width={16} height={16} alt="" />
                 </div>
               </div>
-              <div className="flex flex-row gap-3 items-center">
+              <div className="flex flex-row items-center gap-3">
                 <div>Promote to Highstreet</div>
                 <div>
                   <select
@@ -100,7 +100,7 @@ const ManageHighStreet = () => {
                   </select>
                 </div>
               </div>
-              <div className="flex flex-row gap-3 items-center">
+              <div className="flex flex-row items-center gap-3">
                 <div>Schedule occupancy</div>
                 <div>
                   <select
@@ -114,7 +114,7 @@ const ManageHighStreet = () => {
                   </select>
                 </div>
               </div>
-              <div className="flex flex-row gap-3 w-1/3 items-center">
+              <div className="flex flex-row items-center w-1/3 gap-3">
                 <div>Cost</div>
                 <input
                   className="bg-[#343434] w-full  border-none shadow appearance-none rounded  p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
@@ -128,7 +128,7 @@ const ManageHighStreet = () => {
               <div className="flex flex-col gap-3">
                 <div>Select window position</div>
                 <div className="flex flex-col gap-4">
-                  <div className=" grid grid-cols-6 gap-2" ref={row}>
+                  <div className="grid grid-cols-6 gap-2 " ref={row}>
                     <div
                       className={`border-2 bg-[#1A1A1A] flex items-center border-gray-500  rounded-lg cursor-pointer `}
                       style={{ width: `${width}px`, height: `${width}px` }}
@@ -157,7 +157,7 @@ const ManageHighStreet = () => {
                       style={{ width: `${width}px`, height: `${width}px` }}
                     ></div>
                   </div>
-                  <div className=" grid grid-cols-6 gap-2" ref={row}>
+                  <div className="grid grid-cols-6 gap-2 " ref={row}>
                     <div
                       className={`border-2 bg-[#1A1A1A] flex items-center border-gray-500  rounded-lg cursor-pointer `}
                       style={{ width: `${width}px`, height: `${width}px` }}
@@ -195,7 +195,7 @@ const ManageHighStreet = () => {
                       <img
                         src="./images/paste.png"
                         alt=""
-                        className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                        className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                       />
                     </button>
                     {isModalOpen && <HighStreetModal closeModal={closeModal} />}
@@ -210,14 +210,14 @@ const ManageHighStreet = () => {
                       <img
                         src="./images/purchase-order.png"
                         alt=""
-                        className="w-6 h-6 border-l-2 border-dashed border-white py-1 pl-2"
+                        className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
                       />
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="flex flex-1 items-center justify-center">
+            <div className="flex items-center justify-center flex-1">
               <div className="border flex flex-col gap-3  border-solid border-[#9E4080] rounded-2xl text-base bg-gradient-to-b from-[#3E3733] to-[#000000] text-white to-35% p-5 ">
                 <div className="text-lg">Business overview</div>
                 <p>

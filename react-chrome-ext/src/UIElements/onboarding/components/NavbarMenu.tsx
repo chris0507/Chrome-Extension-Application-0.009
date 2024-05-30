@@ -10,8 +10,11 @@ const NavbarMenu = () => {
   useEffect(() => {
     console.log("location.pathname", location.pathname);
     switch (location.pathname) {
-      case "/high-street": 
+      case "/high-street":
         setTitle("High Street");
+        break;
+      case "/expired-coupons":
+        setTitle("Expired Coupons");
         break;
       case "/coupons":
         setTitle("Explore coupons");
@@ -38,19 +41,19 @@ const NavbarMenu = () => {
     window.history.back();
   };
   return (
-    <div className="pt-2 flex items-center flex-col justify-center">
+    <div className="flex flex-col items-center justify-center pt-2">
       <div className="container">
-        <div className="flex w-full justify-between items-center">
-          <div className="flex justify-start items-center ">
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center justify-start ">
             <MenuModal userType={userType} />
             {userType === "public" ? (
               <div className=" gap-1 text-[#3FA9F5] md:flex hidden">
-                <span className="lg:text-2xl text-xl font-bold">200 sch |</span>
+                <span className="text-xl font-bold lg:text-2xl">200 sch |</span>
                 <span className="flex items-center textl-xl">Max 500</span>
               </div>
             ) : (
               <div className="md:flex hidden gap-1 text-[#9E4080]">
-                <span className="lg:text-2xl text-xl font-bold">200 sch |</span>
+                <span className="text-xl font-bold lg:text-2xl">200 sch |</span>
                 <span className="flex items-center text-xl">Max 500</span>
               </div>
             )}
@@ -68,11 +71,11 @@ const NavbarMenu = () => {
               />
               <button
                 type="submit"
-                className="absolute text-white right-1 top-1/2 transform -translate-y-1/2"
+                className="absolute text-white transform -translate-y-1/2 right-1 top-1/2"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 "
+                  className="w-5 h-5 "
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -87,7 +90,7 @@ const NavbarMenu = () => {
               </button>
             </div>
           ) : null}
-          <div className="flex justify-end items-center gap-3 mr-4">
+          <div className="flex items-center justify-end gap-3 mr-4">
             {userType === "public" ? (
               <span className="text-2xl md:block hidden font-bold text-[#3FA9F5]">
                 {title}
@@ -101,9 +104,9 @@ const NavbarMenu = () => {
           </div>
         </div>
       </div>
-      <div className="flex items-center w-full justify-center">
+      <div className="flex items-center justify-center w-full">
         <div className="container">
-          <div className="flex justify-start w-full mb-4 items-center gap-1">
+          <div className="flex items-center justify-start w-full gap-1 mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
