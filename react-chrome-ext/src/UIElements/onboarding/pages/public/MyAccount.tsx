@@ -1,83 +1,95 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Datepicker from "tailwind-datepicker-react";
 import { Progress } from "@material-tailwind/react";
 import { PieChart } from "react-minimal-pie-chart";
 import Dropdown from "../../components/public/Dropdown";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../../../store";
+import { useSelector } from "react-redux";
 
 const MyAccount = () => {
   //calendar
   const [show, setShow] = useState(false);
+  const [dob, setDob] = useState("1992-01-01");
+  const [options, setOptions] = useState<any>({});
   const navigate = useNavigate();
-
-  const options = {
-    title: "",
-    autoHide: true,
-    todayBtn: false,
-    clearBtn: true,
-    clearBtnText: "Clear",
-    maxDate: new Date("2030-01-01"),
-    minDate: new Date("1950-01-01"),
-    theme: {
-      background: "bg-white dark:bg-[#343434]",
-      todayBtn: "",
-      clearBtn: "",
-      icons: "",
-      text: "",
-      disabledText: "bg-red-500",
-      input: "bg-[#343434] dark:bg-[#343434] rounded-full text-white",
-      inputIcon: "",
-      selected: "",
-    },
-    icons: {
-      prev: () => (
-        <span>
-          <svg
-            className="w-5 h-5 text-gray-800 dark:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 8 14"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
-            />
-          </svg>
-        </span>
-      ),
-      next: () => (
-        <span>
-          <svg
-            className="w-5 h-5 text-gray-800 dark:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 8 14"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
-            />
-          </svg>
-        </span>
-      ),
-    },
-    datepickerClassNames: "top-12",
-    defaultDate: new Date("2024-01-01"),
-    language: "en",
-    disabledDates: [],
-    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-    inputNameProp: "date",
-    inputIdProp: "date",
-    inputPlaceholderProp: "Select Date",
-  };
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+  useEffect(() => {
+    console.log("userinfo:", userInfo);
+    let dob = userInfo?.dob;
+    let parts = dob?.split("/");
+    console.log("parts:", parts);
+    if (parts) {
+      setDob(`${parts[2]}-${parts[0]}-${parts[1]}`);
+      setOptions({
+        title: "",
+        autoHide: true,
+        todayBtn: false,
+        clearBtn: true,
+        clearBtnText: "Clear",
+        maxDate: new Date("2030-01-01"),
+        minDate: new Date("1950-01-01"),
+        theme: {
+          background: "bg-white dark:bg-[#343434]",
+          todayBtn: "",
+          clearBtn: "",
+          icons: "",
+          text: "",
+          disabledText: "bg-red-500",
+          input: "bg-[#343434] dark:bg-[#343434] rounded-full text-white",
+          inputIcon: "",
+          selected: "",
+        },
+        icons: {
+          prev: () => (
+            <span>
+              <svg
+                className="w-5 h-5 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 8 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
+                />
+              </svg>
+            </span>
+          ),
+          next: () => (
+            <span>
+              <svg
+                className="w-5 h-5 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 8 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
+                />
+              </svg>
+            </span>
+          ),
+        },
+        datepickerClassNames: "top-12",
+        language: "en",
+        disabledDates: [],
+        weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+        inputNameProp: "date",
+        inputIdProp: "date",
+        inputPlaceholderProp: "Select Date",
+      });
+    }
+  }, [userInfo]);
 
   const handleChangeDob = (selectedDate: Date) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -115,7 +127,8 @@ const MyAccount = () => {
                     id="username"
                     type="text"
                     placeholder="Username/Tag"
-                    required
+                    value={userInfo?.username}
+                    disabled
                   />
                 </div>
                 <div className="mb-3">
@@ -151,8 +164,9 @@ const MyAccount = () => {
                   <label className="block text-sm text-white">DOB</label>
                   <Datepicker
                     options={options}
+                    value={new Date(dob)}
                     onChange={handleChangeDob}
-                    show={show}
+                    show={false}
                     setShow={handleClose}
                   />
                 </div>
@@ -161,8 +175,9 @@ const MyAccount = () => {
                     id="city"
                     className="bg-[#3FA9F5]  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
                     required
+                    value={userInfo?.city}
                   >
-                    <option value="" disabled selected>
+                    <option disabled selected>
                       City
                     </option>
                     <option value="US">United States</option>
@@ -172,7 +187,10 @@ const MyAccount = () => {
                   </select>
                 </div>
                 <div className="mb-3">
-                  <Dropdown onSelect={handleSelect} />
+                  <Dropdown
+                    selectedMenu={userInfo?.ethnicity}
+                    onSelect={handleSelect}
+                  />
                 </div>
                 <div className="mb-3">
                   <input
@@ -181,6 +199,7 @@ const MyAccount = () => {
                     type="email"
                     placeholder="Email address"
                     required
+                    value={userInfo?.email}
                   />
                 </div>
                 <div className="mb-3">
@@ -212,28 +231,33 @@ const MyAccount = () => {
                     </div>
                   </div>
                 </div>
-                <button className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full">
-                  <span className="py-1 pr-2">GDPR settings</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"
-                    />
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                    />
-                  </svg>
-                </button>
+                <div className="flex flex-row justify-between gap-2">
+                  <button className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full">
+                    <span className="py-1 pr-2">GDPR settings</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6 py-1 pl-2 border-l-2 border-white border-dashed"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                      />
+                    </svg>
+                  </button>
+                  <button type="submit" className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full">
+                    <span className="py-1 pr-2">Update Account</span>
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -388,7 +412,7 @@ const MyAccount = () => {
                 </div>
               </div>
               <div className="mt-3">
-                <span className="text-[#3FA9F5] text-2xl">Buisness stats</span>
+                <span className="text-[#3FA9F5] text-2xl">Business stats</span>
                 <div className="border border-solid border-[#2F2F2F] rounded-2xl bg-gradient-to-b from-[#797A7D] to-[#000000] to-35% mt-2 p-3 px-5 flex flex-row justify-between items-center text-white">
                   <div className="-rotate-90 ">
                     <svg

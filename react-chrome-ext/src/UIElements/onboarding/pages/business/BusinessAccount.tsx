@@ -4,13 +4,16 @@ import { Progress } from "@material-tailwind/react";
 import { PieChart } from "react-minimal-pie-chart";
 import Dropdown from "../../components/public/Dropdown";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../../../store";
+import { useSelector } from "react-redux";
 
 const BusinessAccount = () => {
   const navigate = useNavigate();
   const handleSelect = (value: string) => {
     //   setValue("ethnicity", value, { shouldValidate: true });
   };
-
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const API_BASE_URL = process.env.REACT_APP_API_URL
   return (
     <div className="flex justify-center w-full">
       <div className="container flex-col ">
@@ -18,7 +21,9 @@ const BusinessAccount = () => {
           <div className="flex flex-row gap-4">
             <button
               className="flex items-center justify-between bg-[#932580] text-white px-2 pl-4 rounded-full"
-              onClick={() => { navigate("/create-coupons") }}
+              onClick={() => {
+                navigate("/create-coupons");
+              }}
             >
               <span className="py-1 pr-2">Manage Coupons</span>
               <img
@@ -29,7 +34,9 @@ const BusinessAccount = () => {
             </button>
             <button
               className="flex items-center justify-between bg-[#932580] text-white px-2 pl-4 rounded-full"
-              onClick={() => {navigate("/manage-high-street")}}
+              onClick={() => {
+                navigate("/manage-high-street");
+              }}
             >
               <span className="py-1 pr-2">Manage High Street</span>
               <img
@@ -50,14 +57,14 @@ const BusinessAccount = () => {
                     className="bg-[#343434] border-none shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                     id="username"
                     type="text"
-                    value={`Annie's Burger Shack`}
+                    value={userInfo?.brandName}
                     required
                   />
                   <input
                     className="bg-[#343434] border-none shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
                     id="username"
                     type="text"
-                    value={`info@anniesburgershack.com`}
+                    value={userInfo?.email}
                     required
                   />
                 </div>
@@ -65,12 +72,18 @@ const BusinessAccount = () => {
                   <div className="flex-1">
                     <select
                       id="city"
-                      className="bg-[#932580] border-none  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
+                      className="bg-[#932580] text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-white pr-10"
                       required
+                      value={userInfo?.city}
                     >
                       <option value="" disabled selected>
-                        Nottingham
+                        City
                       </option>
+                      <option value="US">United States</option>
+                      <option value="UK">United Kingdom</option>
+                      <option value="CA">Canada</option>
+                      <option value="FR">France</option>
+                      <option value="DE">Germany</option>
                     </select>
                   </div>
                   <div className="flex items-center justify-end flex-1">
@@ -79,7 +92,6 @@ const BusinessAccount = () => {
                       id="password"
                       type="text"
                       placeholder="Update Password"
-                      value={`Update password`}
                       required
                     />
                     <div className="absolute pr-2 cursor-pointer">
@@ -105,13 +117,19 @@ const BusinessAccount = () => {
                 <div className="flex flex-row gap-3 ">
                   <div className="flex-1">
                     <select
-                      id="city"
-                      className="bg-[#932580]  border-none text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
+                      id="country"
+                      className="bg-[#932580] text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-white pr-10"
                       required
+                      value={userInfo?.country}
                     >
                       <option value="" disabled selected>
-                        Restaurant
+                        Country
                       </option>
+                      <option value="US">United States</option>
+                      <option value="UK">United Kingdom</option>
+                      <option value="CA">Canada</option>
+                      <option value="FR">France</option>
+                      <option value="DE">Germany</option>
                     </select>
                   </div>
                   <div className="flex items-center justify-end flex-1"></div>
@@ -120,9 +138,8 @@ const BusinessAccount = () => {
                   <div className="flex flex-1">
                     <input
                       className="bg-[#343434] border-none shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
-                      id="email"
-                      type="email"
-                      value={`Annie Spaziano`}
+                      type="text"
+                      value={userInfo?.CEOname}
                       required
                     />
                   </div>
@@ -132,9 +149,8 @@ const BusinessAccount = () => {
                   <div className="flex flex-1">
                     <input
                       className="bg-[#343434] border-none shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
-                      id="email"
                       type="email"
-                      value={`annie@anniesburgershack.com`}
+                      value={userInfo?.CEOemail}
                       required
                     />
                   </div>
@@ -144,9 +160,8 @@ const BusinessAccount = () => {
                   <div className="flex flex-1">
                     <input
                       className="bg-[#343434] border-none shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
-                      id="email"
-                      type="email"
-                      value={`08189761`}
+                      type="text"
+                      value={userInfo?.companyID}
                       required
                     />
                   </div>
@@ -156,9 +171,8 @@ const BusinessAccount = () => {
                   <div className="flex flex-1">
                     <input
                       className="bg-[#343434] border-none shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
-                      id="email"
-                      type="email"
-                      value={`anniesburgershack.com`}
+                      type="text"
+                      value={userInfo?.businessURL}
                       required
                     />
                   </div>
@@ -167,7 +181,7 @@ const BusinessAccount = () => {
                 <div className="flex flex-row items-center gap-3 ">
                   <div className="flex items-center flex-1 gap-4">
                     <div className="flex flex-1">
-                      <img src="./images/annie1.png" alt="" />
+                      <img src={`${API_BASE_URL}${userInfo?.logo}`} alt="" />
                     </div>
                     <div className="flex justify-start flex-1 ">
                       <svg
@@ -188,27 +202,7 @@ const BusinessAccount = () => {
                   </div>
                   <div className="flex flex-1"></div>
                 </div>
-                <div className="flex flex-row items-center gap-4 ">
-                  <div className="w-4/5 ">
-                    <img src="./images/annielogo.png" alt="" />
-                  </div>
-                  <div className="flex justify-start">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      className="w-5 h-5 text-white -rotate-90"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                  </div>
-                </div>
+             
               </form>
             </div>
             <div className="flex justify-center w-full border-gray-400 md:border-l-2 ">
@@ -382,7 +376,7 @@ const BusinessAccount = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row items-center justify-end w-2/3 gap-2 pr-4 text-white" >
+        <div className="flex flex-row items-center justify-end w-2/3 gap-2 pr-4 text-white">
           <div>View Google Sheets</div>
           <div>
             <img src="./images/resize.png" width={15} alt="" />

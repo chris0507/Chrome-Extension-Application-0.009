@@ -3,24 +3,31 @@ import React from "react";
 const MyCoupons = () => {
   const items = [
     {
-      image:'./images/annie1.png',
-      title:'10% Off All Burgers & Meals',
-      name:"Annie's Burger Shack",
-      content:'dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+      image:'./images/logos/annies logo.png',
+      title:'Free drinks with your Buffalo Ranch',
+      name:"",
+      content:"Sweeten the deal with this latest additions to the menu, the Buffalo Ranch burger. Get a free drink to help wash it down; offer ends 10th Nov 2024.",
       coupon_code:'B49H5577'
     },
     {
-      image:'./images/Boots logo.png',
-      title:'Free Boots Meal Deal',
-      name:'Boots',
-      content:'dolor sit amet, sonsetetur sadipscing elitr, sed diam eirmod invidunt ut labore et dolore magna aliquyam eratm, sed diam.',
+      image:'./images/logos/Doughnotts logo.png',
+      title:'Behind the sense Thursday.',
+      name:'',
+      content:"Take a peak into Nottingham'sfavourite bakery and see how we turn our lovely wheat into your favourite donuts every Thursday; access ends August 2024.",
       coupon_code:'B16T8844'
     },
     {
-      image:'./images/piemininister logo.png',
-      title:'PE-1-Get-1FREE',
-      name:"Pieminister",
-      content:'dolor sit amet, consetetur sadipsciing elitr, sed diam eirmod invidunt ut labore et dolore magna aliquyam erat sed.',
+      image:'./images/logos/Amazon logo.jpg',
+      title:"Haven't found that perfect present yet?",
+      name:"",
+      content:"How about Amazon next day prime delivery, try extend that delivery period, no rush? Offer ends December 24th 2024",
+      coupon_code:'T16T8844'
+    },
+    {
+      image:'./images/logos/Bunk nottingham logo.png',
+      title:"Join Ramadan with 25%  off your meal with Halal",
+      name:"",
+      content:"We wanted to offer you Halal meals during Ramadan 2024. It's certified by officials but your opinion is what matters to join the celebrations; offer ends April 09th 2024.",
       coupon_code:'T16T8844'
     }
   ]

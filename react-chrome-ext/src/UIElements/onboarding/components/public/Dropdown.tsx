@@ -7,9 +7,10 @@ type MainMenuKey = keyof typeof mainMenus;
 
 type DropdownProps = {
   onSelect: (value: string) => void;
+  selectedMenu?:string
 };
 
-const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
+const Dropdown: React.FC<DropdownProps> = ({ selectedMenu ,onSelect }) => {
   const [mainMenuSelected, setMainMenuSelected] = useState<MainMenuKey>("");
   const [subMenuSelected, setSubMenuSelected] = useState<string>("");
   const [customOther, setCustomOther] = useState<string>("");
@@ -47,6 +48,9 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
   }, []);
 
   useEffect(() => {
+    if(selectedMenu){
+      setSubMenuSelected(selectedMenu)
+    }
     onSelect(subMenuSelected);
   }, [subMenuSelected, onSelect]);
 
@@ -62,7 +66,7 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
           e.preventDefault();
           setDropdownOpen((prev) => !prev);
         }}
-        className="inline-flex justify-between items-center w-full text-white"
+        className="inline-flex items-center justify-between w-full text-white"
         id="menu-button"
         aria-expanded="true"
         aria-haspopup="true"
@@ -75,7 +79,7 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
 
       {/* Dropdown Panel */}
       {dropdownOpen && (
-        <div className="origin-top-right absolute right-0 mt-2 w-full rounded shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+        <div className="absolute right-0 z-10 w-full mt-2 origin-top-right bg-white rounded shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="flex flex-col">
             {Object.keys(mainMenus).map((key) => {
               // Main menu button with a right arrow icon
@@ -96,8 +100,8 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
                   </button>
                   {/* Submenu that expands to the right */}
                   {mainMenuSelected === key && (
-                    <div className="ml-4 relative">
-                      <div className="absolute left-full top-0 w-56 rounded shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                    <div className="relative ml-4">
+                      <div className="absolute top-0 w-56 bg-white rounded shadow-lg left-full ring-1 ring-black ring-opacity-5">
                         {mainMenus[key].map((subMenuOption) => (
                           <button
                             key={subMenuOption}

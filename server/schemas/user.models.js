@@ -1,17 +1,15 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-
-const Role={
-  PUBLIC : 'PUBLIC',
-  BUSINESS : 'BUSINESS',
-}
-
+const Role = {
+  PUBLIC: "PUBLIC",
+  BUSINESS: "BUSINESS",
+};
 
 const UserSchema = new Schema(
   {
-    username:{
-        type:String,
+    username: {
+      type: String,
     },
     email: {
       type: String,
@@ -23,53 +21,56 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      required:true,
+      required: true,
     },
-    dob:{
-        type:String,
+    dob: {
+      type: String,
     },
-    city:{
-        type:String,
+    city: {
+      type: String,
     },
-    ethnicity:{
-        type:String,
+    country: {
+      type: String,
     },
-    code:{
-        type:String,
+    ethnicity: {
+      type: String,
     },
-    status:{
-        type:String,
+    code: {
+      type: String,
     },
-    brandName:{
-        type:String,
+    status: {
+      type: String,
     },
-    businessURL:{
-      type:String,
+    brandName: {
+      type: String,
     },
-    CEOname:{
-      type:String,
+    businessURL: {
+      type: String,
     },
-    CEOemail:{
-      type:String,
+    CEOname: {
+      type: String,
     },
-    companyID:{
-      type:String,
+    CEOemail: {
+      type: String,
     },
-    logo:{
-      type:String,
+    companyID: {
+      type: String,
     },
-    urls:{
-        type:[{
-          url:String,
-          row:Number,
-          col:Number,
-          date:Date,
-        }],
+    logo: {
+      type: String,
+    },
+    urls: {
+      type: [
+        {
+          url: String,
+          row: Number,
+          col: Number,
+          date: Date,
+        },
+      ],
     },
   },
   { timestamps: true }
 );
 
-
 module.exports = mongoose.model("User", UserSchema);
-

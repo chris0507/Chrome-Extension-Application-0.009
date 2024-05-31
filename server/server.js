@@ -520,6 +520,7 @@ app.post("/business/register", upload.single("logo"), async (req, res) => {
   const {
     brandName,
     city,
+    country,
     ethnicity,
     CEOname,
     CEOemail,
@@ -544,6 +545,7 @@ app.post("/business/register", upload.single("logo"), async (req, res) => {
   await User.create({
     brandName: brandName,
     city: city,
+    country:country,
     ethnicity: ethnicity,
     CEOname: CEOname,
     CEOemail: CEOemail,
