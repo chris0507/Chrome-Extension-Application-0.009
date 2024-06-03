@@ -6,6 +6,8 @@ import Dropdown from "../../components/public/Dropdown";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../../store";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { userUpdateSuccessfullyToast, userUpdateFailedToast } from "../../components/Alert";
 
 const MyAccount = () => {
   //calendar
@@ -14,8 +16,20 @@ const MyAccount = () => {
   const [options, setOptions] = useState<any>({});
   const navigate = useNavigate();
   const { userInfo } = useSelector((state: RootState) => state.auth);
+
+  const [city, setCity] = useState("");
+  const [ethicity, setEthicity] = useState("");
+  const [email, setEmail]= useState("");
+  const [password, setPassword]= useState('')
+
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
+
+  
   useEffect(() => {
     console.log("userinfo:", userInfo);
+    setCity(userInfo?.city);
+    setEthicity(userInfo?.ethnicity)
+    setEmail(userInfo?.email)
     let dob = userInfo?.dob;
     let parts = dob?.split("/");
     console.log("parts:", parts);
@@ -110,8 +124,28 @@ const MyAccount = () => {
   };
 
   const handleSelect = (value: string) => {
-    //   setValue("ethnicity", value, { shouldValidate: true });
+    setEthicity(value)
   };
+
+  const handleUpdate = (e:any) => {
+    e.preventDefault()
+    axios
+      .post(`${API_BASE_URL}updateUser`, {
+        city: city,
+        ethicity: ethicity,
+        email: email,
+        password: password
+      })
+      .then((res) => {
+        console.log(res);
+        userUpdateSuccessfullyToast();
+      })
+      .catch((err) => {
+        console.log(err);
+        userUpdateFailedToast()
+      });
+      
+  }
 
   return (
     <div className="flex items-center justify-center w-full">
@@ -138,7 +172,6 @@ const MyAccount = () => {
                       id="password"
                       type="text"
                       placeholder="Upload avatar"
-                      required
                     />
                     <div className="absolute pr-2 cursor-pointer">
                       <button type="submit">
@@ -176,6 +209,7 @@ const MyAccount = () => {
                     className="bg-[#3FA9F5]  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
                     required
                     value={userInfo?.city}
+                    onChange={(e) => setCity(e.target.value)}
                   >
                     <option disabled selected>
                       City
@@ -200,6 +234,7 @@ const MyAccount = () => {
                     placeholder="Email address"
                     required
                     value={userInfo?.email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="mb-3">
@@ -210,6 +245,7 @@ const MyAccount = () => {
                       type="password"
                       placeholder="Passwrod"
                       required
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                     <div className="absolute pr-2 cursor-pointer">
                       <button type="submit">
@@ -254,7 +290,7 @@ const MyAccount = () => {
                       />
                     </svg>
                   </button>
-                  <button type="submit" className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full">
+                  <button type="submit" onClick={handleUpdate} className="flex items-center justify-between bg-[#43A9F5] text-white px-4 rounded-full">
                     <span className="py-1 pr-2">Update Account</span>
                   </button>
                 </div>

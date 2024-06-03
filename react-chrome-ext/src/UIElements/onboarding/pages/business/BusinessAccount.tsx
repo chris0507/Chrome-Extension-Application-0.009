@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Datepicker from "tailwind-datepicker-react";
 import { Progress } from "@material-tailwind/react";
 import { PieChart } from "react-minimal-pie-chart";
@@ -6,14 +6,49 @@ import Dropdown from "../../components/public/Dropdown";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../../store";
 import { useSelector } from "react-redux";
+import { set } from "lodash";
 
 const BusinessAccount = () => {
   const navigate = useNavigate();
+  
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [city, setCity] = useState('')
+  const [country, setCountry] = useState('')
+  const [ceoName, setCeoName] = useState('')
+  const [ceoEmail, setCeoEmail] = useState('')
+  const [companyID, setCompanyID] = useState('')
+  const [businessURL, setBusinessURL] = useState('')
+  const [logo, setLogo] = useState('')
+  
+  
+  
   const handleSelect = (value: string) => {
     //   setValue("ethnicity", value, { shouldValidate: true });
   };
+  const handleUpdate = (e:any) => {
+    e.preventDefault()
+    
+  };
+
+ 
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const API_BASE_URL = process.env.REACT_APP_API_URL
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
+
+  useEffect(() => {
+    setEmail(userInfo?.email)
+    setCity(userInfo?.city)
+    setCountry(userInfo?.country)
+    setCeoName(userInfo?.CEOname)
+    setCeoEmail(userInfo?.CEOemail)
+    setCompanyID(userInfo?.companyID)
+    setBusinessURL(userInfo?.businessURL)
+    setLogo(userInfo?.logo)
+    
+  }, [userInfo]);
+
+
+  
   return (
     <div className="flex justify-center w-full">
       <div className="container flex-col ">
@@ -58,7 +93,7 @@ const BusinessAccount = () => {
                     id="username"
                     type="text"
                     value={userInfo?.brandName}
-                    required
+                    disabled
                   />
                   <input
                     className="bg-[#343434] border-none shadow appearance-none rounded w-full p-2 text-white leading-tight focus:outline-none focus:shadow-outline"
@@ -202,7 +237,15 @@ const BusinessAccount = () => {
                   </div>
                   <div className="flex flex-1"></div>
                 </div>
-             
+                <div className="flex justify-start w-full">
+                  <button
+                    type="submit"
+                    onClick={handleUpdate}
+                    className="flex items-center justify-between bg-[#9E4080] text-white px-4 rounded-full"
+                  >
+                    <span className="py-1 pr-2">Update Account</span>
+                  </button>
+                </div>
               </form>
             </div>
             <div className="flex justify-center w-full border-gray-400 md:border-l-2 ">

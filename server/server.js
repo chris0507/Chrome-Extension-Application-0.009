@@ -71,6 +71,28 @@ const generateAccessJWT = (email, ipAddresses) => {
   return jwt.sign(payload, secretKey, options);
 };
 
+app.post('/updateUser', async(req, res)=>{
+  const { city, ethicity, email, password} = req.body;
+  const user = await User.findOne({email:email})
+  if(!user){
+    return res.status(404).json({
+      status: "not-exist",
+      data: [],
+      message: "Email does not exist",
+    });
+  }
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  user.city = city;
+  user.ethicity = ethicity;
+  user.email = email;
+  user.password = hashedPassword;
+  await user.save();
+  return res.status(200).json({
+    status: "success",
+    message: "Successfully updated user"
+  });
+})
+
 app.post("/register", async (req, res) => {
   const { username, dob, city, ethnicity, email, password } = req.body;
   const user = await User.findOne({ email: email });
